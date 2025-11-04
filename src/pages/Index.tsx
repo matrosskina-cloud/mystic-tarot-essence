@@ -1,12 +1,66 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Button } from "@/components/ui/button";
+import { BenefitCard } from "@/components/BenefitCard";
+import { MysticBackground } from "@/components/MysticBackground";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="relative min-h-screen overflow-hidden">
+      <MysticBackground />
+      
+      <main className="relative z-10 flex flex-col items-center justify-start min-h-screen px-6 py-12">
+        <div className="w-full max-w-md mx-auto space-y-8">
+          {/* Header Section */}
+          <div className="text-center space-y-4 animate-fade-in-up">
+            <h1 className="text-4xl font-bold text-foreground leading-tight">
+              Анна, давай узнаем, кто ты в системе Таро?
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              Пройди короткий тест, чтобы узнать свой архетип<br />
+              и понять, как тебя воспринимают другие.
+            </p>
+          </div>
+
+          {/* CTA Button */}
+          <div className="animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+            <Button 
+              variant="mystic" 
+              size="xl" 
+              className="w-full font-semibold"
+            >
+              🧿 Узнать свой архетип
+            </Button>
+          </div>
+
+          {/* Benefits Cards */}
+          <div className="space-y-6 pt-4">
+            <BenefitCard
+              icon="🌿"
+              title="Личность"
+              description="Узнай свой архетип в системе Таро — твои сильные стороны, точки роста и жизненный урок, который ты проходишь сейчас."
+              delay={400}
+            />
+            
+            <BenefitCard
+              icon="👁"
+              title="Взгляд со стороны"
+              description="Посмотри, как тебя видят друзья через призму архетипов Таро — и насколько их мнение совпадает с твоим."
+              delay={600}
+            />
+            
+            <BenefitCard
+              icon="✨"
+              title="Инсайты от близких"
+              description="Получай анонимные инсайты от друзей — что в тебе сильнее всего и над чем, по их мнению, стоит поработать."
+              delay={800}
+            />
+          </div>
+
+          {/* Footer Text */}
+          <p className="text-center text-sm text-muted-foreground/70 pt-4 animate-fade-in-up" style={{ animationDelay: '1000ms' }}>
+            Займёт всего пару минут. А польза — на годы.
+          </p>
+        </div>
+      </main>
     </div>
   );
 };
