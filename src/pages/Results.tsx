@@ -42,16 +42,16 @@ const Results = () => {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-[#0a0a0f]">
       <MysticBackground />
       
-      <main className="relative z-10 container max-w-4xl mx-auto px-4 py-8 md:py-12 space-y-6">
+      <main className="relative z-10 container max-w-4xl mx-auto px-4 py-8 md:py-12 space-y-5">
         {/* Block 1: Мини-профиль архетипа (2 колонки) */}
         <section className="animate-fade-in">
-          <div className="bg-card/20 backdrop-blur-sm border border-border/5 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_hsl(var(--primary)/0.12)]">
+          <div className="bg-[#1a1a2e]/60 backdrop-blur-md border border-primary/10 rounded-[28px] p-6 md:p-8 shadow-[0_0_60px_rgba(139,92,246,0.15)]">
             <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start">
               {/* Tarot Card - cropped top */}
-              <div className="flex-shrink-0 rounded-2xl overflow-hidden shadow-[0_0_50px_hsl(var(--primary)/0.25),0_0_30px_hsl(var(--primary)/0.15)] ring-1 ring-primary/20">
+              <div className="flex-shrink-0 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(139,92,246,0.3)] ring-1 ring-primary/30">
                 <img 
                   src={archetype.imageUrl} 
                   alt={archetype.name}
@@ -62,7 +62,7 @@ const Results = () => {
               
               {/* Text Content */}
               <div className="flex-1 text-center md:text-left">
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
                   Мой архетип: {archetype.name}
                 </h2>
                 
@@ -70,7 +70,7 @@ const Results = () => {
                   {archetype.subtitle}
                 </p>
                 
-                <p className="text-sm md:text-base text-foreground/70 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-300 leading-relaxed">
                   {archetype.description}
                 </p>
               </div>
@@ -80,28 +80,28 @@ const Results = () => {
 
         {/* Block 2: Пригласи друзей */}
         <section className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="bg-card/20 backdrop-blur-sm border border-border/5 rounded-3xl p-6 md:p-8 shadow-[0_0_30px_hsl(var(--primary)/0.08)]">
-            <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">
+          <div className="bg-[#1a1a2e]/60 backdrop-blur-md border border-primary/10 rounded-[28px] p-6 md:p-8 shadow-[0_0_60px_rgba(139,92,246,0.15)]">
+            <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
               Поделись с друзьями
             </h2>
             
-            <p className="text-sm md:text-base text-muted-foreground mb-6">
+            <p className="text-sm md:text-base text-gray-400 mb-6">
               Отправь ссылку друзьям, чтобы они ответили на те же вопросы о тебе
             </p>
 
             {/* What You'll Unlock */}
-            <div className="bg-card/30 backdrop-blur-sm border border-primary/20 rounded-2xl p-5 md:p-6 mb-6 shadow-[0_0_25px_hsl(var(--primary)/0.15)]">
+            <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-5 md:p-6 mb-6 shadow-[0_0_40px_rgba(139,92,246,0.2)]">
               <div className="flex gap-4">
-                <div className="flex-shrink-0 text-xl opacity-60">
+                <div className="flex-shrink-0 text-xl opacity-50">
                   🔒
                 </div>
                 
                 <div className="flex-1">
-                  <p className="text-sm md:text-base text-muted-foreground/70 font-medium mb-3">
+                  <p className="text-sm md:text-base text-gray-400 font-medium mb-3">
                     После 3 ответов ты увидишь:
                   </p>
                   
-                  <div className="space-y-2 text-sm md:text-base text-muted-foreground/80">
+                  <div className="space-y-2 text-sm md:text-base text-gray-300">
                     <p className="flex items-center gap-2">
                       <span>🪐</span>
                       <span>Полное описание архетипа</span>
@@ -121,16 +121,16 @@ const Results = () => {
 
             {/* Progress */}
             <div className="mb-6">
-              <p className="text-base md:text-lg font-semibold text-foreground mb-4">
+              <p className="text-base md:text-lg font-semibold text-white mb-4">
                 Ответили: {friendsCount} / {maxFriends} друзей
               </p>
 
               <div className="flex justify-start mb-4">
-                <div className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30 rounded-full px-6 py-2 shadow-[0_0_30px_hsl(var(--primary)/0.2)]">
+                <div className="inline-flex items-center gap-2 bg-primary/20 border border-primary/40 rounded-full px-6 py-2 shadow-[0_0_35px_rgba(139,92,246,0.3)]">
                   <span className="text-2xl md:text-3xl font-bold text-primary">
                     {friendsCount}
                   </span>
-                  <span className="text-lg md:text-xl text-muted-foreground/80">
+                  <span className="text-lg md:text-xl text-gray-400">
                     / {maxFriends}
                   </span>
                 </div>
@@ -141,7 +141,7 @@ const Results = () => {
             <Button
               onClick={handleCopyLink}
               size="lg"
-              className="w-full md:w-auto bg-gradient-to-r from-primary/30 to-primary/20 hover:from-primary/40 hover:to-primary/30 text-white border border-primary/50 backdrop-blur-sm shadow-[0_0_35px_hsl(var(--primary)/0.3)] hover:shadow-[0_0_45px_hsl(var(--primary)/0.4)] transition-all font-medium px-8 rounded-full"
+              className="w-full md:w-auto bg-gradient-to-r from-primary/40 to-primary/30 hover:from-primary/50 hover:to-primary/40 text-white border border-primary/60 backdrop-blur-sm shadow-[0_0_40px_rgba(139,92,246,0.4)] hover:shadow-[0_0_50px_rgba(139,92,246,0.5)] transition-all font-medium px-8 rounded-full"
             >
               <Copy className="mr-2 h-5 w-5" />
               Скопировать ссылку
@@ -151,17 +151,17 @@ const Results = () => {
 
         {/* Block 3: Полное описание архетипа */}
         <section className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="bg-card/20 backdrop-blur-sm border border-border/5 rounded-3xl p-6 md:p-8 shadow-[0_0_30px_hsl(var(--primary)/0.08)]">
+          <div className="bg-[#1a1a2e]/60 backdrop-blur-md border border-primary/10 rounded-[28px] p-6 md:p-8 shadow-[0_0_60px_rgba(139,92,246,0.15)]">
             <div className="flex items-start gap-4 mb-4">
-              <div className="flex-shrink-0 text-2xl opacity-50">
+              <div className="flex-shrink-0 text-xl opacity-40">
                 🔒
               </div>
-              <h2 className="text-xl md:text-2xl font-bold text-foreground">
+              <h2 className="text-xl md:text-2xl font-bold text-white">
                 Сила твоего архетипа
               </h2>
             </div>
             
-            <p className="text-sm md:text-base text-muted-foreground/70 leading-relaxed">
+            <p className="text-sm md:text-base text-gray-400 leading-relaxed">
               Здесь появится подробное описание твоего архетипа — сильные стороны, точки роста и жизненный урок, который ты проходишь сейчас.
               Откроется после того, как 3 друга пройдут тест о тебе.
             </p>
@@ -170,23 +170,23 @@ const Results = () => {
 
         {/* Block 4: Инсайты от друзей */}
         <section className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
-          <div className="bg-card/20 backdrop-blur-sm border border-border/5 rounded-3xl p-6 md:p-8 shadow-[0_0_30px_hsl(var(--primary)/0.08)]">
+          <div className="bg-[#1a1a2e]/60 backdrop-blur-md border border-primary/10 rounded-[28px] p-6 md:p-8 shadow-[0_0_60px_rgba(139,92,246,0.15)]">
             <div className="flex items-start gap-4 mb-4">
-              <div className="flex-shrink-0 text-2xl opacity-50">
+              <div className="flex-shrink-0 text-xl opacity-40">
                 💬
               </div>
-              <h2 className="text-xl md:text-2xl font-bold text-foreground">
+              <h2 className="text-xl md:text-2xl font-bold text-white">
                 Как тебя видят другие
               </h2>
             </div>
             
-            <p className="text-sm md:text-base text-muted-foreground/70 leading-relaxed mb-4">
+            <p className="text-sm md:text-base text-gray-400 leading-relaxed mb-4">
               Здесь появятся комментарии друзей и их взгляд на твои качества.
               Это поможет тебе увидеть себя со стороны.
             </p>
             
-            <div className="bg-card/30 backdrop-blur-sm border border-border/5 rounded-xl p-4 text-center">
-              <p className="text-sm text-muted-foreground/60 italic">
+            <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-4 text-center">
+              <p className="text-sm text-gray-500 italic">
                 Инсайты появятся здесь после 3 ответов
               </p>
             </div>
