@@ -42,17 +42,16 @@ const ArchetypeUnlocked = () => {
   
   const state = location.state as LocationState;
 
-  useEffect(() => {
-    if (!state || !state.result) {
-      navigate("/");
-    }
-  }, [state, navigate]);
-
-  if (!state || !state.result) {
-    return null;
-  }
-
-  const archetype = archetypeData[state.result];
+  // For preview/testing: use default archetype if no state
+  const archetypeId = state?.result || "empress";
+  const archetype = archetypeData[archetypeId];
+  
+  // Friend archetypes tags (mock data)
+  const friendArchetypes = [
+    { emoji: "🧙", name: "Жрица" },
+    { emoji: "👑", name: "Император" },
+    { emoji: "🎭", name: "Влюблённые" }
+  ];
 
   const handleCopyLink = () => {
     const link = window.location.origin;
@@ -259,11 +258,33 @@ const ArchetypeUnlocked = () => {
               <div className="flex-shrink-0 text-2xl">
                 💬
               </div>
-              <h2 className="text-xl md:text-2xl font-bold text-white">
-                Как тебя видят другие
-              </h2>
+              <div className="flex-1">
+                <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
+                  Как тебя видят другие
+                </h2>
+                <p className="text-sm md:text-base text-gray-400">
+                  Архетипы, которые выбрали твои друзья
+                </p>
+              </div>
             </div>
             
+            {/* Friend Archetypes Tags */}
+            <div className="mb-8">
+              <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                {friendArchetypes.map((friendArchetype, index) => (
+                  <div
+                    key={index}
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 rounded-full px-4 py-2 shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all"
+                  >
+                    <span className="text-lg">{friendArchetype.emoji}</span>
+                    <span className="text-sm md:text-base font-medium text-white">
+                      {friendArchetype.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Compatibility Progress */}
             <div className="mb-8 space-y-3">
               <div className="flex justify-between items-center">
