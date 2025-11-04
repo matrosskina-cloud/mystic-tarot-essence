@@ -1,4 +1,5 @@
 export interface ArchetypeData {
+  id: string;
   name: string;
   subtitle: string;
   description: string;
@@ -6,52 +7,60 @@ export interface ArchetypeData {
 }
 
 export const archetypeData: Record<string, ArchetypeData> = {
-  "Влюблённые": {
+  "lovers": {
+    id: "lovers",
     name: "Влюблённые",
-    subtitle: "Связь, выбор и гармония",
-    description: "Ты живёшь отношениями и связью с миром. Умеешь выбирать и находить баланс между разными частями себя. Сила — в объединении и принятии.",
+    subtitle: "Энергия сердца и выбора",
+    description: "Твоя сила — в близости, умении любить и быть рядом. Ты стремишься к гармонии и часто стоишь перед важными решениями, идущими от души.",
     imageUrl: "https://afqxhqbtvlnsihkrwbfi.supabase.co/storage/v1/object/public/Public%20storage/tarot_78/lovers.jpg"
   },
-  "Император": {
+  "emperor": {
+    id: "emperor",
     name: "Император",
-    subtitle: "Сила, структура и воля",
-    description: "Ты строишь свой мир, опираясь на волю и уверенность. Умеешь организовывать и вести за собой. Сила — в чёткости, решительности и порядке.",
+    subtitle: "Сила структуры и контроля",
+    description: "Ты опора и лидер. Любишь ясность, порядок и умеешь добиваться своего. Иногда тебе стоит смягчить давление и довериться ходу событий.",
     imageUrl: "https://afqxhqbtvlnsihkrwbfi.supabase.co/storage/v1/object/public/Public%20storage/tarot_78/emperor.jpg"
   },
-  "Императрица": {
+  "empress": {
+    id: "empress",
     name: "Императрица",
-    subtitle: "Любовь, забота и изобилие",
-    description: "Ты создаёшь уют и поддержку вокруг себя. Умеешь дарить тепло и замечать красоту. Сила — в заботе, чувственности и способности взращивать.",
+    subtitle: "Забота, изобилие, творчество",
+    description: "Ты даришь тепло, уют и ресурсы другим. Обладаешь природной щедростью и умеешь взращивать идеи и людей. Помни заботиться и о себе.",
     imageUrl: "https://afqxhqbtvlnsihkrwbfi.supabase.co/storage/v1/object/public/Public%20storage/tarot_78/empress.jpg"
   },
-  "Маг": {
+  "magician": {
+    id: "magician",
     name: "Маг",
-    subtitle: "Действие, креативность и фокус",
-    description: "Ты умеешь воплощать задуманное в реальность. Используешь все свои ресурсы для достижения целей. Сила — в концентрации, творчестве и новизне.",
+    subtitle: "Энергия действия и проявления",
+    description: "Ты создаёшь реальность через силу воли и идей. Уверенность, изобретательность и смелость — твои дары. Главное — не забывай об ответственности.",
     imageUrl: "https://afqxhqbtvlnsihkrwbfi.supabase.co/storage/v1/object/public/Public%20storage/tarot_78/magician.jpg"
   },
-  "Жрица": {
+  "priestess": {
+    id: "priestess",
     name: "Жрица",
     subtitle: "Интуиция, тайны и глубина",
     description: "Ты живёшь в ритме внутреннего мира. Видишь больше, чем другие, и чувствуешь скрытые смыслы. Сила — в тишине, мудрости и доверии к себе.",
     imageUrl: "https://afqxhqbtvlnsihkrwbfi.supabase.co/storage/v1/object/public/Public%20storage/tarot_78/high_priestess.jpg"
   },
-  "Шут": {
+  "fool": {
+    id: "fool",
     name: "Шут",
-    subtitle: "Игра, свобода и исследование",
-    description: "Ты идёшь своим путём, не боясь быть собой. Видишь возможности там, где другие видят риск. Сила — в спонтанности, лёгкости и открытости новому.",
+    subtitle: "Свобода, лёгкость и обновление",
+    description: "Ты идёшь по жизни с открытым сердцем. Риск, игра и исследование — твоя стихия. Главное — помнить об опоре и намерении в пути.",
     imageUrl: "https://afqxhqbtvlnsihkrwbfi.supabase.co/storage/v1/object/public/Public%20storage/tarot_78/the_fool.jpg"
   },
-  "Смерть": {
+  "death": {
+    id: "death",
     name: "Смерть",
-    subtitle: "Трансформация, отпускание и обновление",
-    description: "Ты умеешь проходить через кризисы и выходить обновлённым. Не боишься перемен и готов отпускать старое. Сила — в трансформации и глубине.",
+    subtitle: "Завершение, рост, перерождение",
+    description: "Ты не боишься перемен. Проживаешь трансформации глубоко, помогая себе и другим отпустить старое. Ты — символ начала нового.",
     imageUrl: "https://afqxhqbtvlnsihkrwbfi.supabase.co/storage/v1/object/public/Public%20storage/tarot_78/death.jpg"
   },
-  "Отшельник": {
+  "hermit": {
+    id: "hermit",
     name: "Отшельник",
-    subtitle: "Внутренний поиск и мудрость",
-    description: "Ты ищешь ответы внутри себя. Ценишь уединение и глубокое понимание. Сила — в самопознании, внутренней ясности и терпении.",
+    subtitle: "Путь внутрь себя",
+    description: "Твоя сила — в уединении и созерцании. Ты ищешь истины и не боишься одиночества. Помни — твой свет важен и для других.",
     imageUrl: "https://afqxhqbtvlnsihkrwbfi.supabase.co/storage/v1/object/public/Public%20storage/tarot_78/hermit.jpg"
   }
 };

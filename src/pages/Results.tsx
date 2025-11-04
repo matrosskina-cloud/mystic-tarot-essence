@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { MysticBackground } from "@/components/MysticBackground";
 import { Button } from "@/components/ui/button";
-import { Copy, Lock } from "lucide-react";
+import { Copy } from "lucide-react";
 import { archetypeData } from "@/data/archetypeData";
 import { useToast } from "@/hooks/use-toast";
 
@@ -16,6 +16,7 @@ const Results = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [friendsCount] = useState(0);
+  const maxFriends = 3;
   
   const state = location.state as LocationState;
 
@@ -47,89 +48,98 @@ const Results = () => {
       <main className="relative z-10 container max-w-2xl mx-auto px-4 py-8 md:py-12">
         {/* Header */}
         <div className="text-center mb-8 md:mb-12 animate-fade-in">
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-xl md:text-2xl text-foreground/80 mb-3">
             Твой архетип в системе Таро —
           </h1>
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
+          <h2 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent mb-2">
             {archetype.name}
           </h2>
         </div>
 
         {/* Archetype Card */}
-        <div className="mb-8 md:mb-12 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="bg-card/25 backdrop-blur-sm border border-border/5 rounded-2xl p-6 md:p-8 shadow-[0_0_40px_hsl(var(--primary)/0.15),0_0_80px_hsl(var(--primary)/0.08),inset_0_0_60px_hsl(var(--primary)/0.05)]">
+        <div className="mb-8 md:mb-10 animate-fade-in" style={{ animationDelay: "0.15s" }}>
+          <div className="bg-card/20 backdrop-blur-sm border border-border/5 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_hsl(var(--primary)/0.12),0_0_80px_hsl(var(--primary)/0.06)]">
             <div className="flex flex-col items-center">
-              <div className="mb-6 rounded-xl overflow-hidden shadow-[0_0_40px_hsl(var(--primary)/0.3),0_0_60px_hsl(var(--primary)/0.15)]">
+              {/* Card Image */}
+              <div className="mb-6 rounded-2xl overflow-hidden shadow-[0_0_50px_hsl(var(--primary)/0.25),0_0_80px_hsl(var(--primary)/0.12)] ring-1 ring-primary/10">
                 <img 
                   src={archetype.imageUrl} 
                   alt={archetype.name}
-                  className="w-48 h-72 md:w-64 md:h-96 object-cover"
+                  className="w-52 h-80 md:w-64 md:h-96 object-cover"
                 />
               </div>
               
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-                {archetype.name}
-              </h3>
-              
-              <p className="text-lg md:text-xl text-muted-foreground italic mb-4 text-center">
+              {/* Subtitle */}
+              <p className="text-base md:text-lg text-primary/90 font-medium mb-4 text-center">
                 {archetype.subtitle}
               </p>
               
-              <p className="text-base md:text-lg text-foreground/80 text-center leading-relaxed">
+              {/* Description */}
+              <p className="text-sm md:text-base text-foreground/70 text-center leading-relaxed max-w-lg">
                 {archetype.description}
               </p>
             </div>
           </div>
         </div>
 
-        {/* Statistics */}
-        <div className="mb-8 md:mb-12 animate-fade-in" style={{ animationDelay: "0.4s" }}>
-          <div className="bg-card/20 backdrop-blur-sm border border-border/5 rounded-xl p-6 text-center">
-            <p className="text-lg md:text-xl text-foreground mb-2">
-              Ответили: <span className="font-bold">{friendsCount} друзей</span>
-            </p>
-            <p className="text-sm md:text-base text-muted-foreground">
-              Открой полное описание архетипа и узнай, как тебя видят другие — после{" "}
-              <span className="text-primary font-semibold shadow-[0_0_15px_hsl(var(--primary)/0.4)]">
-                3 ответов от друзей
-              </span>
-            </p>
-          </div>
-        </div>
-
-        {/* Share Block */}
-        <div className="mb-8 md:mb-12 animate-fade-in" style={{ animationDelay: "0.6s" }}>
-          <div className="bg-card/20 backdrop-blur-sm border border-border/5 rounded-xl p-6 text-center shadow-[0_0_20px_hsl(var(--primary)/0.1)]">
-            <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
-              Поделись с друзьями
+        {/* Unlock Section */}
+        <div className="mb-6 md:mb-8 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          <div className="bg-card/15 backdrop-blur-sm border border-border/5 rounded-2xl p-6 md:p-7 shadow-[0_0_30px_hsl(var(--primary)/0.08)]">
+            <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3 text-center">
+              Открой глубже свой архетип
             </h3>
-            <p className="text-sm md:text-base text-muted-foreground mb-4">
-              Скопируй ссылку и отправь её, чтобы узнать, как тебя воспринимают другие
+            
+            <p className="text-sm md:text-base text-muted-foreground text-center mb-4">
+              Пригласи 3 друзей, чтобы увидеть, как они тебя воспринимают
             </p>
-            <Button
-              onClick={handleCopyLink}
-              size="lg"
-              className="bg-primary/20 hover:bg-primary/30 text-primary border border-primary/30 backdrop-blur-sm shadow-[0_0_20px_hsl(var(--primary)/0.2)] hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)] transition-all"
-            >
-              <Copy className="mr-2 h-4 w-4" />
-              Скопировать ссылку
-            </Button>
+
+            {/* Progress Badge */}
+            <div className="flex justify-center mb-5">
+              <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-5 py-2 shadow-[0_0_20px_hsl(var(--primary)/0.15)]">
+                <span className="text-2xl md:text-3xl font-bold text-primary">
+                  {friendsCount}
+                </span>
+                <span className="text-lg md:text-xl text-muted-foreground">
+                  / {maxFriends} друзей
+                </span>
+              </div>
+            </div>
+
+            {/* Copy Button */}
+            <div className="flex justify-center">
+              <Button
+                onClick={handleCopyLink}
+                size="lg"
+                className="bg-primary/20 hover:bg-primary/30 text-white border border-primary/40 backdrop-blur-sm shadow-[0_0_30px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_40px_hsl(var(--primary)/0.35)] transition-all font-medium px-8"
+              >
+                <Copy className="mr-2 h-5 w-5" />
+                Скопировать ссылку
+              </Button>
+            </div>
           </div>
         </div>
 
-        {/* Locked Content */}
-        <div className="animate-fade-in" style={{ animationDelay: "0.8s" }}>
-          <div className="bg-card/15 backdrop-blur-sm border border-border/5 rounded-xl p-6 md:p-8 opacity-60">
-            <div className="flex flex-col items-center text-center">
-              <Lock className="w-12 h-12 md:w-16 md:h-16 text-muted-foreground mb-4" />
-              <p className="text-base md:text-lg text-muted-foreground mb-4">
+        {/* What You'll Unlock */}
+        <div className="animate-fade-in" style={{ animationDelay: "0.45s" }}>
+          <div className="bg-card/10 backdrop-blur-sm border border-border/5 rounded-2xl p-6 md:p-7 opacity-70">
+            <div className="text-center space-y-3">
+              <p className="text-base md:text-lg text-muted-foreground font-medium mb-4">
                 После 3 ответов ты увидишь:
               </p>
-              <ul className="text-sm md:text-base text-muted-foreground space-y-2">
-                <li>💫 Полное описание архетипа</li>
-                <li>🧭 Инсайты от друзей</li>
-                <li>🔄 Совпадение ваших ответов</li>
-              </ul>
+              <div className="space-y-2.5 text-sm md:text-base text-muted-foreground">
+                <p className="flex items-center justify-center gap-2">
+                  <span className="text-lg">💫</span>
+                  <span>Полное описание архетипа</span>
+                </p>
+                <p className="flex items-center justify-center gap-2">
+                  <span className="text-lg">🧭</span>
+                  <span>Инсайты от друзей</span>
+                </p>
+                <p className="flex items-center justify-center gap-2">
+                  <span className="text-lg">🔄</span>
+                  <span>Совпадение ваших ответов</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>

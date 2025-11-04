@@ -23,14 +23,14 @@ const Quiz = () => {
 
   const calculateResults = (finalAnswers: Record<number, number>): QuizResult => {
     const archetypeScores: ArchetypeScores = {
-      "Императрица": 0,
-      "Император": 0,
-      "Маг": 0,
-      "Жрица": 0,
-      "Шут": 0,
-      "Смерть": 0,
-      "Влюблённые": 0,
-      "Отшельник": 0
+      "empress": 0,
+      "emperor": 0,
+      "magician": 0,
+      "priestess": 0,
+      "fool": 0,
+      "death": 0,
+      "lovers": 0,
+      "hermit": 0
     };
 
     // Count scores for each archetype
@@ -46,7 +46,7 @@ const Quiz = () => {
 
     // Find the archetype with the highest score
     let maxScore = 0;
-    let resultArchetype = "Императрица";
+    let resultArchetype = "empress";
 
     Object.entries(archetypeScores).forEach(([archetype, score]) => {
       if (score > maxScore) {
