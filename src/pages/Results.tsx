@@ -82,57 +82,73 @@ const Results = () => {
         <section className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
           <div className="bg-[#1a1a2e]/60 backdrop-blur-md border border-primary/10 rounded-[28px] p-6 md:p-8 shadow-[0_0_60px_rgba(139,92,246,0.15)]">
             <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
-              Поделись с друзьями
+              Открой больше о себе с помощью друзей
             </h2>
             
             <p className="text-sm md:text-base text-gray-400 mb-6">
-              Отправь ссылку друзьям, чтобы они ответили на те же вопросы о тебе
+              Пригласи друзей пройти тест о тебе — это разблокирует дополнительные инсайты
             </p>
 
-            {/* What You'll Unlock */}
-            <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-5 md:p-6 mb-6 shadow-[0_0_40px_rgba(139,92,246,0.2)]">
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 text-xl opacity-50">
-                  🔒
-                </div>
-                
-                <div className="flex-1">
-                  <p className="text-sm md:text-base text-gray-400 font-medium mb-3">
-                    После 3 ответов ты увидишь:
-                  </p>
-                  
-                  <div className="space-y-2 text-sm md:text-base text-gray-300">
-                    <p className="flex items-center gap-2">
-                      <span>🪐</span>
-                      <span>Полное описание архетипа</span>
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <span>📌</span>
-                      <span>Инсайты от друзей</span>
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <span>🎭</span>
-                      <span>Совпадение ваших ответов</span>
-                    </p>
-                  </div>
-                </div>
+            {/* Bonus Tiles */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              {/* Tile 1 */}
+              <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-5 shadow-[0_0_40px_rgba(139,92,246,0.2)]">
+                <div className="text-3xl mb-3">📖</div>
+                <h3 className="text-base md:text-lg font-bold text-white mb-2">
+                  Полное описание архетипа
+                </h3>
+                <p className="text-sm text-gray-400">
+                  Расширенная трактовка, сильные стороны, точки роста и жизненные уроки
+                </p>
+              </div>
+
+              {/* Tile 2 */}
+              <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-5 shadow-[0_0_40px_rgba(139,92,246,0.2)]">
+                <div className="text-3xl mb-3">🔍</div>
+                <h3 className="text-base md:text-lg font-bold text-white mb-2">
+                  Инсайты от друзей
+                </h3>
+                <p className="text-sm text-gray-400">
+                  Что о тебе думают близкие — в коротких заметках
+                </p>
+              </div>
+
+              {/* Tile 3 */}
+              <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-5 shadow-[0_0_40px_rgba(139,92,246,0.2)]">
+                <div className="text-3xl mb-3">🎭</div>
+                <h3 className="text-base md:text-lg font-bold text-white mb-2">
+                  Совпадение ваших ответов
+                </h3>
+                <p className="text-sm text-gray-400">
+                  Где вы совпали в восприятии, а где — нет
+                </p>
+              </div>
+
+              {/* Tile 4 */}
+              <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-5 shadow-[0_0_40px_rgba(139,92,246,0.2)]">
+                <div className="text-3xl mb-3">🧿</div>
+                <h3 className="text-base md:text-lg font-bold text-white mb-2">
+                  Внешний архетип
+                </h3>
+                <p className="text-sm text-gray-400">
+                  Архетип, который чаще всего выбирают друзья — как они тебя видят
+                </p>
               </div>
             </div>
 
-            {/* Progress */}
-            <div className="mb-6">
-              <p className="text-base md:text-lg font-semibold text-white mb-4">
-                Ответили: {friendsCount} / {maxFriends} друзей
-              </p>
-
-              <div className="flex justify-start mb-4">
-                <div className="inline-flex items-center gap-2 bg-primary/20 border border-primary/40 rounded-full px-6 py-2 shadow-[0_0_35px_rgba(139,92,246,0.3)]">
-                  <span className="text-2xl md:text-3xl font-bold text-primary">
-                    {friendsCount}
-                  </span>
-                  <span className="text-lg md:text-xl text-gray-400">
-                    / {maxFriends}
-                  </span>
+            {/* Progress Block */}
+            <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-[20px] p-5 mb-6">
+              <div className="flex flex-wrap gap-3 items-center justify-center md:justify-start">
+                <div className="inline-flex items-center gap-2 bg-[#0f0f1a]/80 border border-primary/40 rounded-full px-5 py-2 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+                  <span className="text-sm text-gray-400">Ответили:</span>
+                  <span className="text-xl font-bold text-primary">{friendsCount}</span>
+                  <span className="text-sm text-gray-400">/ {maxFriends} друзей</span>
+                </div>
+                
+                <div className="inline-flex items-center gap-2 bg-[#0f0f1a]/80 border border-primary/40 rounded-full px-5 py-2 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+                  <span className="text-sm text-gray-400">Приглашено:</span>
+                  <span className="text-xl font-bold text-primary">0</span>
+                  <span className="text-sm text-gray-400">друзей</span>
                 </div>
               </div>
             </div>
