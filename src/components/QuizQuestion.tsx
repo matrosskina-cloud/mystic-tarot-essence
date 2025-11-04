@@ -24,8 +24,12 @@ export const QuizQuestionComponent = ({
   const progress = (question.question_number / totalQuestions) * 100;
 
   return (
-    <div className="relative min-h-screen flex flex-col px-4 sm:px-6 py-6 sm:py-8 bg-[#0a0a0f]">
-      <div className="w-full max-w-2xl mx-auto flex flex-col space-y-4 sm:space-y-6 max-h-[70vh] mt-[10vh] sm:mt-[12vh] animate-fade-in">
+    <div className="relative min-h-screen flex flex-col px-4 sm:px-6 pt-6 sm:pt-8 pb-6 sm:pb-8">
+      <div className="w-full max-w-2xl mx-auto flex flex-col space-y-4 sm:space-y-6 animate-fade-in">
+        {/* Title */}
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-foreground mb-2 sm:mb-4" style={{ marginTop: 'max(16px, env(safe-area-inset-top))' }}>
+          Пройди тест и узнай свой Архетип
+        </h1>
         {/* Progress Section */}
         <div className="space-y-2 sm:space-y-3">
           <div className="flex justify-between items-center px-1">

@@ -98,7 +98,7 @@ const Quiz = () => {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#0a0a0f]">
+    <div className="relative min-h-screen overflow-hidden">
       <MysticBackground />
       
       <main className="relative z-10">
