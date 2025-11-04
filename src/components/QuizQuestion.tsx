@@ -71,10 +71,10 @@ export const QuizQuestionComponent = ({
               <button
                 key={index}
                 onClick={() => onSelectOption(index)}
-                className={`w-full p-4 rounded-2xl text-left transition-all duration-300 ${
+                className={`w-full p-4 rounded-2xl text-left transition-all duration-300 border-2 ${
                   selectedOption === index
-                    ? "bg-primary/20 border-2 border-primary shadow-[0_0_20px_hsl(var(--primary)/0.4)] scale-[1.02]"
-                    : "bg-muted/30 border border-border/30 hover:bg-muted/50 hover:border-primary/30 hover:shadow-[0_0_15px_hsl(var(--primary)/0.2)]"
+                    ? "bg-card/60 border-primary shadow-[0_0_20px_hsl(var(--primary)/0.5),0_4px_12px_hsl(var(--primary)/0.3)] scale-[1.02]"
+                    : "bg-card/20 border-transparent hover:border-primary/40 hover:shadow-[0_0_15px_hsl(var(--primary)/0.25)]"
                 }`}
               >
                 <span className="text-base text-foreground font-medium">
