@@ -85,9 +85,8 @@ const Quiz = () => {
       const results = calculateResults(updatedAnswers);
       console.log("Test completed!", results);
       
-      // TODO: Navigate to results page with results data
-      // navigate("/results", { state: { results } });
-      navigate("/");
+      // Navigate to results page with results data
+      navigate("/results", { state: { results } });
     }
   };
 
