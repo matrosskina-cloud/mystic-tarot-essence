@@ -40,7 +40,7 @@ export const QuizQuestionComponent = ({
         </div>
 
         {/* Question Card */}
-        <div className="bg-card/30 backdrop-blur-sm border border-border/10 rounded-3xl p-10 shadow-[0_0_40px_hsl(var(--primary)/0.15),0_0_80px_hsl(var(--primary)/0.08),inset_0_0_60px_hsl(var(--primary)/0.05)]">
+        <div className="bg-card/25 backdrop-blur-sm border border-border/5 rounded-3xl p-10 shadow-[0_0_40px_hsl(var(--primary)/0.15),0_0_80px_hsl(var(--primary)/0.08),inset_0_0_60px_hsl(var(--primary)/0.05)]">
           <h2 className="text-2xl font-normal text-foreground mb-10 leading-relaxed">
             {question.question_text}
           </h2>
@@ -51,11 +51,11 @@ export const QuizQuestionComponent = ({
               <button
                 key={index}
                 onClick={() => onSelectOption(index)}
-                className={`w-full p-5 rounded-2xl text-left transition-all duration-200 border ${
+                className={`w-full p-5 rounded-2xl text-left transition-all duration-200 ${
                   selectedOption === index
-                    ? "bg-card/40 border-primary/20 shadow-[0_0_25px_hsl(var(--primary)/0.3),0_0_40px_hsl(var(--primary)/0.15),inset_0_0_30px_hsl(var(--primary)/0.08)]"
-                    : "bg-card/20 border-border/10 hover:border-primary/15 hover:bg-card/30 hover:shadow-[0_0_20px_hsl(var(--primary)/0.2),inset_0_0_20px_hsl(var(--primary)/0.05)]"
-                } shadow-[0_0_15px_hsl(var(--primary)/0.08)]`}
+                    ? "bg-card/30 border-2 border-white/80 shadow-[0_0_25px_hsl(var(--primary)/0.3),0_0_40px_hsl(var(--primary)/0.15),inset_0_0_30px_hsl(var(--primary)/0.08)]"
+                    : "bg-card/20 border-2 border-transparent hover:border-white/60 hover:bg-card/25 shadow-[0_0_20px_hsl(var(--primary)/0.12),inset_0_0_25px_hsl(var(--primary)/0.06)]"
+                }`}
               >
                 <span className="text-base text-foreground/90 font-normal leading-relaxed">
                   {option.text}
