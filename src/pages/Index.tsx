@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { BenefitCard } from "@/components/BenefitCard";
 import { MysticBackground } from "@/components/MysticBackground";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       <MysticBackground />
@@ -26,6 +29,7 @@ const Index = () => {
               variant="mystic" 
               size="xl" 
               className="w-full font-semibold"
+              onClick={() => navigate('/quiz')}
             >
               🧿 Узнать свой архетип
             </Button>

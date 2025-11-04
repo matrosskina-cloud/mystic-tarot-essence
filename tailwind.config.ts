@@ -88,6 +88,11 @@ export default {
           from: { opacity: "0", transform: "translateY(20px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        "card-drop": {
+          "0%": { opacity: "0", transform: "translateY(-100px) scale(0.8)" },
+          "50%": { opacity: "1", transform: "translateY(20px) scale(1.1)" },
+          "100%": { opacity: "0", transform: "translateY(100px) scale(0.9)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -96,6 +101,7 @@ export default {
         float: "float 3s ease-in-out infinite",
         "glow-pulse": "glow-pulse 2s ease-in-out infinite",
         "fade-in-up": "fade-in-up 0.6s ease-out forwards",
+        "card-drop": "card-drop 0.6s ease-out forwards",
       },
     },
   },
