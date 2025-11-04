@@ -25,7 +25,7 @@ export const QuizQuestionComponent = ({
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center px-6 py-8">
-      <div className="w-full max-w-2xl space-y-8">
+      <div className="w-full max-w-lg space-y-8">
         {/* Progress Section */}
         <div className="space-y-3">
           <div className="flex justify-between items-center px-1">
@@ -40,7 +40,7 @@ export const QuizQuestionComponent = ({
         </div>
 
         {/* Question Card */}
-        <div className="bg-card/30 backdrop-blur-sm border border-border/30 rounded-3xl p-10">
+        <div className="bg-card/30 backdrop-blur-sm border border-border/10 rounded-3xl p-10 shadow-[0_0_40px_hsl(var(--primary)/0.15),0_0_80px_hsl(var(--primary)/0.08),inset_0_0_60px_hsl(var(--primary)/0.05)]">
           <h2 className="text-2xl font-normal text-foreground mb-10 leading-relaxed">
             {question.question_text}
           </h2>
@@ -53,9 +53,9 @@ export const QuizQuestionComponent = ({
                 onClick={() => onSelectOption(index)}
                 className={`w-full p-5 rounded-2xl text-left transition-all duration-200 border ${
                   selectedOption === index
-                    ? "bg-card/40 border-primary/60 shadow-[0_0_0_1px_hsl(var(--primary)/0.3)]"
-                    : "bg-card/20 border-border/20 hover:border-primary/30 hover:bg-card/30"
-                }`}
+                    ? "bg-card/40 border-primary/20 shadow-[0_0_25px_hsl(var(--primary)/0.3),0_0_40px_hsl(var(--primary)/0.15),inset_0_0_30px_hsl(var(--primary)/0.08)]"
+                    : "bg-card/20 border-border/10 hover:border-primary/15 hover:bg-card/30 hover:shadow-[0_0_20px_hsl(var(--primary)/0.2),inset_0_0_20px_hsl(var(--primary)/0.05)]"
+                } shadow-[0_0_15px_hsl(var(--primary)/0.08)]`}
               >
                 <span className="text-base text-foreground/90 font-normal leading-relaxed">
                   {option.text}
