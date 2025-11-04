@@ -38,9 +38,11 @@ export const QuizQuestionComponent = ({
     <div className="relative min-h-screen flex flex-col items-center justify-center px-6 py-8">
       {/* Card Animation Overlay */}
       {showCardAnimation && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 pointer-events-none">
+        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
           <div className="animate-card-drop">
-            <div className="w-20 h-28 bg-gradient-to-br from-primary/30 to-accent/30 rounded-lg border border-primary/50 shadow-[0_0_30px_hsl(var(--primary)/0.6)]" />
+            <div className="w-20 h-28 bg-gradient-to-br from-primary/40 to-accent/40 rounded-lg border border-primary/60 shadow-[0_0_40px_hsl(var(--primary)/0.7),0_0_60px_hsl(var(--accent)/0.4)]">
+              <div className="w-full h-full flex items-center justify-center text-3xl">🔮</div>
+            </div>
           </div>
         </div>
       )}
@@ -85,14 +87,22 @@ export const QuizQuestionComponent = ({
           </div>
         </div>
 
+        {/* Tarot Deck Icon */}
+        <div className="flex justify-center py-2">
+          <div className="relative">
+            <div className="text-5xl opacity-60 animate-float">🃏</div>
+            <div className="absolute -top-1 -right-1 text-2xl opacity-40">✨</div>
+          </div>
+        </div>
+
         {/* Navigation Buttons */}
-        <div className="flex gap-3 pt-4">
+        <div className="flex gap-3 pt-2">
           {showBack && (
             <Button
-              variant="outline"
+              variant="ghost"
               size="lg"
               onClick={onBack}
-              className="flex-1 border-border/50 hover:border-primary/50"
+              className="flex-1 text-muted-foreground hover:text-foreground"
             >
               Назад
             </Button>
@@ -102,9 +112,11 @@ export const QuizQuestionComponent = ({
             size="lg"
             onClick={handleNext}
             disabled={selectedOption === null}
-            className={`${showBack ? 'flex-1' : 'w-full'}`}
+            className={`${showBack ? 'flex-1' : 'w-full'} transition-all duration-300 ${
+              selectedOption === null ? 'opacity-50 scale-95' : 'opacity-100 scale-100 animate-fade-in-up'
+            }`}
           >
-            {question.question_number === totalQuestions ? "Завершить" : "Далее"}
+            {question.question_number === totalQuestions ? "Завершить ✨" : "Далее →"}
           </Button>
         </div>
       </div>
