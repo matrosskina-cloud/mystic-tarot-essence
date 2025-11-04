@@ -86,7 +86,7 @@ const Quiz = () => {
       console.log("Test completed!", results);
       
       // Navigate to results page with results data
-      navigate("/results", { state: { results } });
+      navigate("/results", { state: results });
     }
   };
 
