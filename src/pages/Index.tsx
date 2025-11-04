@@ -7,19 +7,18 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-x-hidden overflow-hidden bg-[#0a0a0f]">
       <MysticBackground />
       
-      <main className="relative z-10 flex flex-col items-center justify-start min-h-screen px-6 py-12">
-        <div className="w-full max-w-md mx-auto space-y-8">
+      <main className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 py-12">
+        <div className="w-full max-w-md mx-auto space-y-8 box-border">
           {/* Header Section */}
           <div className="text-center space-y-4 animate-fade-in-up">
-            <h1 className="text-4xl font-bold text-foreground leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight">
               Анна, давай узнаем, кто ты в системе Таро?
             </h1>
-            <p className="text-lg text-muted-foreground">
-              Пройди короткий тест, чтобы узнать свой архетип<br />
-              и понять, как тебя воспринимают другие.
+            <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
+              Пройди короткий тест, чтобы узнать свой архетип и понять, как тебя воспринимают другие
             </p>
           </div>
 
@@ -28,7 +27,7 @@ const Index = () => {
             <Button 
               variant="mystic" 
               size="xl" 
-              className="w-full font-semibold"
+              className="w-full font-semibold transition-all hover:shadow-[0_0_50px_rgba(139,92,246,0.5)]"
               onClick={() => navigate('/quiz')}
             >
               🧿 Узнать свой архетип

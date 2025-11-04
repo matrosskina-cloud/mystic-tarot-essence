@@ -42,21 +42,21 @@ const Results = () => {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#0a0a0f]">
+    <div className="relative min-h-screen overflow-x-hidden overflow-hidden bg-[#0a0a0f]">
       <MysticBackground />
       
-      <main className="relative z-10 container max-w-4xl mx-auto px-4 py-8 md:py-12 space-y-5">
+      <main className="relative z-10 w-full max-w-4xl mx-auto px-4 py-8 md:py-12 space-y-5 box-border">
         {/* Block 1: Мини-профиль архетипа (2 колонки) */}
         <section className="animate-fade-in">
           <div className="bg-[#1a1a2e]/60 backdrop-blur-md border border-primary/10 rounded-[28px] p-6 md:p-8 shadow-[0_0_60px_rgba(139,92,246,0.15)]">
             <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start">
-              {/* Tarot Card - cropped top */}
-              <div className="flex-shrink-0 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(139,92,246,0.3)] ring-1 ring-primary/30">
+              {/* Tarot Card - cropped top more */}
+              <div className="flex-shrink-0 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(139,92,246,0.3)] ring-1 ring-primary/30 md:max-w-[40%]">
                 <img 
                   src={archetype.imageUrl} 
                   alt={archetype.name}
-                  className="w-32 h-48 md:w-40 md:h-60 object-cover object-[center_20%]"
-                  style={{ objectPosition: 'center 20%' }}
+                  className="w-32 h-48 md:w-40 md:h-60 object-cover"
+                  style={{ objectPosition: 'center 10%', marginTop: '-8px' }}
                 />
               </div>
               
@@ -90,9 +90,9 @@ const Results = () => {
             </p>
 
             {/* Bonus Tiles */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
               {/* Tile 1 */}
-              <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-5 shadow-[0_0_40px_rgba(139,92,246,0.2)]">
+              <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-4 sm:p-5 shadow-[0_0_40px_rgba(139,92,246,0.2)] transition-all hover:shadow-[0_0_50px_rgba(139,92,246,0.3)] hover:border-primary/30">
                 <div className="text-3xl mb-3">📖</div>
                 <h3 className="text-base md:text-lg font-bold text-white mb-2">
                   Полное описание архетипа
@@ -103,7 +103,7 @@ const Results = () => {
               </div>
 
               {/* Tile 2 */}
-              <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-5 shadow-[0_0_40px_rgba(139,92,246,0.2)]">
+              <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-4 sm:p-5 shadow-[0_0_40px_rgba(139,92,246,0.2)] transition-all hover:shadow-[0_0_50px_rgba(139,92,246,0.3)] hover:border-primary/30">
                 <div className="text-3xl mb-3">🔍</div>
                 <h3 className="text-base md:text-lg font-bold text-white mb-2">
                   Инсайты от друзей
@@ -114,7 +114,7 @@ const Results = () => {
               </div>
 
               {/* Tile 3 */}
-              <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-5 shadow-[0_0_40px_rgba(139,92,246,0.2)]">
+              <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-4 sm:p-5 shadow-[0_0_40px_rgba(139,92,246,0.2)] transition-all hover:shadow-[0_0_50px_rgba(139,92,246,0.3)] hover:border-primary/30">
                 <div className="text-3xl mb-3">🎭</div>
                 <h3 className="text-base md:text-lg font-bold text-white mb-2">
                   Совпадение ваших ответов
@@ -125,7 +125,7 @@ const Results = () => {
               </div>
 
               {/* Tile 4 */}
-              <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-5 shadow-[0_0_40px_rgba(139,92,246,0.2)]">
+              <div className="bg-[#0f0f1a]/80 backdrop-blur-sm border border-primary/20 rounded-[20px] p-4 sm:p-5 shadow-[0_0_40px_rgba(139,92,246,0.2)] transition-all hover:shadow-[0_0_50px_rgba(139,92,246,0.3)] hover:border-primary/30">
                 <div className="text-3xl mb-3">🧿</div>
                 <h3 className="text-base md:text-lg font-bold text-white mb-2">
                   Внешний архетип
@@ -137,8 +137,8 @@ const Results = () => {
             </div>
 
             {/* Progress Block */}
-            <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-[20px] p-5 mb-6">
-              <div className="flex flex-wrap gap-3 items-center justify-center md:justify-start">
+            <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-[20px] p-4 sm:p-5 mb-6">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 items-center justify-center">
                 <div className="inline-flex items-center gap-2 bg-[#0f0f1a]/80 border border-primary/40 rounded-full px-5 py-2 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
                   <span className="text-sm text-gray-400">Ответили:</span>
                   <span className="text-xl font-bold text-primary">{friendsCount}</span>
@@ -157,7 +157,7 @@ const Results = () => {
             <Button
               onClick={handleCopyLink}
               size="lg"
-              className="w-full md:w-auto bg-gradient-to-r from-primary/40 to-primary/30 hover:from-primary/50 hover:to-primary/40 text-white border border-primary/60 backdrop-blur-sm shadow-[0_0_40px_rgba(139,92,246,0.4)] hover:shadow-[0_0_50px_rgba(139,92,246,0.5)] transition-all font-medium px-8 rounded-full"
+              className="w-full bg-gradient-to-r from-primary/40 to-primary/30 hover:from-primary/50 hover:to-primary/40 text-white border border-primary/60 backdrop-blur-sm shadow-[0_0_40px_rgba(139,92,246,0.4)] hover:shadow-[0_0_50px_rgba(139,92,246,0.5)] transition-all duration-300 font-medium px-8 rounded-full"
             >
               <Copy className="mr-2 h-5 w-5" />
               Скопировать ссылку
