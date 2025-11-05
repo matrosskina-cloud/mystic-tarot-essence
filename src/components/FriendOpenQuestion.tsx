@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
+import { useEffect, useRef } from "react";
 
 interface FriendOpenQuestionProps {
   questionNumber: number;
@@ -27,9 +28,43 @@ export const FriendOpenQuestion = ({
   showBack
 }: FriendOpenQuestionProps) => {
   const progress = (questionNumber / totalQuestions) * 100;
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleFocus = () => {
+      // Small delay to ensure keyboard is visible
+      setTimeout(() => {
+        if (textareaRef.current) {
+          textareaRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+    };
+
+    const handleBlur = () => {
+      // Scroll back to top when keyboard dismisses
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 100);
+    };
+
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.addEventListener('focus', handleFocus);
+      textarea.addEventListener('blur', handleBlur);
+    }
+
+    return () => {
+      if (textarea) {
+        textarea.removeEventListener('focus', handleFocus);
+        textarea.removeEventListener('blur', handleBlur);
+      }
+    };
+  }, []);
 
   return (
-    <div className="relative min-h-screen flex flex-col px-4 sm:px-6 pt-6 sm:pt-8 pb-6 sm:pb-8">
+    <div ref={containerRef} className="relative min-h-screen flex flex-col px-4 sm:px-6 pt-6 sm:pt-8 pb-6 sm:pb-8"
+      style={{ minHeight: '100dvh' }}>
       <div className="w-full max-w-2xl mx-auto flex flex-col space-y-4 sm:space-y-6 animate-fade-in">
         {/* Title */}
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-foreground mb-2 sm:mb-4" style={{ marginTop: 'max(16px, env(safe-area-inset-top))' }}>
@@ -60,6 +95,7 @@ export const FriendOpenQuestion = ({
 
           {/* Text Area */}
           <Textarea
+            ref={textareaRef}
             value={value}
             onChange={(e) => onValueChange(e.target.value)}
             placeholder="Напишите ваш ответ..."
@@ -68,7 +104,7 @@ export const FriendOpenQuestion = ({
         </div>
 
         {/* Navigation Buttons */}
-        <div className="fixed sm:relative bottom-0 left-0 right-0 flex gap-3 sm:gap-4 pt-4 sm:pt-6 pb-4 sm:pb-0 px-4 sm:px-0 bg-[#0a0a0f]/98 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border-t sm:border-t-0 border-white/5 sm:border-0 shadow-[0_-10px_30px_rgba(0,0,0,0.3)] sm:shadow-none" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
+        <div className="fixed sm:relative bottom-0 left-0 right-0 flex gap-3 sm:gap-4 pt-4 sm:pt-6 pb-4 sm:pb-0 px-4 sm:px-0 bg-[#0a0a0f]/98 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border-t sm:border-t-0 border-white/5 sm:border-0 shadow-[0_-10px_30px_rgba(0,0,0,0.3)] sm:shadow-none z-50" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
           {showBack && (
             <Button
               variant="ghost"
