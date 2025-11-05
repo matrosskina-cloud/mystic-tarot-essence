@@ -21,6 +21,7 @@ export const FriendOpenQuestion = ({
   totalQuestions,
   title,
   subtitle,
+  username,
   value,
   onValueChange,
   onNext,
@@ -68,7 +69,7 @@ export const FriendOpenQuestion = ({
       <div className="w-full max-w-2xl mx-auto flex flex-col space-y-4 sm:space-y-6 animate-fade-in">
         {/* Title */}
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-foreground mb-2 sm:mb-4" style={{ marginTop: 'max(16px, env(safe-area-inset-top))' }}>
-          Опрос о друге
+          Помоги @{username} узнать себя лучше
         </h1>
         
         {/* Progress Section */}

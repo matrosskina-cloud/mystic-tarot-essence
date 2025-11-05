@@ -184,6 +184,7 @@ const FriendQuiz = () => {
         ) : (
           <FriendQuizQuestion
             question={quizQuestions[currentQuestionIndex - openQuestions.length]}
+            currentQuestionNumber={currentQuestionIndex + 1}
             totalQuestions={totalQuestions}
             selectedOption={selectedOption}
             onSelectOption={handleSelectOption}

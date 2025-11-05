@@ -4,6 +4,7 @@ import { QuizQuestion } from "@/data/quizQuestions";
 
 interface FriendQuizQuestionProps {
   question: QuizQuestion;
+  currentQuestionNumber: number;
   totalQuestions: number;
   selectedOption: number | null;
   onSelectOption: (index: number) => void;
@@ -16,6 +17,7 @@ interface FriendQuizQuestionProps {
 
 export const FriendQuizQuestion = ({
   question,
+  currentQuestionNumber,
   totalQuestions,
   selectedOption,
   onSelectOption,
@@ -25,21 +27,21 @@ export const FriendQuizQuestion = ({
   username,
   quote
 }: FriendQuizQuestionProps) => {
-  const progress = (question.question_number / totalQuestions) * 100;
+  const progress = (currentQuestionNumber / totalQuestions) * 100;
 
   return (
     <div className="relative min-h-screen flex flex-col px-4 sm:px-6 pt-6 sm:pt-8 pb-6 sm:pb-8">
       <div className="w-full max-w-2xl mx-auto flex flex-col space-y-4 sm:space-y-6 animate-fade-in">
         {/* Title */}
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-foreground mb-2 sm:mb-4" style={{ marginTop: 'max(16px, env(safe-area-inset-top))' }}>
-          Помоги @{username} узнать себя глубже
+          Помоги @{username} узнать себя лучше
         </h1>
         
         {/* Progress Section */}
         <div className="space-y-2 sm:space-y-3">
           <div className="flex justify-between items-center px-1">
             <span className="text-xs sm:text-sm text-muted-foreground/60">
-              Вопрос {question.question_number} из {totalQuestions}
+              Вопрос {currentQuestionNumber} из {totalQuestions}
             </span>
             <span className="text-xs sm:text-sm text-primary/70 font-medium">
               {Math.round(progress)}%
