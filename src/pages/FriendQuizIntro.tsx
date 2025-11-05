@@ -57,7 +57,7 @@ const FriendQuizIntro = () => {
           {/* Subtitle */}
           <div className="text-center animate-fade-in-up" style={{ animationDelay: '200ms' }}>
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto">
-              Пройди короткий опрос. Твои ответы станут важной частью самопознания — помогут @{friendUsername} лучше понять себя, увидеть сильные стороны и открыть неожиданные инсайты.
+              Пройди короткий <b>анонимный</b> опрос. Твои ответы станут важной частью самопознания — помогут @{friendUsername} лучше понять себя, увидеть сильные стороны и открыть неожиданные инсайты.
             </p>
           </div>
 
