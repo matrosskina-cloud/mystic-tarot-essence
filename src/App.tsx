@@ -24,8 +24,8 @@ const App = () => (
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/results" element={<Results />} />
           <Route path="/archetype-unlocked" element={<ArchetypeUnlocked />} />
-          <Route path="/friend-quiz" element={<FriendQuiz />} />
           <Route path="/friend-quiz-intro" element={<FriendQuizIntro />} />
+          <Route path="/friend-quiz" element={<FriendQuiz />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

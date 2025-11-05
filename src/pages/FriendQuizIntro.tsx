@@ -94,7 +94,7 @@ const FriendQuizIntro = () => {
               variant="mystic" 
               size="xl" 
               className="w-full font-semibold transition-all hover:shadow-[0_0_50px_rgba(139,92,246,0.5)]"
-              onClick={() => navigate('/quiz')}
+              onClick={() => navigate('/friend-quiz')}
             >
               ✨ Принять участие
             </Button>
