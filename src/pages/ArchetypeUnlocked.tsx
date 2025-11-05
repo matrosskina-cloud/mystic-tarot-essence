@@ -6,6 +6,12 @@ import { Copy } from "lucide-react";
 import { archetypeData } from "@/data/archetypeData";
 import { useToast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface LocationState {
   result: string;
@@ -153,100 +159,112 @@ const ArchetypeUnlocked = () => {
                 </p>
               </div>
 
-              {/* 1. Описание личности */}
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <span className="text-primary">1.</span> Описание личности по архетипу
-                </h3>
-                <div className="bg-[#0f0f1a]/60 border border-primary/10 rounded-2xl p-5 space-y-3">
-                  <p className="text-sm md:text-base text-gray-300 leading-relaxed">
-                    Ты — воплощение материнской энергии, тепла и жизни. Императрица символизирует изобилие, творческую силу и способность создавать — будь то любовь, дом, проект или отношения.
-                  </p>
-                  <p className="text-sm md:text-base text-gray-300 leading-relaxed">
-                    Ты умеешь любить безусловно, вдохновлять, поддерживать и питать. Люди рядом с тобой чувствуют себя в безопасности и словно «растут» в твоём поле. У тебя природный дар создавать уют, гармонию и излучать чувственное присутствие.
-                  </p>
-                  <p className="text-sm md:text-base text-gray-300 leading-relaxed">
-                    Ты глубоко связана с телом, природой, ощущениями. Умеешь замечать красоту в мелочах и превращать обычное в особенное. Иногда тебе трудно переключиться с заботы о других на заботу о себе, но именно в этом — твоя внутренняя сила.
-                  </p>
-                </div>
-              </div>
-
-              {/* 2. Сильные стороны */}
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <span className="text-primary">2.</span> Сильные стороны
-                </h3>
-                <div className="bg-[#0f0f1a]/60 border border-primary/10 rounded-2xl p-5 space-y-2">
-                  <p className="text-sm md:text-base text-gray-300">🌿 Способность любить, поддерживать и вдохновлять других.</p>
-                  <p className="text-sm md:text-base text-gray-300">💫 Творческое мышление и умение воплощать идеи в реальность.</p>
-                  <p className="text-sm md:text-base text-gray-300">🌸 Глубокая чувственность, контакт с телом и природой.</p>
-                  <p className="text-sm md:text-base text-gray-300">🌷 Энергия изобилия: всё, к чему ты прикасаешься, расцветает.</p>
-                  <p className="text-sm md:text-base text-gray-300">🕊 Умение создавать пространство любви, уюта и принятия.</p>
-                </div>
-              </div>
-
-              {/* 3. Точки роста */}
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <span className="text-primary">3.</span> Точки роста
-                </h3>
-                <div className="bg-[#0f0f1a]/60 border border-primary/10 rounded-2xl p-5 space-y-2">
-                  <p className="text-sm md:text-base text-gray-300">💧 Склонность отдавать больше, чем получаешь — риск выгорания.</p>
-                  <p className="text-sm md:text-base text-gray-300">🌪 Трудность в выражении собственных потребностей.</p>
-                  <p className="text-sm md:text-base text-gray-300">🪞 Зависимость от признания и одобрения других.</p>
-                  <p className="text-sm md:text-base text-gray-300">🌻 Страх быть неидеальной — стремление быть «всегда сильной».</p>
-                  <p className="text-sm md:text-base text-gray-300">🔥 Переизбыток заботы может превращаться в контроль.</p>
-                </div>
-              </div>
-
-              {/* 4. Подходящий партнёр */}
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <span className="text-primary">4.</span> Подходящий партнёр в отношениях
-                </h3>
-                <div className="bg-[#0f0f1a]/60 border border-primary/10 rounded-2xl p-5 space-y-3">
-                  <p className="text-sm md:text-base text-gray-300 leading-relaxed">
-                    Императрице нужен партнёр, который уважает её мягкость и не воспринимает её щедрость как должное.
-                  </p>
-                  <p className="text-sm md:text-base text-gray-300 font-semibold">Тебе подойдёт тот, кто:</p>
-                  <div className="space-y-2 pl-2">
-                    <p className="text-sm md:text-base text-gray-300">🪵 Ценит твою заботу и отвечает стабильностью.</p>
-                    <p className="text-sm md:text-base text-gray-300">☀️ Умеет вдохновлять, поддерживать и создавать вместе.</p>
-                    <p className="text-sm md:text-base text-gray-300">🌙 Принимает твою эмоциональность, не обесценивая.</p>
-                    <p className="text-sm md:text-base text-gray-300">⚖️ Готов к глубокой, надёжной связи, в которой есть баланс — не только давать, но и получать.</p>
-                  </div>
-                  <p className="text-sm md:text-base text-gray-300 leading-relaxed italic">
-                    Это партнёр, с которым можно строить не зависимость, а союз роста и любви.
-                  </p>
-                </div>
-              </div>
-
-              {/* 5. Кармические уроки */}
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                  <span className="text-primary">5.</span> Кармические уроки архетипа {archetype.name}
-                </h3>
-                <div className="bg-[#0f0f1a]/60 border border-primary/10 rounded-2xl p-5 space-y-4">
-                  <div className="space-y-2">
-                    <p className="text-base font-semibold text-primary">1. Урок заботы о себе</p>
+              <Accordion type="single" collapsible className="space-y-3">
+                {/* 1. Описание личности */}
+                <AccordionItem value="item-1" className="bg-[#0f0f1a]/60 border border-primary/10 rounded-2xl overflow-hidden">
+                  <AccordionTrigger className="px-5 py-4 hover:no-underline">
+                    <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                      <span className="text-primary">1.</span> Описание личности по архетипу
+                    </h3>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-5 pb-5 space-y-3">
                     <p className="text-sm md:text-base text-gray-300 leading-relaxed">
-                      Ты можешь растворяться в других, забывая, что заслуживаешь того же тепла и внимания. Жизнь учит тебя наполняться прежде, чем делиться.
+                      Ты — воплощение материнской энергии, тепла и жизни. Императрица символизирует изобилие, творческую силу и способность создавать — будь то любовь, дом, проект или отношения.
                     </p>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-base font-semibold text-primary">2. Урок внутренней опоры</p>
                     <p className="text-sm md:text-base text-gray-300 leading-relaxed">
-                      Иногда ты ищешь подтверждение своей ценности через то, что делаешь для других. Но настоящая сила Императрицы — в уверенности, что ты уже достаточна просто потому, что есть.
+                      Ты умеешь любить безусловно, вдохновлять, поддерживать и питать. Люди рядом с тобой чувствуют себя в безопасности и словно «растут» в твоём поле. У тебя природный дар создавать уют, гармонию и излучать чувственное присутствие.
                     </p>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-base font-semibold text-primary">3. Урок здоровых границ</p>
                     <p className="text-sm md:text-base text-gray-300 leading-relaxed">
-                      Ты не обязана быть источником для всех. Научись говорить "нет" без чувства вины — это акт любви к себе, а не отказ другим.
+                      Ты глубоко связана с телом, природой, ощущениями. Умеешь замечать красоту в мелочах и превращать обычное в особенное. Иногда тебе трудно переключиться с заботы о других на заботу о себе, но именно в этом — твоя внутренняя сила.
                     </p>
-                  </div>
-                </div>
-              </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                {/* 2. Сильные стороны */}
+                <AccordionItem value="item-2" className="bg-[#0f0f1a]/60 border border-primary/10 rounded-2xl overflow-hidden">
+                  <AccordionTrigger className="px-5 py-4 hover:no-underline">
+                    <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                      <span className="text-primary">2.</span> Сильные стороны
+                    </h3>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-5 pb-5 space-y-2">
+                    <p className="text-sm md:text-base text-gray-300">🌿 Способность любить, поддерживать и вдохновлять других.</p>
+                    <p className="text-sm md:text-base text-gray-300">💫 Творческое мышление и умение воплощать идеи в реальность.</p>
+                    <p className="text-sm md:text-base text-gray-300">🌸 Глубокая чувственность, контакт с телом и природой.</p>
+                    <p className="text-sm md:text-base text-gray-300">🌷 Энергия изобилия: всё, к чему ты прикасаешься, расцветает.</p>
+                    <p className="text-sm md:text-base text-gray-300">🕊 Умение создавать пространство любви, уюта и принятия.</p>
+                  </AccordionContent>
+                </AccordionItem>
+
+                {/* 3. Точки роста */}
+                <AccordionItem value="item-3" className="bg-[#0f0f1a]/60 border border-primary/10 rounded-2xl overflow-hidden">
+                  <AccordionTrigger className="px-5 py-4 hover:no-underline">
+                    <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                      <span className="text-primary">3.</span> Точки роста
+                    </h3>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-5 pb-5 space-y-2">
+                    <p className="text-sm md:text-base text-gray-300">💧 Склонность отдавать больше, чем получаешь — риск выгорания.</p>
+                    <p className="text-sm md:text-base text-gray-300">🌪 Трудность в выражении собственных потребностей.</p>
+                    <p className="text-sm md:text-base text-gray-300">🪞 Зависимость от признания и одобрения других.</p>
+                    <p className="text-sm md:text-base text-gray-300">🌻 Страх быть неидеальной — стремление быть «всегда сильной».</p>
+                    <p className="text-sm md:text-base text-gray-300">🔥 Переизбыток заботы может превращаться в контроль.</p>
+                  </AccordionContent>
+                </AccordionItem>
+
+                {/* 4. Подходящий партнёр */}
+                <AccordionItem value="item-4" className="bg-[#0f0f1a]/60 border border-primary/10 rounded-2xl overflow-hidden">
+                  <AccordionTrigger className="px-5 py-4 hover:no-underline">
+                    <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                      <span className="text-primary">4.</span> Подходящий партнёр в отношениях
+                    </h3>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-5 pb-5 space-y-3">
+                    <p className="text-sm md:text-base text-gray-300 leading-relaxed">
+                      Императрице нужен партнёр, который уважает её мягкость и не воспринимает её щедрость как должное.
+                    </p>
+                    <p className="text-sm md:text-base text-gray-300 font-semibold">Тебе подойдёт тот, кто:</p>
+                    <div className="space-y-2 pl-2">
+                      <p className="text-sm md:text-base text-gray-300">🪵 Ценит твою заботу и отвечает стабильностью.</p>
+                      <p className="text-sm md:text-base text-gray-300">☀️ Умеет вдохновлять, поддерживать и создавать вместе.</p>
+                      <p className="text-sm md:text-base text-gray-300">🌙 Принимает твою эмоциональность, не обесценивая.</p>
+                      <p className="text-sm md:text-base text-gray-300">⚖️ Готов к глубокой, надёжной связи, в которой есть баланс — не только давать, но и получать.</p>
+                    </div>
+                    <p className="text-sm md:text-base text-gray-300 leading-relaxed italic">
+                      Это партнёр, с которым можно строить не зависимость, а союз роста и любви.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+
+                {/* 5. Кармические уроки */}
+                <AccordionItem value="item-5" className="bg-[#0f0f1a]/60 border border-primary/10 rounded-2xl overflow-hidden">
+                  <AccordionTrigger className="px-5 py-4 hover:no-underline">
+                    <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                      <span className="text-primary">5.</span> Кармические уроки архетипа {archetype.name}
+                    </h3>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-5 pb-5 space-y-4">
+                    <div className="space-y-2">
+                      <p className="text-base font-semibold text-primary">1. Урок заботы о себе</p>
+                      <p className="text-sm md:text-base text-gray-300 leading-relaxed">
+                        Ты можешь растворяться в других, забывая, что заслуживаешь того же тепла и внимания. Жизнь учит тебя наполняться прежде, чем делиться.
+                      </p>
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-base font-semibold text-primary">2. Урок внутренней опоры</p>
+                      <p className="text-sm md:text-base text-gray-300 leading-relaxed">
+                        Иногда ты ищешь подтверждение своей ценности через то, что делаешь для других. Но настоящая сила Императрицы — в уверенности, что ты уже достаточна просто потому, что есть.
+                      </p>
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-base font-semibold text-primary">3. Урок здоровых границ</p>
+                      <p className="text-sm md:text-base text-gray-300 leading-relaxed">
+                        Ты не обязана быть источником для всех. Научись говорить "нет" без чувства вины — это акт любви к себе, а не отказ другим.
+                      </p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           </div>
         </section>
