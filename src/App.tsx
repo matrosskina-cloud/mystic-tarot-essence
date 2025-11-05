@@ -8,6 +8,7 @@ import Quiz from "./pages/Quiz";
 import Results from "./pages/Results";
 import ArchetypeUnlocked from "./pages/ArchetypeUnlocked";
 import FriendQuiz from "./pages/FriendQuiz";
+import FriendQuizIntro from "./pages/FriendQuizIntro";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/results" element={<Results />} />
           <Route path="/archetype-unlocked" element={<ArchetypeUnlocked />} />
           <Route path="/friend-quiz" element={<FriendQuiz />} />
+          <Route path="/friend-quiz-intro" element={<FriendQuizIntro />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
