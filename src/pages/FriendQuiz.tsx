@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MysticBackground } from "@/components/MysticBackground";
 import { FriendOpenQuestion } from "@/components/FriendOpenQuestion";
-import { QuizQuestionComponent } from "@/components/QuizQuestion";
-import { quizQuestions } from "@/data/quizQuestions";
+import { FriendQuizQuestion } from "@/components/FriendQuizQuestion";
+import FriendQuizThankYou from "./FriendQuizThankYou";
+import { quizQuestions, friendQuizQuotes } from "@/data/quizQuestions";
 
 interface OpenQuestion {
   id: string;
@@ -45,6 +46,7 @@ const FriendQuiz = () => {
   const [openAnswers, setOpenAnswers] = useState<Record<string, string>>({});
   const [closedAnswers, setClosedAnswers] = useState<Record<number, number>>({});
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [quizCompleted, setQuizCompleted] = useState(false);
   
   const username = "Анна"; // В реальности из Telegram или URL параметров
   const totalQuestions = openQuestions.length + quizQuestions.length;
@@ -138,7 +140,7 @@ const FriendQuiz = () => {
         // Quiz completed
         const results = calculateResults(updatedClosedAnswers);
         console.log("Friend quiz completed!", results);
-        navigate("/results", { state: results });
+        setQuizCompleted(true);
       }
     }
   };
@@ -156,6 +158,10 @@ const FriendQuiz = () => {
       }
     }
   };
+
+  if (quizCompleted) {
+    return <FriendQuizThankYou username={username} />;
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -176,7 +182,7 @@ const FriendQuiz = () => {
             showBack={currentQuestionIndex > 0}
           />
         ) : (
-          <QuizQuestionComponent
+          <FriendQuizQuestion
             question={quizQuestions[currentQuestionIndex - openQuestions.length]}
             totalQuestions={totalQuestions}
             selectedOption={selectedOption}
@@ -184,6 +190,8 @@ const FriendQuiz = () => {
             onNext={handleNext}
             onBack={handleBack}
             showBack={currentQuestionIndex > 0}
+            username={username}
+            quote={friendQuizQuotes[currentQuestionIndex - openQuestions.length]}
           />
         )}
       </main>
