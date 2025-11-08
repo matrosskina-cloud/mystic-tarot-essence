@@ -387,21 +387,12 @@ const ArchetypeUnlocked = () => {
               </div>
             </div>
 
-            {/* Compatibility Progress */}
-            <div className="mb-8 space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm md:text-base text-gray-300">Совместимость ваших ответов</span>
-                <span className="text-lg font-bold text-primary">{compatibility}%</span>
-              </div>
-              <Progress value={compatibility} className="h-3 bg-[#0f0f1a]/80" />
-            </div>
-
             {/* Friends' Answers */}
             <div className="space-y-8">
               {/* Question 1: Superpower */}
               <div className="space-y-4">
                 <h3 className="text-base md:text-lg font-semibold text-white border-b border-primary/20 pb-2">
-                  Вопрос: В чём твоя суперсила?
+                  В чём твоя суперсила?
                 </h3>
                 <div className="space-y-3">
                   {mockFriendAnswers.superpower.map((answer, index) => (
@@ -420,7 +411,7 @@ const ArchetypeUnlocked = () => {
               {/* Question 2: Growth Area */}
               <div className="space-y-4">
                 <h3 className="text-base md:text-lg font-semibold text-white border-b border-primary/20 pb-2">
-                  Вопрос: Над чем тебе стоит поработать?
+                  Над чем тебе стоит поработать?
                 </h3>
                 <div className="space-y-3">
                   {mockFriendAnswers.growthArea.map((answer, index) => (
@@ -439,7 +430,7 @@ const ArchetypeUnlocked = () => {
               {/* Question 3: Warm Message */}
               <div className="space-y-4">
                 <h3 className="text-base md:text-lg font-semibold text-white border-b border-primary/20 pb-2">
-                  Вопрос: Тёплое послание
+                  Тёплое послание
                 </h3>
                 <div className="space-y-3">
                   {mockFriendAnswers.warmMessage.map((answer, index) => (
@@ -458,8 +449,7 @@ const ArchetypeUnlocked = () => {
               {/* Quiz Questions Analysis */}
               <div className="mt-12 pt-8 border-t border-primary/20">
                 <h3 className="text-lg md:text-xl font-bold text-white mb-6 flex items-center gap-2">
-                  <span className="text-primary">📊</span>
-                  Анализ совпадений по тесту
+                  💥 Как отвечали твои друзья:
                 </h3>
                 
                 <Accordion type="single" collapsible defaultValue="quiz-0" className="space-y-3">
