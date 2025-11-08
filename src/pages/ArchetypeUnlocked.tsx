@@ -233,16 +233,6 @@ const ArchetypeUnlocked = () => {
             </div>
             
             <div className="space-y-6">
-              {/* Intro */}
-              <div className="text-center space-y-2 pb-4 border-b border-white/10">
-                <p className="text-lg font-semibold text-primary">
-                  🪷 Архетип: {archetype.name}
-                </p>
-                <p className="text-base text-gray-400 italic">
-                  {archetype.subtitle}
-                </p>
-              </div>
-
               <Accordion type="single" collapsible className="space-y-3">
                 {/* 1. Описание личности */}
                 <AccordionItem value="item-1" className="bg-[#0f0f1a]/60 border border-primary/10 rounded-2xl overflow-hidden">
