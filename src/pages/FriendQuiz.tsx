@@ -4,7 +4,7 @@ import { MysticBackground } from "@/components/MysticBackground";
 import { FriendOpenQuestion } from "@/components/FriendOpenQuestion";
 import { FriendQuizQuestion } from "@/components/FriendQuizQuestion";
 import FriendQuizThankYou from "./FriendQuizThankYou";
-import { quizQuestions, friendQuizQuotes } from "@/data/quizQuestions";
+import { quizQuestions } from "@/data/quizQuestions";
 
 interface ArchetypeScores {
   [key: string]: number;
@@ -148,7 +148,6 @@ const FriendQuiz = () => {
             onBack={handleBack}
             showBack={currentQuestionIndex > 0}
             username={username}
-            quote={friendQuizQuotes[currentQuestionIndex]}
           />
         )}
       </main>
