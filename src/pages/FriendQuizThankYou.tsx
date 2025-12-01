@@ -44,13 +44,6 @@ const FriendQuizThankYou = ({ username }: FriendQuizThankYouProps) => {
             </p>
           </div>
 
-          {/* Quote */}
-          <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-2xl p-5 sm:p-6 backdrop-blur-sm">
-            <p className="text-sm sm:text-base text-foreground/80 italic leading-relaxed">
-              "Иногда зеркало, которое держат другие, показывает то, что мы сами не видим. Твой вклад бесценен."
-            </p>
-          </div>
-
           {/* Invitation to take own quiz */}
           <div className="bg-[#1a1a2e]/40 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 space-y-6 mt-8">
             <div className="text-center space-y-2">
