@@ -12,7 +12,6 @@ interface FriendQuizQuestionProps {
   onBack: () => void;
   showBack: boolean;
   username: string;
-  quote: string;
 }
 
 export const FriendQuizQuestion = ({
@@ -24,8 +23,7 @@ export const FriendQuizQuestion = ({
   onNext,
   onBack,
   showBack,
-  username,
-  quote
+  username
 }: FriendQuizQuestionProps) => {
   const progress = (currentQuestionNumber / totalQuestions) * 100;
 
@@ -76,12 +74,6 @@ export const FriendQuizQuestion = ({
           </div>
         </div>
 
-        {/* Inspiring Quote */}
-        <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-2xl p-4 sm:p-5 backdrop-blur-sm">
-          <p className="text-sm sm:text-base text-foreground/80 italic leading-relaxed text-center">
-            {quote.replace('@username', `@${username}`)}
-          </p>
-        </div>
 
         {/* Navigation Buttons */}
         <div className="fixed sm:relative bottom-0 left-0 right-0 flex gap-3 sm:gap-4 pt-4 sm:pt-6 pb-4 sm:pb-0 px-4 sm:px-0 bg-[#0a0a0f]/98 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border-t sm:border-t-0 border-white/5 sm:border-0 shadow-[0_-10px_30px_rgba(0,0,0,0.3)] sm:shadow-none" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
