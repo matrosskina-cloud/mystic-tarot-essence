@@ -19,23 +19,11 @@ interface LocationState {
 }
 
 // Mock data for friends' answers - in real app this would come from backend
-const mockFriendAnswers = {
-  superpower: [
-    "Умение вдохновлять и поддерживать, даже когда самой тяжело",
-    "Ты создаёшь вокруг себя тепло и уют",
-    "Твоя мягкость не мешает тебе быть сильной — в этом твоя магия"
-  ],
-  growthArea: [
-    "Перестать всё тянуть на себе и делиться нагрузкой",
-    "Иногда нужно говорить \"нет\" без чувства вины",
-    "Проси больше, не жди, что все сами догадаются"
-  ],
-  warmMessage: [
-    "Ты — моё безопасное место, спасибо тебе за это",
-    "Не забывай заботиться о себе так же, как ты заботишься обо мне",
-    "Ты даёшь любовь, которая лечит"
-  ]
-};
+const mockFriendFirstImpressions = [
+  "С первой секунды было ощущение тепла и спокойствия. Как будто рядом с тобой всё встаёт на свои места.",
+  "Запомнилась твоя улыбка и то, как внимательно ты слушаешь. Редко такое встретишь.",
+  "Первое впечатление — человек, рядом с которым хочется раскрыться и быть собой."
+];
 
 // Mock data for quiz question answers - shows how many friends selected each option
 const mockQuizAnswers = [
@@ -379,65 +367,8 @@ const ArchetypeUnlocked = () => {
 
             {/* Friends' Answers */}
             <div className="space-y-8">
-              {/* Question 1: Superpower */}
-              <div className="space-y-4">
-                <h3 className="text-base md:text-lg font-semibold text-white border-b border-primary/20 pb-2">
-                  В чём твоя суперсила?
-                </h3>
-                <div className="space-y-3">
-                  {mockFriendAnswers.superpower.map((answer, index) => (
-                    <div 
-                      key={index}
-                      className="bg-[#0f0f1a]/60 border border-primary/10 rounded-xl p-4 hover:border-primary/30 transition-all"
-                    >
-                      <p className="text-sm md:text-base text-gray-300 italic leading-relaxed">
-                        "{answer}"
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Question 2: Growth Area */}
-              <div className="space-y-4">
-                <h3 className="text-base md:text-lg font-semibold text-white border-b border-primary/20 pb-2">
-                  Над чем тебе стоит поработать?
-                </h3>
-                <div className="space-y-3">
-                  {mockFriendAnswers.growthArea.map((answer, index) => (
-                    <div 
-                      key={index}
-                      className="bg-[#0f0f1a]/60 border border-primary/10 rounded-xl p-4 hover:border-primary/30 transition-all"
-                    >
-                      <p className="text-sm md:text-base text-gray-300 italic leading-relaxed">
-                        "{answer}"
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Question 3: Warm Message */}
-              <div className="space-y-4">
-                <h3 className="text-base md:text-lg font-semibold text-white border-b border-primary/20 pb-2">
-                  Тёплое послание
-                </h3>
-                <div className="space-y-3">
-                  {mockFriendAnswers.warmMessage.map((answer, index) => (
-                    <div 
-                      key={index}
-                      className="bg-[#0f0f1a]/60 border border-primary/10 rounded-xl p-4 hover:border-primary/30 transition-all"
-                    >
-                      <p className="text-sm md:text-base text-gray-300 italic leading-relaxed">
-                        "{answer}"
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
               {/* Quiz Questions Analysis */}
-              <div className="mt-12 pt-8 border-t border-primary/20">
+              <div className="space-y-4">
                 <h3 className="text-lg md:text-xl font-bold text-white mb-6 flex items-center gap-2">
                   💥 Как отвечали твои друзья:
                 </h3>
@@ -573,6 +504,25 @@ const ArchetypeUnlocked = () => {
                     </AccordionItem>
                   ))}
                 </Accordion>
+              </div>
+
+              {/* First Impressions Section */}
+              <div className="mt-10 pt-8 border-t border-primary/20 space-y-4">
+                <h3 className="text-lg md:text-xl font-bold text-white flex items-center gap-2">
+                  💌 Первое впечатление о тебе
+                </h3>
+                <div className="space-y-3">
+                  {mockFriendFirstImpressions.map((impression, index) => (
+                    <div 
+                      key={index}
+                      className="bg-[#0f0f1a]/60 border border-primary/10 rounded-xl p-4 hover:border-primary/30 transition-all"
+                    >
+                      <p className="text-sm md:text-base text-gray-300 italic leading-relaxed">
+                        "{impression}"
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
