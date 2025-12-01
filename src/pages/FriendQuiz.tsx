@@ -6,30 +6,6 @@ import { FriendQuizQuestion } from "@/components/FriendQuizQuestion";
 import FriendQuizThankYou from "./FriendQuizThankYou";
 import { quizQuestions, friendQuizQuotes } from "@/data/quizQuestions";
 
-interface OpenQuestion {
-  id: string;
-  title: string;
-  subtitle: string;
-}
-
-const openQuestions: OpenQuestion[] = [
-  {
-    id: "superpower",
-    title: "🧿 В чём суперсила @Анна?",
-    subtitle: "Напиши, что в ней особенно сильного. Что вдохновляет или вызывает уважение?"
-  },
-  {
-    id: "growth",
-    title: "🪞 Над чем, по-твоему, стоит поработать @Анна?",
-    subtitle: "Если бы ты мог(-ла) подсказать что-то важное — что бы это было?"
-  },
-  {
-    id: "message",
-    title: "💌 Тёплое послание для @Анна",
-    subtitle: "Передай что-то доброе и искреннее. Не обязательно серьёзно — главное, от души."
-  }
-];
-
 interface ArchetypeScores {
   [key: string]: number;
 }
@@ -37,20 +13,21 @@ interface ArchetypeScores {
 interface QuizResult {
   result: string;
   score: ArchetypeScores;
-  openAnswers: Record<string, string>;
+  openAnswer: string;
 }
 
 const FriendQuiz = () => {
   const navigate = useNavigate();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [openAnswers, setOpenAnswers] = useState<Record<string, string>>({});
+  const [openAnswer, setOpenAnswer] = useState("");
   const [closedAnswers, setClosedAnswers] = useState<Record<number, number>>({});
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [quizCompleted, setQuizCompleted] = useState(false);
   
   const username = "Анна"; // В реальности из Telegram или URL параметров
-  const totalQuestions = openQuestions.length + quizQuestions.length;
-  const isOpenQuestion = currentQuestionIndex < openQuestions.length;
+  // Total = quiz questions + 1 open question at the end
+  const totalQuestions = quizQuestions.length + 1;
+  const isOpenQuestion = currentQuestionIndex === quizQuestions.length;
 
   const calculateResults = (finalClosedAnswers: Record<number, number>): QuizResult => {
     const archetypeScores: ArchetypeScores = {
@@ -87,16 +64,12 @@ const FriendQuiz = () => {
     return {
       result: resultArchetype,
       score: archetypeScores,
-      openAnswers
+      openAnswer
     };
   };
 
   const handleOpenAnswerChange = (value: string) => {
-    const currentQuestion = openQuestions[currentQuestionIndex];
-    setOpenAnswers(prev => ({
-      ...prev,
-      [currentQuestion.id]: value
-    }));
+    setOpenAnswer(value);
   };
 
   const handleSelectOption = (optionIndex: number) => {
@@ -105,42 +78,30 @@ const FriendQuiz = () => {
 
   const handleNext = () => {
     if (isOpenQuestion) {
-      // Validate open question answer
-      const currentQuestion = openQuestions[currentQuestionIndex];
-      const answer = openAnswers[currentQuestion.id] || "";
-      if (answer.trim().length === 0) return;
+      // Open question (last question) - validate and complete quiz
+      if (openAnswer.trim().length === 0) return;
       
-      // Move to next question
-      setCurrentQuestionIndex(prev => prev + 1);
-      
-      // Pre-fill next question if it exists in answers
-      if (currentQuestionIndex + 1 < openQuestions.length) {
-        // Next is still an open question - no action needed
-      } else if (currentQuestionIndex + 1 === openQuestions.length) {
-        // Next is first closed question
-        setSelectedOption(closedAnswers[0] ?? null);
-      }
+      const results = calculateResults(closedAnswers);
+      console.log("Friend quiz completed!", results);
+      setQuizCompleted(true);
     } else {
       // Closed question logic
       if (selectedOption === null) return;
 
-      const closedQuestionIndex = currentQuestionIndex - openQuestions.length;
       const updatedClosedAnswers = {
         ...closedAnswers,
-        [closedQuestionIndex]: selectedOption
+        [currentQuestionIndex]: selectedOption
       };
       
       setClosedAnswers(updatedClosedAnswers);
-
-      if (currentQuestionIndex < totalQuestions - 1) {
-        setCurrentQuestionIndex(prev => prev + 1);
-        const nextClosedIndex = closedQuestionIndex + 1;
-        setSelectedOption(closedAnswers[nextClosedIndex] ?? null);
+      setCurrentQuestionIndex(prev => prev + 1);
+      
+      // If next is still a closed question, pre-fill selection
+      if (currentQuestionIndex + 1 < quizQuestions.length) {
+        setSelectedOption(closedAnswers[currentQuestionIndex + 1] ?? null);
       } else {
-        // Quiz completed
-        const results = calculateResults(updatedClosedAnswers);
-        console.log("Friend quiz completed!", results);
-        setQuizCompleted(true);
+        // Next is the open question
+        setSelectedOption(null);
       }
     }
   };
@@ -149,13 +110,8 @@ const FriendQuiz = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prev => prev - 1);
       
-      if (currentQuestionIndex - 1 < openQuestions.length) {
-        // Going back to an open question - no selectedOption needed
-      } else {
-        // Going back to a closed question
-        const closedIndex = currentQuestionIndex - 1 - openQuestions.length;
-        setSelectedOption(closedAnswers[closedIndex] ?? null);
-      }
+      // Going back to a closed question
+      setSelectedOption(closedAnswers[currentQuestionIndex - 1] ?? null);
     }
   };
 
@@ -172,10 +128,10 @@ const FriendQuiz = () => {
           <FriendOpenQuestion
             questionNumber={currentQuestionIndex + 1}
             totalQuestions={totalQuestions}
-            title={openQuestions[currentQuestionIndex].title}
-            subtitle={openQuestions[currentQuestionIndex].subtitle}
+            title={`Вспомни первое впечатление о @${username}`}
+            subtitle="Что запомнилось? Что почувствовалось в этом человеке сразу? Поделись откровенно — даже пара слов могут многое рассказать 💌"
             username={username}
-            value={openAnswers[openQuestions[currentQuestionIndex].id] || ""}
+            value={openAnswer}
             onValueChange={handleOpenAnswerChange}
             onNext={handleNext}
             onBack={handleBack}
@@ -183,7 +139,7 @@ const FriendQuiz = () => {
           />
         ) : (
           <FriendQuizQuestion
-            question={quizQuestions[currentQuestionIndex - openQuestions.length]}
+            question={quizQuestions[currentQuestionIndex]}
             currentQuestionNumber={currentQuestionIndex + 1}
             totalQuestions={totalQuestions}
             selectedOption={selectedOption}
@@ -192,7 +148,7 @@ const FriendQuiz = () => {
             onBack={handleBack}
             showBack={currentQuestionIndex > 0}
             username={username}
-            quote={friendQuizQuotes[currentQuestionIndex - openQuestions.length]}
+            quote={friendQuizQuotes[currentQuestionIndex]}
           />
         )}
       </main>
