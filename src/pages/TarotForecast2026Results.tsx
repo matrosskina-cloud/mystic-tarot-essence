@@ -196,7 +196,7 @@ const TarotForecast2026Results = () => {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
 
     document.querySelectorAll("[data-section]").forEach((el) => observer.observe(el));
@@ -334,7 +334,7 @@ const TarotForecast2026Results = () => {
                 </Avatar>
               </div>
 
-              <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">Твой годовой расклад готов ✨</h1>
+              <h1 className="text-2xl md:text-3xl font-bold text-white mb-2"> ✨ Твой расклад на 2026 год ✨</h1>
             </div>
           </div>
         </section>
@@ -384,10 +384,7 @@ const TarotForecast2026Results = () => {
             </div>
 
             {/* Keywords - golden */}
-            <p
-              className="text-center font-medium mb-5 text-[16px] md:text-[17px]"
-              style={{ color: "#EAC46F" }}
-            >
+            <p className="text-center font-medium mb-5 text-[16px] md:text-[17px]" style={{ color: "#EAC46F" }}>
               {mockMainCard.keywords}
             </p>
 
@@ -434,7 +431,9 @@ const TarotForecast2026Results = () => {
           }`}
         >
           <div className="h-px w-16 md:w-24 bg-gradient-to-r from-transparent to-white/30" />
-          <span style={{ color: "#EAC46F" }} className="text-lg">✨</span>
+          <span style={{ color: "#EAC46F" }} className="text-lg">
+            ✨
+          </span>
           <div className="h-px w-16 md:w-24 bg-gradient-to-l from-transparent to-white/30" />
         </div>
 
