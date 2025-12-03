@@ -35,19 +35,11 @@ const TarotForecast2026Quiz = () => {
     if (currentQuestionIndex < tarotQuizQuestions.length - 1) {
       // Move to next question
       setCurrentQuestionIndex(prev => prev + 1);
-      setSelectedCards(answers[currentQuestionIndex + 1] ?? []);
+      setSelectedCards([]);
     } else {
       // Quiz completed
       console.log("Tarot quiz completed!", updatedAnswers);
-      // TODO: Navigate to results page
       navigate("/2026_tarot_forecast_unlocked");
-    }
-  };
-
-  const handleBack = () => {
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(prev => prev - 1);
-      setSelectedCards(answers[currentQuestionIndex - 1] ?? []);
     }
   };
 
@@ -72,8 +64,6 @@ const TarotForecast2026Quiz = () => {
           selectedCards={selectedCards}
           onSelectCard={handleSelectCard}
           onNext={handleNext}
-          onBack={handleBack}
-          showBack={currentQuestionIndex > 0}
         />
       </main>
     </div>

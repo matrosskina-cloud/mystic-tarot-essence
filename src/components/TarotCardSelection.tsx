@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { TarotCard } from "@/components/TarotCard";
 import { TarotQuizQuestion } from "@/data/tarotQuizQuestions";
@@ -11,8 +10,6 @@ interface TarotCardSelectionProps {
   selectedCards: number[];
   onSelectCard: (cardIndex: number) => void;
   onNext: () => void;
-  onBack: () => void;
-  showBack: boolean;
 }
 
 export const TarotCardSelection = ({
@@ -21,27 +18,29 @@ export const TarotCardSelection = ({
   totalQuestions,
   selectedCards,
   onSelectCard,
-  onNext,
-  onBack,
-  showBack
+  onNext
 }: TarotCardSelectionProps) => {
   const progress = (currentQuestionNumber / totalQuestions) * 100;
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   
   const canSelectMore = selectedCards.length < question.cardsToSelect;
-  const isComplete = selectedCards.length === question.cardsToSelect;
 
   const handleCardClick = (index: number) => {
     const isCurrentlySelected = selectedCards.includes(index);
     
     if (isCurrentlySelected) {
-      // Deselect: unflip and remove from selection
-      setFlippedCards(prev => prev.filter(i => i !== index));
-      onSelectCard(index);
+      return; // Can't deselect once selected
     } else if (canSelectMore) {
       // Select: flip and add to selection
       setFlippedCards(prev => [...prev, index]);
       onSelectCard(index);
+      
+      // Auto-advance when selection is complete
+      if (selectedCards.length + 1 === question.cardsToSelect) {
+        setTimeout(() => {
+          onNext();
+        }, 800); // Small delay to show the flip animation
+      }
     }
   };
 
@@ -84,49 +83,40 @@ export const TarotCardSelection = ({
             {question.cardsToSelect > 1 && ' — по одной карте на каждый месяц'}
           </p>
 
-          {/* Cards Grid */}
-          <div className="flex justify-center items-center gap-2 sm:gap-3 md:gap-4 py-4">
-            {[0, 1, 2, 3, 4].map((index) => (
-              <TarotCard
-                key={index}
-                index={index}
-                isSelected={selectedCards.includes(index)}
-                isFlipped={flippedCards.includes(index)}
-                onClick={() => handleCardClick(index)}
-                disabled={!canSelectMore}
-              />
-            ))}
+          {/* Cards Grid - 2 rows: 3 + 2 */}
+          <div className="flex flex-col items-center gap-3 sm:gap-4 py-4">
+            {/* First row - 3 cards */}
+            <div className="flex justify-center items-center gap-3 sm:gap-4 md:gap-5">
+              {[0, 1, 2].map((index) => (
+                <TarotCard
+                  key={index}
+                  index={index}
+                  isSelected={selectedCards.includes(index)}
+                  isFlipped={flippedCards.includes(index)}
+                  onClick={() => handleCardClick(index)}
+                  disabled={!canSelectMore}
+                />
+              ))}
+            </div>
+            {/* Second row - 2 cards */}
+            <div className="flex justify-center items-center gap-3 sm:gap-4 md:gap-5">
+              {[3, 4].map((index) => (
+                <TarotCard
+                  key={index}
+                  index={index}
+                  isSelected={selectedCards.includes(index)}
+                  isFlipped={flippedCards.includes(index)}
+                  onClick={() => handleCardClick(index)}
+                  disabled={!canSelectMore}
+                />
+              ))}
+            </div>
           </div>
           
           {/* Selection status */}
           <p className="text-center text-white/50 text-sm mt-4">
             Выбрано: {selectedCards.length} / {question.cardsToSelect}
           </p>
-        </div>
-
-        {/* Navigation Buttons */}
-        <div className="fixed sm:relative bottom-0 left-0 right-0 flex gap-3 sm:gap-4 pt-4 sm:pt-6 pb-4 sm:pb-0 px-4 sm:px-0 bg-black/90 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border-t sm:border-t-0 border-white/5 sm:border-0 shadow-[0_-10px_30px_rgba(0,0,0,0.3)] sm:shadow-none" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
-          {showBack && (
-            <Button
-              variant="ghost"
-              size="lg"
-              onClick={onBack}
-              className="flex-1 text-white/60 hover:text-white hover:bg-white/10 h-11 sm:h-12 min-h-[44px] border border-white/10 hover:border-white/20 transition-all duration-300"
-            >
-              Назад
-            </Button>
-          )}
-          <Button
-            variant="golden"
-            size="lg"
-            onClick={onNext}
-            disabled={!isComplete}
-            className={`${showBack ? 'flex-1' : 'w-full'} transition-all duration-300 h-11 sm:h-12 min-h-[44px] ${
-              !isComplete ? 'opacity-40 cursor-not-allowed' : 'opacity-100 hover:shadow-[0_0_30px_rgba(251,191,36,0.5)] hover:scale-105'
-            }`}
-          >
-            {currentQuestionNumber === totalQuestions ? "Завершить" : "Далее →"}
-          </Button>
         </div>
       </div>
     </div>
