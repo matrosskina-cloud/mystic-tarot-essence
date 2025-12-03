@@ -1,10 +1,5 @@
+import { useState, useRef, useEffect } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 // Mock data - will be replaced with real data
 const mockUserData = {
@@ -23,30 +18,153 @@ const mockMainCard = {
 };
 
 const monthsData = [
-  { month: "Январь", icon: "❄️", card: "Маг", season: "winter" },
-  { month: "Февраль", icon: "❄️", card: "Верховная Жрица", season: "winter" },
-  { month: "Март", icon: "🌿", card: "Императрица", season: "spring" },
-  { month: "Апрель", icon: "🌿", card: "Император", season: "spring" },
-  { month: "Май", icon: "🌿", card: "Иерофант", season: "spring" },
-  { month: "Июнь", icon: "☀️", card: "Влюблённые", season: "summer" },
-  { month: "Июль", icon: "☀️", card: "Колесница", season: "summer" },
-  { month: "Август", icon: "☀️", card: "Сила", season: "summer" },
-  { month: "Сентябрь", icon: "🍂", card: "Отшельник", season: "autumn" },
-  { month: "Октябрь", icon: "🍂", card: "Колесо Фортуны", season: "autumn" },
-  { month: "Ноябрь", icon: "🎇", card: "Справедливость", season: "final" },
-  { month: "Декабрь", icon: "🎇", card: "Повешенный", season: "final" },
+  { month: "Январь", icon: "❄️", card: "Маг", keywords: "Начало • Воля • Потенциал" },
+  { month: "Февраль", icon: "❄️", card: "Верховная Жрица", keywords: "Интуиция • Тайна • Мудрость" },
+  { month: "Март", icon: "🌿", card: "Императрица", keywords: "Рост • Забота • Изобилие" },
+  { month: "Апрель", icon: "🌿", card: "Император", keywords: "Структура • Власть • Порядок" },
+  { month: "Май", icon: "🌿", card: "Иерофант", keywords: "Традиции • Учение • Вера" },
+  { month: "Июнь", icon: "☀️", card: "Влюблённые", keywords: "Выбор • Связь • Гармония" },
+  { month: "Июль", icon: "☀️", card: "Колесница", keywords: "Движение • Победа • Воля" },
+  { month: "Август", icon: "☀️", card: "Сила", keywords: "Мужество • Терпение • Страсть" },
+  { month: "Сентябрь", icon: "🍂", card: "Отшельник", keywords: "Поиск • Уединение • Мудрость" },
+  { month: "Октябрь", icon: "🍂", card: "Колесо Фортуны", keywords: "Судьба • Перемены • Цикл" },
+  { month: "Ноябрь", icon: "🎇", card: "Справедливость", keywords: "Баланс • Карма • Истина" },
+  { month: "Декабрь", icon: "🎇", card: "Повешенный", keywords: "Пауза • Жертва • Прозрение" },
 ];
 
-const mockMonthInterpretation = {
-  theme: "Новые начинания и свежая энергия",
-  events: "Важные встречи, новые проекты, переосмысление целей",
-  opportunities: "Шанс начать что-то с нуля, поддержка от неожиданных людей",
-  warnings: "Не торопись с решениями, дай себе время на адаптацию",
-  advice: "Доверься своей интуиции и не бойся делать первый шаг",
-  summary: "Месяц закладывает фундамент для всего года — используй его мудро",
+const mockMonthInterpretations: Record<string, {
+  theme: string;
+  events: string;
+  opportunities: string;
+  warnings: string;
+  advice: string;
+  summary: string;
+}> = {
+  "Январь": {
+    theme: "Новые начинания и свежая энергия",
+    events: "Важные встречи, новые проекты, переосмысление целей",
+    opportunities: "Шанс начать что-то с нуля, поддержка от неожиданных людей",
+    warnings: "Не торопись с решениями, дай себе время на адаптацию",
+    advice: "Доверься своей интуиции и не бойся делать первый шаг",
+    summary: "Месяц закладывает фундамент для всего года — используй его мудро",
+  },
+  "Февраль": {
+    theme: "Глубокое познание и интуиция",
+    events: "Внутренние открытия, важные сны, тайные знания",
+    opportunities: "Развитие интуиции, духовные практики",
+    warnings: "Не игнорируй свои чувства и предчувствия",
+    advice: "Прислушивайся к внутреннему голосу",
+    summary: "Время для самопознания и развития внутренней мудрости",
+  },
+  "Март": {
+    theme: "Творчество и расцвет",
+    events: "Творческие проекты, новые идеи, забота о близких",
+    opportunities: "Материальное благополучие, творческая реализация",
+    warnings: "Не забывай о себе, заботясь о других",
+    advice: "Позволь себе творить и наслаждаться жизнью",
+    summary: "Весна приносит изобилие во всех сферах",
+  },
+  "Апрель": {
+    theme: "Структура и организация",
+    events: "Важные решения, построение планов, лидерство",
+    opportunities: "Карьерный рост, признание авторитета",
+    warnings: "Избегай чрезмерного контроля",
+    advice: "Будь твёрдым, но справедливым",
+    summary: "Время для создания прочного фундамента",
+  },
+  "Май": {
+    theme: "Обучение и традиции",
+    events: "Получение знаний, важные наставники, ритуалы",
+    opportunities: "Духовный рост, обучение новому",
+    warnings: "Не следуй слепо за авторитетами",
+    advice: "Найди баланс между традицией и личным путём",
+    summary: "Месяц мудрости и духовного обогащения",
+  },
+  "Июнь": {
+    theme: "Любовь и выбор",
+    events: "Романтические встречи, важные решения в отношениях",
+    opportunities: "Глубокие связи, гармония в партнёрстве",
+    warnings: "Будь честен с собой в своих чувствах",
+    advice: "Следуй за сердцем, но слушай разум",
+    summary: "Время для любви и важных жизненных выборов",
+  },
+  "Июль": {
+    theme: "Движение и победа",
+    events: "Активные действия, путешествия, достижения",
+    opportunities: "Преодоление препятствий, успех в начинаниях",
+    warnings: "Не позволяй эго управлять тобой",
+    advice: "Двигайся вперёд с уверенностью",
+    summary: "Месяц активных действий и триумфа",
+  },
+  "Август": {
+    theme: "Внутренняя сила и мужество",
+    events: "Испытания, проявление характера, страсть",
+    opportunities: "Развитие силы духа, преодоление страхов",
+    warnings: "Контролируй свои импульсы",
+    advice: "Сила в мягкости и терпении",
+    summary: "Время для проявления истинной силы",
+  },
+  "Сентябрь": {
+    theme: "Уединение и поиск",
+    events: "Время для размышлений, внутренний поиск",
+    opportunities: "Глубокое самопознание, мудрость",
+    warnings: "Не изолируйся полностью от мира",
+    advice: "Найди время для себя и своих мыслей",
+    summary: "Месяц внутреннего путешествия",
+  },
+  "Октябрь": {
+    theme: "Перемены и судьба",
+    events: "Неожиданные повороты, смена циклов",
+    opportunities: "Новые возможности от перемен",
+    warnings: "Будь готов к неожиданностям",
+    advice: "Прими перемены как часть жизни",
+    summary: "Время для принятия судьбоносных поворотов",
+  },
+  "Ноябрь": {
+    theme: "Баланс и справедливость",
+    events: "Важные решения, кармические уроки",
+    opportunities: "Восстановление баланса, честные отношения",
+    warnings: "Будь честен во всём",
+    advice: "Ищи справедливость, но начни с себя",
+    summary: "Месяц кармического равновесия",
+  },
+  "Декабрь": {
+    theme: "Пауза и трансформация",
+    events: "Время переосмысления, жертвы ради роста",
+    opportunities: "Глубокое прозрение, духовная трансформация",
+    warnings: "Не сопротивляйся необходимым переменам",
+    advice: "Позволь старому уйти для нового",
+    summary: "Завершение года с глубоким пониманием",
+  },
 };
 
 const TarotForecast2026Results = () => {
+  const [activeMonth, setActiveMonth] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const scrollToCard = (index: number) => {
+    const card = cardRefs.current[index];
+    if (card && scrollRef.current) {
+      const container = scrollRef.current;
+      const cardRect = card.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      const scrollLeft = card.offsetLeft - containerRect.width / 2 + cardRect.width / 2;
+      container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    scrollToCard(activeMonth);
+  }, [activeMonth]);
+
+  const handleMonthClick = (index: number) => {
+    setActiveMonth(index);
+  };
+
+  const currentMonth = monthsData[activeMonth];
+  const currentInterpretation = mockMonthInterpretations[currentMonth.month];
+
   return (
     <div className="relative min-h-screen overflow-x-hidden" style={{ backgroundColor: "#1a3a2f" }}>
       {/* Subtle gradient overlay */}
@@ -129,7 +247,7 @@ const TarotForecast2026Results = () => {
           </div>
         </section>
 
-        {/* Block 4: Monthly Dropdowns */}
+        {/* Block 4: Monthly Slider */}
         <section className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
           <div className="bg-[#0f1f1a]/60 backdrop-blur-md border border-amber-500/20 rounded-[28px] p-6 md:p-8 shadow-[0_0_60px_rgba(234,196,111,0.1)]">
             <div className="flex items-start gap-3 mb-6">
@@ -139,57 +257,111 @@ const TarotForecast2026Results = () => {
               </h2>
             </div>
             
-            <Accordion type="single" collapsible className="space-y-3">
+            {/* Horizontal Month Slider */}
+            <div 
+              ref={scrollRef}
+              className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory"
+              style={{ 
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+              }}
+            >
               {monthsData.map((monthData, idx) => (
-                <AccordionItem 
-                  key={idx} 
-                  value={`month-${idx}`} 
-                  className="bg-[#0a1512]/60 border border-amber-500/10 rounded-2xl overflow-hidden"
+                <button
+                  key={idx}
+                  ref={(el) => (cardRefs.current[idx] = el)}
+                  onClick={() => handleMonthClick(idx)}
+                  className={`
+                    flex-shrink-0 snap-center
+                    w-[90px] h-[110px] md:w-[100px] md:h-[120px]
+                    rounded-[20px] p-3
+                    flex flex-col items-center justify-center gap-1
+                    transition-all duration-150 ease-out
+                    cursor-pointer
+                    ${activeMonth === idx 
+                      ? 'scale-[1.06] border-2 border-[#EAC46F] shadow-[0_0_12px_rgba(234,196,111,0.4)]' 
+                      : 'border border-white/[0.12] hover:border-white/25'
+                    }
+                  `}
+                  style={{
+                    background: activeMonth === idx 
+                      ? 'linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))'
+                      : 'linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
+                    boxShadow: activeMonth === idx 
+                      ? '0 0 12px rgba(234,196,111,0.4), 0 6px 12px rgba(0,0,0,0.25)'
+                      : '0 6px 12px rgba(0,0,0,0.25)',
+                  }}
                 >
-                  <AccordionTrigger className="px-5 py-4 hover:no-underline">
-                    <div className="flex items-center gap-3">
-                      <span className="text-xl" style={{ color: "#EAC46F" }}>
-                        {monthData.icon}
-                      </span>
-                      <h3 className="text-lg font-bold text-white">
-                        {monthData.month} — {monthData.card}
-                      </h3>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-5 pb-5 space-y-4">
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-amber-400/90 font-medium text-sm mb-1">🎯 Тема месяца</p>
-                        <p className="text-sm text-gray-300">{mockMonthInterpretation.theme}</p>
-                      </div>
-                      <div>
-                        <p className="text-amber-400/90 font-medium text-sm mb-1">📍 Главные события</p>
-                        <p className="text-sm text-gray-300">{mockMonthInterpretation.events}</p>
-                      </div>
-                      <div>
-                        <p className="text-amber-400/90 font-medium text-sm mb-1">✨ Возможности</p>
-                        <p className="text-sm text-gray-300">{mockMonthInterpretation.opportunities}</p>
-                      </div>
-                      <div>
-                        <p className="text-amber-400/90 font-medium text-sm mb-1">⚠️ Риски / предупреждения</p>
-                        <p className="text-sm text-gray-300">{mockMonthInterpretation.warnings}</p>
-                      </div>
-                      <div>
-                        <p className="text-amber-400/90 font-medium text-sm mb-1">💡 Совет</p>
-                        <p className="text-sm text-gray-300">{mockMonthInterpretation.advice}</p>
-                      </div>
-                      <div>
-                        <p className="text-amber-400/90 font-medium text-sm mb-1">🌟 Итог месяца</p>
-                        <p className="text-sm text-gray-300">{mockMonthInterpretation.summary}</p>
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
+                  <span className="text-xl" style={{ color: "#EAC46F" }}>
+                    {monthData.icon}
+                  </span>
+                  <span className="text-white text-xs font-medium">
+                    {monthData.month}
+                  </span>
+                  <span className="text-white/70 text-[10px] font-semibold text-center leading-tight">
+                    {monthData.card}
+                  </span>
+                </button>
               ))}
-            </Accordion>
+            </div>
+
+            {/* Detailed Month Interpretation */}
+            <div 
+              key={activeMonth}
+              className="mt-6 rounded-[24px] p-6 animate-fade-in"
+              style={{
+                background: 'rgba(0,0,0,0.25)',
+                backdropFilter: 'blur(14px)',
+                border: '1px solid rgba(255,255,255,0.12)',
+                boxShadow: '0 20px 40px rgba(234,196,111,0.12)',
+              }}
+            >
+              {/* Month Header */}
+              <h3 className="text-xl md:text-[22px] font-semibold text-white mb-2">
+                {currentMonth.month} — {currentMonth.card}
+              </h3>
+              <p className="text-sm md:text-[15px] font-medium mb-6" style={{ color: '#EAC46F' }}>
+                {currentMonth.keywords}
+              </p>
+
+              {/* Interpretation Sections */}
+              <div className="space-y-5">
+                <div>
+                  <p className="text-white font-semibold text-sm mb-1">🎯 Тема месяца</p>
+                  <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.theme}</p>
+                </div>
+                <div>
+                  <p className="text-white font-semibold text-sm mb-1">📍 Главные события</p>
+                  <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.events}</p>
+                </div>
+                <div>
+                  <p className="text-white font-semibold text-sm mb-1">✨ Возможности</p>
+                  <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.opportunities}</p>
+                </div>
+                <div>
+                  <p className="text-white font-semibold text-sm mb-1">⚠️ Риски / предупреждения</p>
+                  <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.warnings}</p>
+                </div>
+                <div>
+                  <p className="text-white font-semibold text-sm mb-1">💡 Совет</p>
+                  <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.advice}</p>
+                </div>
+                <div>
+                  <p className="text-white font-semibold text-sm mb-1">🌟 Итог месяца</p>
+                  <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.summary}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>
+
+      {/* Hide scrollbar styles */}
+      <style>{`
+        div::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </div>
   );
 };
