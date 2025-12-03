@@ -39,7 +39,7 @@ const TarotForecast2026Quiz = () => {
     } else {
       // Quiz completed
       console.log("Tarot quiz completed!", updatedAnswers);
-      navigate("/2026_tarot_forecast_unlocked");
+      navigate("/2026_tarot_forecast_results");
     }
   };
 
