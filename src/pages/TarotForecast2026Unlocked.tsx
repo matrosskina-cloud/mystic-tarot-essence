@@ -1,11 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { BenefitCard } from "@/components/BenefitCard";
 import tarotBg from "@/assets/tarot-2026-bg.png";
 
 const TarotForecast2026Unlocked = () => {
+  const navigate = useNavigate();
+
   const handleStartForecast = () => {
-    // TODO: Navigate to forecast flow
-    console.log("Start forecast clicked");
+    navigate("/2026_tarot_forecast_quiz");
   };
 
   const handleGiftForecast = () => {
