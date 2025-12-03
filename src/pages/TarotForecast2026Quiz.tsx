@@ -61,7 +61,7 @@ const TarotForecast2026Quiz = () => {
       <main 
         className={`relative z-10 transition-all duration-300 ${
           isTransitioning 
-            ? 'opacity-0 translate-x-8' 
+            ? 'opacity-0 -translate-x-8' 
             : 'opacity-100 translate-x-0'
         }`}
       >
