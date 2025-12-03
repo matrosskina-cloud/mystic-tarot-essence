@@ -9,23 +9,21 @@ const TarotForecast2026Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number[]>>({});
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const currentQuestion = tarotQuizQuestions[currentQuestionIndex];
 
   const handleSelectCard = (cardIndex: number) => {
     setSelectedCards(prev => {
       if (prev.includes(cardIndex)) {
-        // Deselect
         return prev.filter(i => i !== cardIndex);
       } else {
-        // Select
         return [...prev, cardIndex];
       }
     });
   };
 
   const handleNext = () => {
-    // Save current selection
     const updatedAnswers = {
       ...answers,
       [currentQuestionIndex]: selectedCards
@@ -33,11 +31,15 @@ const TarotForecast2026Quiz = () => {
     setAnswers(updatedAnswers);
 
     if (currentQuestionIndex < tarotQuizQuestions.length - 1) {
-      // Move to next question
-      setCurrentQuestionIndex(prev => prev + 1);
-      setSelectedCards([]);
+      // Start transition animation
+      setIsTransitioning(true);
+      
+      setTimeout(() => {
+        setCurrentQuestionIndex(prev => prev + 1);
+        setSelectedCards([]);
+        setIsTransitioning(false);
+      }, 300);
     } else {
-      // Quiz completed
       console.log("Tarot quiz completed!", updatedAnswers);
       navigate("/2026_tarot_forecast_results");
     }
@@ -56,7 +58,13 @@ const TarotForecast2026Quiz = () => {
       {/* Overlay for better readability */}
       <div className="absolute inset-0 bg-black/40" />
       
-      <main className="relative z-10">
+      <main 
+        className={`relative z-10 transition-all duration-300 ${
+          isTransitioning 
+            ? 'opacity-0 translate-x-8' 
+            : 'opacity-100 translate-x-0'
+        }`}
+      >
         <TarotCardSelection
           question={currentQuestion}
           currentQuestionNumber={currentQuestionIndex + 1}
