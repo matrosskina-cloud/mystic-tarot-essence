@@ -142,24 +142,82 @@ const TarotForecast2026Results = () => {
   const [activeMonth, setActiveMonth] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const isScrollingRef = useRef(false);
+  const touchStartX = useRef(0);
 
   const scrollToCard = (index: number) => {
     const card = cardRefs.current[index];
     if (card && scrollRef.current) {
+      isScrollingRef.current = true;
       const container = scrollRef.current;
       const cardRect = card.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
       const scrollLeft = card.offsetLeft - containerRect.width / 2 + cardRect.width / 2;
       container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+      setTimeout(() => { isScrollingRef.current = false; }, 300);
+    }
+  };
+
+  // Handle scroll to detect active card
+  const handleScroll = () => {
+    if (isScrollingRef.current || !scrollRef.current) return;
+    
+    const container = scrollRef.current;
+    const containerCenter = container.scrollLeft + container.offsetWidth / 2;
+    
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+    
+    cardRefs.current.forEach((card, index) => {
+      if (card) {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const distance = Math.abs(containerCenter - cardCenter);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      }
+    });
+    
+    if (closestIndex !== activeMonth) {
+      setActiveMonth(closestIndex);
+    }
+  };
+
+  // Content swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+    
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && activeMonth < 11) {
+        const newIndex = activeMonth + 1;
+        setActiveMonth(newIndex);
+        scrollToCard(newIndex);
+      } else if (diff < 0 && activeMonth > 0) {
+        const newIndex = activeMonth - 1;
+        setActiveMonth(newIndex);
+        scrollToCard(newIndex);
+      }
     }
   };
 
   useEffect(() => {
-    scrollToCard(activeMonth);
+    const container = scrollRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      return () => container.removeEventListener('scroll', handleScroll);
+    }
   }, [activeMonth]);
 
   const handleMonthClick = (index: number) => {
     setActiveMonth(index);
+    scrollToCard(index);
   };
 
   const currentMonth = monthsData[activeMonth];
@@ -248,108 +306,109 @@ const TarotForecast2026Results = () => {
         </section>
 
         {/* Block 4: Monthly Slider */}
-        <section className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
-          <div className="bg-[#0f1f1a]/60 backdrop-blur-md border border-amber-500/20 rounded-[28px] p-6 md:p-8 shadow-[0_0_60px_rgba(234,196,111,0.1)]">
-            <div className="flex items-start gap-3 mb-6">
-              <div className="flex-shrink-0 text-2xl">📅</div>
-              <h2 className="text-xl md:text-2xl font-bold text-white">
-                Твой год по месяцам
-              </h2>
-            </div>
-            
-            {/* Horizontal Month Slider */}
-            <div 
-              ref={scrollRef}
-              className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory"
-              style={{ 
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-              }}
-            >
-              {monthsData.map((monthData, idx) => (
-                <button
-                  key={idx}
-                  ref={(el) => (cardRefs.current[idx] = el)}
-                  onClick={() => handleMonthClick(idx)}
-                  className={`
-                    flex-shrink-0 snap-center
-                    w-[90px] h-[110px] md:w-[100px] md:h-[120px]
-                    rounded-[20px] p-3
-                    flex flex-col items-center justify-center gap-1
-                    transition-all duration-150 ease-out
-                    cursor-pointer
-                    ${activeMonth === idx 
-                      ? 'scale-[1.06] border-2 border-[#EAC46F] shadow-[0_0_12px_rgba(234,196,111,0.4)]' 
-                      : 'border border-white/[0.12] hover:border-white/25'
-                    }
-                  `}
-                  style={{
-                    background: activeMonth === idx 
-                      ? 'linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))'
-                      : 'linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
-                    boxShadow: activeMonth === idx 
-                      ? '0 0 12px rgba(234,196,111,0.4), 0 6px 12px rgba(0,0,0,0.25)'
-                      : '0 6px 12px rgba(0,0,0,0.25)',
-                  }}
-                >
-                  <span className="text-xl" style={{ color: "#EAC46F" }}>
-                    {monthData.icon}
-                  </span>
-                  <span className="text-white text-xs font-medium">
-                    {monthData.month}
-                  </span>
-                  <span className="text-white/70 text-[10px] font-semibold text-center leading-tight">
-                    {monthData.card}
-                  </span>
-                </button>
-              ))}
-            </div>
+        <section className="animate-fade-in space-y-4" style={{ animationDelay: "0.3s" }}>
+          <div className="flex items-center gap-3 px-2">
+            <div className="flex-shrink-0 text-2xl">📅</div>
+            <h2 className="text-xl md:text-2xl font-bold text-white">
+              Твой год по месяцам
+            </h2>
+          </div>
+          
+          {/* Horizontal Month Slider */}
+          <div 
+            ref={scrollRef}
+            className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory -mx-4 px-4"
+            style={{ 
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
+            {monthsData.map((monthData, idx) => (
+              <button
+                key={idx}
+                ref={(el) => (cardRefs.current[idx] = el)}
+                onClick={() => handleMonthClick(idx)}
+                className={`
+                  flex-shrink-0 snap-center
+                  w-[90px] h-[110px] md:w-[100px] md:h-[120px]
+                  rounded-[20px] p-3
+                  flex flex-col items-center justify-center gap-1
+                  transition-all duration-150 ease-out
+                  cursor-pointer
+                  ${activeMonth === idx 
+                    ? 'scale-[1.06] border-2 border-[#EAC46F]' 
+                    : 'border border-white/[0.12] hover:border-white/25'
+                  }
+                `}
+                style={{
+                  background: activeMonth === idx 
+                    ? 'linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))'
+                    : 'linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
+                  boxShadow: activeMonth === idx 
+                    ? '0 0 12px rgba(234,196,111,0.4), 0 6px 12px rgba(0,0,0,0.25)'
+                    : '0 6px 12px rgba(0,0,0,0.25)',
+                }}
+              >
+                <span className="text-xl" style={{ color: "#EAC46F" }}>
+                  {monthData.icon}
+                </span>
+                <span className="text-white text-xs font-medium">
+                  {monthData.month}
+                </span>
+                <span className="text-white/70 text-[10px] font-semibold text-center leading-tight">
+                  {monthData.card}
+                </span>
+              </button>
+            ))}
+          </div>
 
-            {/* Detailed Month Interpretation */}
-            <div 
-              key={activeMonth}
-              className="mt-6 rounded-[24px] p-6 animate-fade-in"
-              style={{
-                background: 'rgba(0,0,0,0.25)',
-                backdropFilter: 'blur(14px)',
-                border: '1px solid rgba(255,255,255,0.12)',
-                boxShadow: '0 20px 40px rgba(234,196,111,0.12)',
-              }}
-            >
-              {/* Month Header */}
-              <h3 className="text-xl md:text-[22px] font-semibold text-white mb-2">
-                {currentMonth.month} — {currentMonth.card}
-              </h3>
-              <p className="text-sm md:text-[15px] font-medium mb-6" style={{ color: '#EAC46F' }}>
-                {currentMonth.keywords}
-              </p>
+          {/* Detailed Month Interpretation - single card without extra nesting */}
+          <div 
+            ref={contentRef}
+            key={activeMonth}
+            className="rounded-[24px] p-6 animate-fade-in"
+            style={{
+              background: 'rgba(15,31,26,0.8)',
+              backdropFilter: 'blur(14px)',
+              border: '1px solid rgba(234,196,111,0.2)',
+              boxShadow: '0 20px 40px rgba(234,196,111,0.08)',
+            }}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* Month Header */}
+            <h3 className="text-xl md:text-[22px] font-semibold text-white mb-2">
+              {currentMonth.month} — {currentMonth.card}
+            </h3>
+            <p className="text-sm md:text-[15px] font-medium mb-6" style={{ color: '#EAC46F' }}>
+              {currentMonth.keywords}
+            </p>
 
-              {/* Interpretation Sections */}
-              <div className="space-y-5">
-                <div>
-                  <p className="text-white font-semibold text-sm mb-1">🎯 Тема месяца</p>
-                  <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.theme}</p>
-                </div>
-                <div>
-                  <p className="text-white font-semibold text-sm mb-1">📍 Главные события</p>
-                  <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.events}</p>
-                </div>
-                <div>
-                  <p className="text-white font-semibold text-sm mb-1">✨ Возможности</p>
-                  <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.opportunities}</p>
-                </div>
-                <div>
-                  <p className="text-white font-semibold text-sm mb-1">⚠️ Риски / предупреждения</p>
-                  <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.warnings}</p>
-                </div>
-                <div>
-                  <p className="text-white font-semibold text-sm mb-1">💡 Совет</p>
-                  <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.advice}</p>
-                </div>
-                <div>
-                  <p className="text-white font-semibold text-sm mb-1">🌟 Итог месяца</p>
-                  <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.summary}</p>
-                </div>
+            {/* Interpretation Sections */}
+            <div className="space-y-5">
+              <div>
+                <p className="text-white font-semibold text-sm mb-1">🎯 Тема месяца</p>
+                <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.theme}</p>
+              </div>
+              <div>
+                <p className="text-white font-semibold text-sm mb-1">📍 Главные события</p>
+                <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.events}</p>
+              </div>
+              <div>
+                <p className="text-white font-semibold text-sm mb-1">✨ Возможности</p>
+                <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.opportunities}</p>
+              </div>
+              <div>
+                <p className="text-white font-semibold text-sm mb-1">⚠️ Риски / предупреждения</p>
+                <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.warnings}</p>
+              </div>
+              <div>
+                <p className="text-white font-semibold text-sm mb-1">💡 Совет</p>
+                <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.advice}</p>
+              </div>
+              <div>
+                <p className="text-white font-semibold text-sm mb-1">🌟 Итог месяца</p>
+                <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.summary}</p>
               </div>
             </div>
           </div>
