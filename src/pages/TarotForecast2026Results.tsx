@@ -608,6 +608,42 @@ const TarotForecast2026Results = () => {
             </div>
           </div>
         </section>
+
+        {/* CTA Buttons Section */}
+        <section
+          data-section="5"
+          className={`mt-10 mb-8 space-y-4 px-4 transition-all duration-500 delay-300 ${
+            visibleSections.has(5) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
+          {/* Primary Button - Gift Reading */}
+          <button
+            onClick={() => window.open("https://t.me/your_bot?start=gift", "_blank")}
+            className="w-full py-4 px-6 rounded-[20px] font-semibold text-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+            style={{
+              background: "linear-gradient(135deg, #EAC46F 0%, #D4A84B 100%)",
+              color: "#1a3a2f",
+              boxShadow: "0 8px 24px rgba(234, 196, 111, 0.35), 0 0 40px rgba(234, 196, 111, 0.15)",
+            }}
+          >
+            🎁 Подарить расклад другу
+          </button>
+
+          {/* Secondary Button - Return to Bot */}
+          <button
+            onClick={() => window.open("https://t.me/your_bot", "_blank")}
+            className="w-full py-4 px-6 rounded-[20px] font-medium text-base transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+            style={{
+              background: "linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%)",
+              backdropFilter: "blur(12px)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              color: "rgba(255,255,255,0.9)",
+              boxShadow: "0 6px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)",
+            }}
+          >
+            ← Вернуться в бота
+          </button>
+        </section>
       </main>
 
       {/* Hide scrollbar styles and animations */}
