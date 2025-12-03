@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+import { StarfieldCanvas } from "@/components/StarfieldCanvas";
 
 // Mock data - will be replaced with real data
 const mockUserData = {
@@ -300,6 +301,9 @@ const TarotForecast2026Results = () => {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden" style={{ backgroundColor: "#1a3a2f" }}>
+      {/* Starfield canvas animation */}
+      <StarfieldCanvas />
+      
       {/* Subtle gradient overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
