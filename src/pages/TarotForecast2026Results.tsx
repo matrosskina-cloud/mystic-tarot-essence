@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 
 // Mock data - will be replaced with real data
 const mockUserData = {
@@ -142,13 +142,66 @@ const mockMonthInterpretations: Record<
   },
 };
 
+// Decorative sparkle component
+const Sparkle = ({ style, size = 8 }: { style?: React.CSSProperties; size?: number }) => (
+  <div
+    className="absolute pointer-events-none animate-pulse"
+    style={{
+      width: size,
+      height: size,
+      background: "radial-gradient(circle, rgba(234,196,111,0.6) 0%, transparent 70%)",
+      borderRadius: "50%",
+      ...style,
+    }}
+  />
+);
+
 const TarotForecast2026Results = () => {
   const [activeMonth, setActiveMonth] = useState(0);
+  const [showFullInterpretation, setShowFullInterpretation] = useState(false);
+  const [parallaxOffset, setParallaxOffset] = useState(0);
+  const [glowIntensity, setGlowIntensity] = useState(0.35);
+  const [visibleSections, setVisibleSections] = useState<Set<number>>(new Set([0, 1]));
   const scrollRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const contentRef = useRef<HTMLDivElement>(null);
   const isScrollingRef = useRef(false);
   const touchStartX = useRef(0);
+  const mainCardRef = useRef<HTMLDivElement>(null);
+
+  // Parallax and glow effect on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      // Parallax: max 8px offset
+      const newOffset = Math.min(scrollY * 0.05, 8);
+      setParallaxOffset(newOffset);
+      // Glow intensity increases with scroll (base 0.35, max 0.45)
+      const newGlow = Math.min(0.35 + scrollY * 0.0003, 0.45);
+      setGlowIntensity(newGlow);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Intersection observer for fade-in animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const index = parseInt(entry.target.getAttribute("data-section") || "0");
+          if (entry.isIntersecting) {
+            setVisibleSections((prev) => new Set([...prev, index]));
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    document.querySelectorAll("[data-section]").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   const scrollToCard = (index: number) => {
     const card = cardRefs.current[index];
@@ -166,7 +219,7 @@ const TarotForecast2026Results = () => {
   };
 
   // Handle scroll to detect active card
-  const handleScroll = () => {
+  const handleSliderScroll = () => {
     if (isScrollingRef.current || !scrollRef.current) return;
 
     const container = scrollRef.current;
@@ -216,8 +269,8 @@ const TarotForecast2026Results = () => {
   useEffect(() => {
     const container = scrollRef.current;
     if (container) {
-      container.addEventListener("scroll", handleScroll);
-      return () => container.removeEventListener("scroll", handleScroll);
+      container.addEventListener("scroll", handleSliderScroll);
+      return () => container.removeEventListener("scroll", handleSliderScroll);
     }
   }, [activeMonth]);
 
@@ -255,9 +308,19 @@ const TarotForecast2026Results = () => {
         }}
       />
 
+      {/* Floating decorative sparkles */}
+      <Sparkle style={{ top: "15%", left: "8%", animationDelay: "0s" }} size={6} />
+      <Sparkle style={{ top: "25%", right: "12%", animationDelay: "0.5s" }} size={4} />
+      <Sparkle style={{ top: "45%", left: "5%", animationDelay: "1s" }} size={5} />
+      <Sparkle style={{ top: "60%", right: "8%", animationDelay: "1.5s" }} size={7} />
+      <Sparkle style={{ top: "75%", left: "15%", animationDelay: "2s" }} size={4} />
+
       <main className="relative z-10 w-full max-w-4xl mx-auto px-4 py-8 md:py-12 space-y-5 box-border">
         {/* Block 1: User Avatar & Welcome */}
-        <section className="animate-fade-in">
+        <section
+          data-section="0"
+          className={`transition-all duration-500 ${visibleSections.has(0) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+        >
           <div className="bg-[#0f1f1a]/60 backdrop-blur-md border border-amber-500/20 rounded-[28px] p-6 md:p-8 shadow-[0_0_60px_rgba(234,196,111,0.1)]">
             <div className="flex flex-col items-center text-center">
               {/* Avatar with glow */}
@@ -276,55 +339,123 @@ const TarotForecast2026Results = () => {
           </div>
         </section>
 
-        {/* Block 2: Inspiring Message */}
-        <section className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="bg-[#0f1f1a]/60 backdrop-blur-md border border-amber-500/20 rounded-[28px] p-6 md:p-8 shadow-[0_0_60px_rgba(234,196,111,0.1)]">
-            <p className="text-base md:text-lg text-amber-100/90 leading-relaxed text-center">
-              Перед тобой карта твоего года — энергия, которая будет вести тебя вперёд месяц за месяцем.
-            </p>
-            <p className="text-sm md:text-base text-amber-100/70 leading-relaxed text-center mt-3">
-              Все трактовки собраны по каждому месяцу, чтобы ты могла возвращаться к ним в любой момент.
-            </p>
-          </div>
-        </section>
+        {/* Block 2: Main Energy of the Year - Premium Card */}
+        <section
+          data-section="1"
+          className={`transition-all duration-500 delay-100 ${visibleSections.has(1) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+        >
+          <div
+            ref={mainCardRef}
+            className="relative rounded-[26px] p-6 md:p-8"
+            style={{
+              background: "linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03))",
+              backdropFilter: "blur(14px)",
+              boxShadow: `inset 0 0 18px rgba(255,255,255,0.08), 0 10px 30px rgba(0,0,0,0.4)`,
+              border: "1px solid rgba(255,255,255,0.1)",
+            }}
+          >
+            {/* Decorative corner sparkles */}
+            <Sparkle style={{ top: 16, right: 20 }} size={6} />
+            <Sparkle style={{ bottom: 20, left: 16 }} size={5} />
 
-        {/* Block 3: Main Energy of the Year */}
-        <section className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="bg-[#0f1f1a]/60 backdrop-blur-md border border-amber-500/20 rounded-[28px] p-6 md:p-8 shadow-[0_0_60px_rgba(234,196,111,0.1)]">
-            <div className="flex items-start gap-3 mb-6">
-              <div className="flex-shrink-0 text-2xl">✨</div>
-              <h2 className="text-xl md:text-2xl font-bold text-white">Энергия 2026 года: {mockMainCard.name}</h2>
-            </div>
+            {/* Header */}
+            <h2 className="text-[20px] md:text-[22px] font-bold text-white mb-6 text-center">
+              ✨ Энергия 2026 года: {mockMainCard.name}
+            </h2>
 
-            {/* Main card image placeholder */}
+            {/* Main card image with parallax and glow */}
             <div className="flex justify-center mb-6">
-              <div className="relative">
-                <div className="absolute inset-0 rounded-2xl bg-amber-400/20 blur-2xl scale-110" />
-                <div className="relative w-40 h-56 md:w-48 md:h-68 bg-gradient-to-br from-amber-100 to-amber-200 rounded-2xl flex items-center justify-center shadow-[0_0_40px_rgba(234,196,111,0.3)] ring-2 ring-amber-400/40">
-                  <span className="text-6xl">⭐</span>
+              <div
+                className="relative transition-transform duration-300"
+                style={{ transform: `translateY(${parallaxOffset}px)` }}
+              >
+                {/* Golden glow */}
+                <div
+                  className="absolute inset-0 rounded-2xl blur-2xl scale-125 transition-opacity duration-300"
+                  style={{
+                    background: `rgba(234,196,111,${glowIntensity})`,
+                    boxShadow: `0 0 28px rgba(234,196,111,${glowIntensity})`,
+                  }}
+                />
+                <div className="relative w-44 h-60 md:w-52 md:h-72 bg-gradient-to-br from-amber-100 to-amber-200 rounded-2xl flex items-center justify-center ring-2 ring-amber-400/40">
+                  <span className="text-7xl">⭐</span>
                 </div>
               </div>
             </div>
 
-            {/* Keywords */}
-            <p className="text-center text-amber-400/90 font-medium mb-6 text-lg">{mockMainCard.keywords}</p>
+            {/* Keywords - golden */}
+            <p
+              className="text-center font-medium mb-5 text-[16px] md:text-[17px]"
+              style={{ color: "#EAC46F" }}
+            >
+              {mockMainCard.keywords}
+            </p>
 
-            {/* Interpretation */}
-            <div className="space-y-4">
-              {mockMainCard.interpretation.map((paragraph, idx) => (
-                <p key={idx} className="text-sm md:text-base text-gray-300 leading-relaxed">
-                  {paragraph}
-                </p>
-              ))}
+            {/* Collapsible interpretation */}
+            <div className="mt-4">
+              <button
+                onClick={() => setShowFullInterpretation(!showFullInterpretation)}
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl transition-all duration-200 hover:bg-white/5"
+                style={{
+                  color: "rgba(255,255,255,0.8)",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                }}
+              >
+                <span className="text-sm font-medium">
+                  {showFullInterpretation ? "Скрыть трактовку" : "Показать полную трактовку"}
+                </span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform duration-200 ${showFullInterpretation ? "rotate-180" : ""}`}
+                />
+              </button>
+
+              <div
+                className={`overflow-hidden transition-all duration-300 ${
+                  showFullInterpretation ? "max-h-[500px] opacity-100 mt-5" : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="space-y-4">
+                  {mockMainCard.interpretation.map((paragraph, idx) => (
+                    <p key={idx} className="text-sm md:text-base text-gray-300 leading-relaxed">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
+        {/* Decorative Separator */}
+        <div
+          data-section="2"
+          className={`flex items-center justify-center gap-3 py-2 transition-all duration-500 delay-150 ${
+            visibleSections.has(2) ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div className="h-px w-16 md:w-24 bg-gradient-to-r from-transparent to-white/30" />
+          <span style={{ color: "#EAC46F" }} className="text-lg">✨</span>
+          <div className="h-px w-16 md:w-24 bg-gradient-to-l from-transparent to-white/30" />
+        </div>
+
         {/* Block 4: Monthly Slider */}
-        <section className="animate-fade-in space-y-4" style={{ animationDelay: "0.3s" }}>
-          <div className="flex items-center gap-3 px-2">
-            <div className="flex-shrink-0 text-2xl">📅</div>
-            <h2 className="text-xl md:text-2xl font-bold text-white">Твой год по месяцам</h2>
+        <section
+          data-section="3"
+          className={`space-y-4 transition-all duration-500 delay-200 ${
+            visibleSections.has(3) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
+          {/* New header with description */}
+          <div className="text-center px-2">
+            <div className="relative inline-block">
+              <h2 className="text-[20px] font-semibold text-white">📅 Твой год по месяцам</h2>
+              {/* Golden glow under title */}
+              <div
+                className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-32 h-2 blur-lg"
+                style={{ background: "rgba(234,196,111,0.25)" }}
+              />
+            </div>
+            <p className="text-sm text-white/60 mt-2">Выбери месяц, чтобы увидеть трактовку</p>
           </div>
 
           {/* Horizontal Month Slider with Arrows */}
@@ -392,8 +523,8 @@ const TarotForecast2026Results = () => {
                     cursor-pointer
                     ${
                       activeMonth === idx
-                        ? "scale-[1.06] border-2 border-[#EAC46F]"
-                        : "border border-white/[0.12] hover:border-white/25"
+                        ? "scale-[1.08] border-2 border-[#EAC46F]"
+                        : "border border-white/[0.12] hover:border-white/25 hover:scale-[1.03] hover:shadow-lg"
                     }
                   `}
                   style={{
@@ -403,7 +534,7 @@ const TarotForecast2026Results = () => {
                         : "linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))",
                     boxShadow:
                       activeMonth === idx
-                        ? "0 0 12px rgba(234,196,111,0.4), 0 6px 12px rgba(0,0,0,0.25)"
+                        ? "0 0 14px rgba(234,196,111,0.45), 0 6px 12px rgba(0,0,0,0.25)"
                         : "0 6px 12px rgba(0,0,0,0.25)",
                   }}
                 >
@@ -419,52 +550,55 @@ const TarotForecast2026Results = () => {
             </div>
           </div>
 
-          {/* Detailed Month Interpretation - single card without extra nesting */}
+          {/* Detailed Month Interpretation */}
           <div
             ref={contentRef}
             key={activeMonth}
-            className="rounded-[24px] p-6"
+            className="relative rounded-[24px] p-6"
             style={{
-              background: "rgba(15,31,26,0.8)",
-              backdropFilter: "blur(14px)",
-              border: "1px solid rgba(234,196,111,0.2)",
-              boxShadow: "0 20px 40px rgba(234,196,111,0.08)",
-              animation: "slideIn 280ms ease-out",
+              background: "rgba(255,255,255,0.10)",
+              backdropFilter: "blur(16px)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              boxShadow: "0 6px 22px rgba(0,0,0,0.35), 0 20px 40px rgba(234,196,111,0.12)",
+              animation: "monthSlideIn 280ms ease-out",
             }}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
+            {/* Decorative sparkle */}
+            <Sparkle style={{ top: 12, right: 16 }} size={5} />
+
             {/* Month Header */}
             <h3 className="text-xl md:text-[22px] font-semibold text-white mb-2">
               {currentMonth.month} — {currentMonth.card}
             </h3>
-            <p className="text-sm md:text-[15px] font-medium mb-6" style={{ color: "#EAC46F" }}>
+            <p className="text-[14px] md:text-[15px] font-medium mb-6" style={{ color: "#EAC46F" }}>
               {currentMonth.keywords}
             </p>
 
             {/* Interpretation Sections */}
             <div className="space-y-5">
-              <div>
+              <div className="interpretation-item" style={{ animationDelay: "50ms" }}>
                 <p className="text-white font-semibold text-sm mb-1">🎯 Тема месяца</p>
                 <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.theme}</p>
               </div>
-              <div>
+              <div className="interpretation-item" style={{ animationDelay: "100ms" }}>
                 <p className="text-white font-semibold text-sm mb-1">📍 Главные события</p>
                 <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.events}</p>
               </div>
-              <div>
+              <div className="interpretation-item" style={{ animationDelay: "150ms" }}>
                 <p className="text-white font-semibold text-sm mb-1">✨ Возможности</p>
                 <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.opportunities}</p>
               </div>
-              <div>
+              <div className="interpretation-item" style={{ animationDelay: "200ms" }}>
                 <p className="text-white font-semibold text-sm mb-1">⚠️ Риски / предупреждения</p>
                 <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.warnings}</p>
               </div>
-              <div>
+              <div className="interpretation-item" style={{ animationDelay: "250ms" }}>
                 <p className="text-white font-semibold text-sm mb-1">💡 Совет</p>
                 <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.advice}</p>
               </div>
-              <div>
+              <div className="interpretation-item" style={{ animationDelay: "300ms" }}>
                 <p className="text-white font-semibold text-sm mb-1">🌟 Итог месяца</p>
                 <p className="text-gray-300/90 text-sm leading-relaxed">{currentInterpretation.summary}</p>
               </div>
@@ -478,10 +612,23 @@ const TarotForecast2026Results = () => {
         div::-webkit-scrollbar {
           display: none;
         }
-        @keyframes slideIn {
+        @keyframes monthSlideIn {
           from {
             opacity: 0;
-            transform: translateY(12px);
+            transform: translateY(14px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .interpretation-item {
+          animation: itemFadeIn 260ms ease-out both;
+        }
+        @keyframes itemFadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(8px);
           }
           to {
             opacity: 1;
