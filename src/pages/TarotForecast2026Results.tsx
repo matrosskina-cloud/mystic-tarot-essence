@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Mock data - will be replaced with real data
 const mockUserData = {
@@ -220,6 +221,22 @@ const TarotForecast2026Results = () => {
     scrollToCard(index);
   };
 
+  const goToPrevMonth = () => {
+    if (activeMonth > 0) {
+      const newIndex = activeMonth - 1;
+      setActiveMonth(newIndex);
+      scrollToCard(newIndex);
+    }
+  };
+
+  const goToNextMonth = () => {
+    if (activeMonth < 11) {
+      const newIndex = activeMonth + 1;
+      setActiveMonth(newIndex);
+      scrollToCard(newIndex);
+    }
+  };
+
   const currentMonth = monthsData[activeMonth];
   const currentInterpretation = mockMonthInterpretations[currentMonth.month];
 
@@ -314,64 +331,114 @@ const TarotForecast2026Results = () => {
             </h2>
           </div>
           
-          {/* Horizontal Month Slider */}
-          <div 
-            ref={scrollRef}
-            className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory -mx-4 px-4"
-            style={{ 
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-            }}
-          >
-            {monthsData.map((monthData, idx) => (
-              <button
-                key={idx}
-                ref={(el) => (cardRefs.current[idx] = el)}
-                onClick={() => handleMonthClick(idx)}
-                className={`
-                  flex-shrink-0 snap-center
-                  w-[90px] h-[110px] md:w-[100px] md:h-[120px]
-                  rounded-[20px] p-3
-                  flex flex-col items-center justify-center gap-1
-                  transition-all duration-150 ease-out
-                  cursor-pointer
-                  ${activeMonth === idx 
-                    ? 'scale-[1.06] border-2 border-[#EAC46F]' 
-                    : 'border border-white/[0.12] hover:border-white/25'
-                  }
-                `}
-                style={{
-                  background: activeMonth === idx 
-                    ? 'linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))'
-                    : 'linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
-                  boxShadow: activeMonth === idx 
-                    ? '0 0 12px rgba(234,196,111,0.4), 0 6px 12px rgba(0,0,0,0.25)'
-                    : '0 6px 12px rgba(0,0,0,0.25)',
-                }}
-              >
-                <span className="text-xl" style={{ color: "#EAC46F" }}>
-                  {monthData.icon}
-                </span>
-                <span className="text-white text-xs font-medium">
-                  {monthData.month}
-                </span>
-                <span className="text-white/70 text-[10px] font-semibold text-center leading-tight">
-                  {monthData.card}
-                </span>
-              </button>
-            ))}
+          {/* Horizontal Month Slider with Arrows */}
+          <div className="relative">
+            {/* Left Arrow */}
+            <button
+              onClick={goToPrevMonth}
+              disabled={activeMonth === 0}
+              className={`
+                absolute left-0 top-1/2 -translate-y-1/2 z-10
+                w-8 h-8 md:w-10 md:h-10 rounded-full
+                flex items-center justify-center
+                transition-all duration-200
+                ${activeMonth === 0 
+                  ? 'opacity-30 cursor-not-allowed' 
+                  : 'opacity-80 hover:opacity-100 hover:scale-110'
+                }
+              `}
+              style={{
+                background: 'linear-gradient(135deg, rgba(234,196,111,0.3), rgba(234,196,111,0.1))',
+                border: '1px solid rgba(234,196,111,0.4)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+              }}
+            >
+              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-amber-200" />
+            </button>
+
+            {/* Right Arrow */}
+            <button
+              onClick={goToNextMonth}
+              disabled={activeMonth === 11}
+              className={`
+                absolute right-0 top-1/2 -translate-y-1/2 z-10
+                w-8 h-8 md:w-10 md:h-10 rounded-full
+                flex items-center justify-center
+                transition-all duration-200
+                ${activeMonth === 11 
+                  ? 'opacity-30 cursor-not-allowed' 
+                  : 'opacity-80 hover:opacity-100 hover:scale-110'
+                }
+              `}
+              style={{
+                background: 'linear-gradient(135deg, rgba(234,196,111,0.3), rgba(234,196,111,0.1))',
+                border: '1px solid rgba(234,196,111,0.4)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+              }}
+            >
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-amber-200" />
+            </button>
+
+            {/* Month Cards */}
+            <div 
+              ref={scrollRef}
+              className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory px-10 md:px-12"
+              style={{ 
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+              }}
+            >
+              {monthsData.map((monthData, idx) => (
+                <button
+                  key={idx}
+                  ref={(el) => (cardRefs.current[idx] = el)}
+                  onClick={() => handleMonthClick(idx)}
+                  className={`
+                    flex-shrink-0 snap-center
+                    w-[90px] h-[110px] md:w-[100px] md:h-[120px]
+                    rounded-[20px] p-3
+                    flex flex-col items-center justify-center gap-1
+                    transition-all duration-200 ease-out
+                    cursor-pointer
+                    ${activeMonth === idx 
+                      ? 'scale-[1.06] border-2 border-[#EAC46F]' 
+                      : 'border border-white/[0.12] hover:border-white/25'
+                    }
+                  `}
+                  style={{
+                    background: activeMonth === idx 
+                      ? 'linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))'
+                      : 'linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
+                    boxShadow: activeMonth === idx 
+                      ? '0 0 12px rgba(234,196,111,0.4), 0 6px 12px rgba(0,0,0,0.25)'
+                      : '0 6px 12px rgba(0,0,0,0.25)',
+                  }}
+                >
+                  <span className="text-xl" style={{ color: "#EAC46F" }}>
+                    {monthData.icon}
+                  </span>
+                  <span className="text-white text-xs font-medium">
+                    {monthData.month}
+                  </span>
+                  <span className="text-white/70 text-[10px] font-semibold text-center leading-tight">
+                    {monthData.card}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Detailed Month Interpretation - single card without extra nesting */}
           <div 
             ref={contentRef}
             key={activeMonth}
-            className="rounded-[24px] p-6 animate-fade-in"
+            className="rounded-[24px] p-6"
             style={{
               background: 'rgba(15,31,26,0.8)',
               backdropFilter: 'blur(14px)',
               border: '1px solid rgba(234,196,111,0.2)',
               boxShadow: '0 20px 40px rgba(234,196,111,0.08)',
+              animation: 'slideIn 280ms ease-out',
             }}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
@@ -415,10 +482,20 @@ const TarotForecast2026Results = () => {
         </section>
       </main>
 
-      {/* Hide scrollbar styles */}
+      {/* Hide scrollbar styles and animations */}
       <style>{`
         div::-webkit-scrollbar {
           display: none;
+        }
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateY(12px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
       `}</style>
     </div>
