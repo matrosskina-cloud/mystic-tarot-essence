@@ -19,29 +19,32 @@ const mockMainCard = {
 };
 
 const monthsData = [
-  { month: "Январь", icon: "❄️", card: ""Маг"", keywords: "Начало • Воля • Потенциал" },
-  { month: "Февраль", icon: "❄️", card: ""Верховная Жрица""", keywords: "Интуиция • Тайна • Мудрость" },
-  { month: "Март", icon: "🌿", card: ""Императрица"", keywords: "Рост • Забота • Изобилие" },
-  { month: "Апрель", icon: "🌿", card: ""Император"", keywords: "Структура • Власть • Порядок" },
-  { month: "Май", icon: "🌿", card: ""Иерофант"", keywords: "Традиции • Учение • Вера" },
-  { month: "Июнь", icon: "☀️", card: ""Влюблённые"", keywords: "Выбор • Связь • Гармония" },
-  { month: "Июль", icon: "☀️", card: ""Колесница"", keywords: "Движение • Победа • Воля" },
-  { month: "Август", icon: "☀️", card: ""Сила"", keywords: "Мужество • Терпение • Страсть" },
-  { month: "Сентябрь", icon: "🍂", card: ""Отшельник"", keywords: "Поиск • Уединение • Мудрость" },
-  { month: "Октябрь", icon: "🍂", card: ""Колесо Фортуны""", keywords: "Судьба • Перемены • Цикл" },
-  { month: "Ноябрь", icon: "🎇", card: ""Справедливость"", keywords: "Баланс • Карма • Истина" },
-  { month: "Декабрь", icon: "🎇", card: ""Повешенный"", keywords: "Пауза • Жертва • Прозрение" },
+  { month: "Январь", icon: "❄️", card: "«Маг»", keywords: "Начало • Воля • Потенциал" },
+  { month: "Февраль", icon: "❄️", card: "«Верховная Жрица»", keywords: "Интуиция • Тайна • Мудрость" },
+  { month: "Март", icon: "🌿", card: "«Императрица»", keywords: "Рост • Забота • Изобилие" },
+  { month: "Апрель", icon: "🌿", card: "«Император»", keywords: "Структура • Власть • Порядок" },
+  { month: "Май", icon: "🌿", card: "«Иерофант»", keywords: "Традиции • Учение • Вера" },
+  { month: "Июнь", icon: "☀️", card: "«Влюблённые»", keywords: "Выбор • Связь • Гармония" },
+  { month: "Июль", icon: "☀️", card: "«Колесница»", keywords: "Движение • Победа • Воля" },
+  { month: "Август", icon: "☀️", card: "«Сила»", keywords: "Мужество • Терпение • Страсть" },
+  { month: "Сентябрь", icon: "🍂", card: "«Отшельник»", keywords: "Поиск • Уединение • Мудрость" },
+  { month: "Октябрь", icon: "🍂", card: "«Колесо Фортуны»", keywords: "Судьба • Перемены • Цикл" },
+  { month: "Ноябрь", icon: "🎇", card: "«Справедливость»", keywords: "Баланс • Карма • Истина" },
+  { month: "Декабрь", icon: "🎇", card: "«Повешенный»", keywords: "Пауза • Жертва • Прозрение" },
 ];
 
-const mockMonthInterpretations: Record<string, {
-  theme: string;
-  events: string;
-  opportunities: string;
-  warnings: string;
-  advice: string;
-  summary: string;
-}> = {
-  "Январь": {
+const mockMonthInterpretations: Record<
+  string,
+  {
+    theme: string;
+    events: string;
+    opportunities: string;
+    warnings: string;
+    advice: string;
+    summary: string;
+  }
+> = {
+  Январь: {
     theme: "Новые начинания и свежая энергия",
     events: "Важные встречи, новые проекты, переосмысление целей",
     opportunities: "Шанс начать что-то с нуля, поддержка от неожиданных людей",
@@ -49,7 +52,7 @@ const mockMonthInterpretations: Record<string, {
     advice: "Доверься своей интуиции и не бойся делать первый шаг",
     summary: "Месяц закладывает фундамент для всего года — используй его мудро",
   },
-  "Февраль": {
+  Февраль: {
     theme: "Глубокое познание и интуиция",
     events: "Внутренние открытия, важные сны, тайные знания",
     opportunities: "Развитие интуиции, духовные практики",
@@ -57,7 +60,7 @@ const mockMonthInterpretations: Record<string, {
     advice: "Прислушивайся к внутреннему голосу",
     summary: "Время для самопознания и развития внутренней мудрости",
   },
-  "Март": {
+  Март: {
     theme: "Творчество и расцвет",
     events: "Творческие проекты, новые идеи, забота о близких",
     opportunities: "Материальное благополучие, творческая реализация",
@@ -65,7 +68,7 @@ const mockMonthInterpretations: Record<string, {
     advice: "Позволь себе творить и наслаждаться жизнью",
     summary: "Весна приносит изобилие во всех сферах",
   },
-  "Апрель": {
+  Апрель: {
     theme: "Структура и организация",
     events: "Важные решения, построение планов, лидерство",
     opportunities: "Карьерный рост, признание авторитета",
@@ -73,7 +76,7 @@ const mockMonthInterpretations: Record<string, {
     advice: "Будь твёрдым, но справедливым",
     summary: "Время для создания прочного фундамента",
   },
-  "Май": {
+  Май: {
     theme: "Обучение и традиции",
     events: "Получение знаний, важные наставники, ритуалы",
     opportunities: "Духовный рост, обучение новому",
@@ -81,7 +84,7 @@ const mockMonthInterpretations: Record<string, {
     advice: "Найди баланс между традицией и личным путём",
     summary: "Месяц мудрости и духовного обогащения",
   },
-  "Июнь": {
+  Июнь: {
     theme: "Любовь и выбор",
     events: "Романтические встречи, важные решения в отношениях",
     opportunities: "Глубокие связи, гармония в партнёрстве",
@@ -89,7 +92,7 @@ const mockMonthInterpretations: Record<string, {
     advice: "Следуй за сердцем, но слушай разум",
     summary: "Время для любви и важных жизненных выборов",
   },
-  "Июль": {
+  Июль: {
     theme: "Движение и победа",
     events: "Активные действия, путешествия, достижения",
     opportunities: "Преодоление препятствий, успех в начинаниях",
@@ -97,7 +100,7 @@ const mockMonthInterpretations: Record<string, {
     advice: "Двигайся вперёд с уверенностью",
     summary: "Месяц активных действий и триумфа",
   },
-  "Август": {
+  Август: {
     theme: "Внутренняя сила и мужество",
     events: "Испытания, проявление характера, страсть",
     opportunities: "Развитие силы духа, преодоление страхов",
@@ -105,7 +108,7 @@ const mockMonthInterpretations: Record<string, {
     advice: "Сила в мягкости и терпении",
     summary: "Время для проявления истинной силы",
   },
-  "Сентябрь": {
+  Сентябрь: {
     theme: "Уединение и поиск",
     events: "Время для размышлений, внутренний поиск",
     opportunities: "Глубокое самопознание, мудрость",
@@ -113,7 +116,7 @@ const mockMonthInterpretations: Record<string, {
     advice: "Найди время для себя и своих мыслей",
     summary: "Месяц внутреннего путешествия",
   },
-  "Октябрь": {
+  Октябрь: {
     theme: "Перемены и судьба",
     events: "Неожиданные повороты, смена циклов",
     opportunities: "Новые возможности от перемен",
@@ -121,7 +124,7 @@ const mockMonthInterpretations: Record<string, {
     advice: "Прими перемены как часть жизни",
     summary: "Время для принятия судьбоносных поворотов",
   },
-  "Ноябрь": {
+  Ноябрь: {
     theme: "Баланс и справедливость",
     events: "Важные решения, кармические уроки",
     opportunities: "Восстановление баланса, честные отношения",
@@ -129,7 +132,7 @@ const mockMonthInterpretations: Record<string, {
     advice: "Ищи справедливость, но начни с себя",
     summary: "Месяц кармического равновесия",
   },
-  "Декабрь": {
+  Декабрь: {
     theme: "Пауза и трансформация",
     events: "Время переосмысления, жертвы ради роста",
     opportunities: "Глубокое прозрение, духовная трансформация",
@@ -155,21 +158,23 @@ const TarotForecast2026Results = () => {
       const cardRect = card.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
       const scrollLeft = card.offsetLeft - containerRect.width / 2 + cardRect.width / 2;
-      container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-      setTimeout(() => { isScrollingRef.current = false; }, 300);
+      container.scrollTo({ left: scrollLeft, behavior: "smooth" });
+      setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 300);
     }
   };
 
   // Handle scroll to detect active card
   const handleScroll = () => {
     if (isScrollingRef.current || !scrollRef.current) return;
-    
+
     const container = scrollRef.current;
     const containerCenter = container.scrollLeft + container.offsetWidth / 2;
-    
+
     let closestIndex = 0;
     let closestDistance = Infinity;
-    
+
     cardRefs.current.forEach((card, index) => {
       if (card) {
         const cardCenter = card.offsetLeft + card.offsetWidth / 2;
@@ -180,7 +185,7 @@ const TarotForecast2026Results = () => {
         }
       }
     });
-    
+
     if (closestIndex !== activeMonth) {
       setActiveMonth(closestIndex);
     }
@@ -194,7 +199,7 @@ const TarotForecast2026Results = () => {
   const handleTouchEnd = (e: React.TouchEvent) => {
     const touchEndX = e.changedTouches[0].clientX;
     const diff = touchStartX.current - touchEndX;
-    
+
     if (Math.abs(diff) > 50) {
       if (diff > 0 && activeMonth < 11) {
         const newIndex = activeMonth + 1;
@@ -211,8 +216,8 @@ const TarotForecast2026Results = () => {
   useEffect(() => {
     const container = scrollRef.current;
     if (container) {
-      container.addEventListener('scroll', handleScroll);
-      return () => container.removeEventListener('scroll', handleScroll);
+      container.addEventListener("scroll", handleScroll);
+      return () => container.removeEventListener("scroll", handleScroll);
     }
   }, [activeMonth]);
 
@@ -243,15 +248,14 @@ const TarotForecast2026Results = () => {
   return (
     <div className="relative min-h-screen overflow-x-hidden" style={{ backgroundColor: "#1a3a2f" }}>
       {/* Subtle gradient overlay */}
-      <div 
+      <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse at center top, rgba(234,196,111,0.08) 0%, transparent 60%)"
+          background: "radial-gradient(ellipse at center top, rgba(234,196,111,0.08) 0%, transparent 60%)",
         }}
       />
-      
+
       <main className="relative z-10 w-full max-w-4xl mx-auto px-4 py-8 md:py-12 space-y-5 box-border">
-        
         {/* Block 1: User Avatar & Welcome */}
         <section className="animate-fade-in">
           <div className="bg-[#0f1f1a]/60 backdrop-blur-md border border-amber-500/20 rounded-[28px] p-6 md:p-8 shadow-[0_0_60px_rgba(234,196,111,0.1)]">
@@ -266,10 +270,8 @@ const TarotForecast2026Results = () => {
                   </AvatarFallback>
                 </Avatar>
               </div>
-              
-              <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                Твой годовой расклад готов ✨
-              </h1>
+
+              <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">Твой годовой расклад готов ✨</h1>
             </div>
           </div>
         </section>
@@ -291,11 +293,9 @@ const TarotForecast2026Results = () => {
           <div className="bg-[#0f1f1a]/60 backdrop-blur-md border border-amber-500/20 rounded-[28px] p-6 md:p-8 shadow-[0_0_60px_rgba(234,196,111,0.1)]">
             <div className="flex items-start gap-3 mb-6">
               <div className="flex-shrink-0 text-2xl">✨</div>
-              <h2 className="text-xl md:text-2xl font-bold text-white">
-                Энергия 2026 года: {mockMainCard.name}
-              </h2>
+              <h2 className="text-xl md:text-2xl font-bold text-white">Энергия 2026 года: {mockMainCard.name}</h2>
             </div>
-            
+
             {/* Main card image placeholder */}
             <div className="flex justify-center mb-6">
               <div className="relative">
@@ -305,12 +305,10 @@ const TarotForecast2026Results = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Keywords */}
-            <p className="text-center text-amber-400/90 font-medium mb-6 text-lg">
-              {mockMainCard.keywords}
-            </p>
-            
+            <p className="text-center text-amber-400/90 font-medium mb-6 text-lg">{mockMainCard.keywords}</p>
+
             {/* Interpretation */}
             <div className="space-y-4">
               {mockMainCard.interpretation.map((paragraph, idx) => (
@@ -326,11 +324,9 @@ const TarotForecast2026Results = () => {
         <section className="animate-fade-in space-y-4" style={{ animationDelay: "0.3s" }}>
           <div className="flex items-center gap-3 px-2">
             <div className="flex-shrink-0 text-2xl">📅</div>
-            <h2 className="text-xl md:text-2xl font-bold text-white">
-              Твой год по месяцам
-            </h2>
+            <h2 className="text-xl md:text-2xl font-bold text-white">Твой год по месяцам</h2>
           </div>
-          
+
           {/* Horizontal Month Slider with Arrows */}
           <div className="relative">
             {/* Left Arrow */}
@@ -342,15 +338,12 @@ const TarotForecast2026Results = () => {
                 w-8 h-8 md:w-10 md:h-10 rounded-full
                 flex items-center justify-center
                 transition-all duration-200
-                ${activeMonth === 0 
-                  ? 'opacity-30 cursor-not-allowed' 
-                  : 'opacity-80 hover:opacity-100 hover:scale-110'
-                }
+                ${activeMonth === 0 ? "opacity-30 cursor-not-allowed" : "opacity-80 hover:opacity-100 hover:scale-110"}
               `}
               style={{
-                background: 'linear-gradient(135deg, rgba(234,196,111,0.3), rgba(234,196,111,0.1))',
-                border: '1px solid rgba(234,196,111,0.4)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                background: "linear-gradient(135deg, rgba(234,196,111,0.3), rgba(234,196,111,0.1))",
+                border: "1px solid rgba(234,196,111,0.4)",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
               }}
             >
               <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-amber-200" />
@@ -365,27 +358,24 @@ const TarotForecast2026Results = () => {
                 w-8 h-8 md:w-10 md:h-10 rounded-full
                 flex items-center justify-center
                 transition-all duration-200
-                ${activeMonth === 11 
-                  ? 'opacity-30 cursor-not-allowed' 
-                  : 'opacity-80 hover:opacity-100 hover:scale-110'
-                }
+                ${activeMonth === 11 ? "opacity-30 cursor-not-allowed" : "opacity-80 hover:opacity-100 hover:scale-110"}
               `}
               style={{
-                background: 'linear-gradient(135deg, rgba(234,196,111,0.3), rgba(234,196,111,0.1))',
-                border: '1px solid rgba(234,196,111,0.4)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                background: "linear-gradient(135deg, rgba(234,196,111,0.3), rgba(234,196,111,0.1))",
+                border: "1px solid rgba(234,196,111,0.4)",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
               }}
             >
               <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-amber-200" />
             </button>
 
             {/* Month Cards */}
-            <div 
+            <div
               ref={scrollRef}
               className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory px-10 md:px-12"
-              style={{ 
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
+              style={{
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
               }}
             >
               {monthsData.map((monthData, idx) => (
@@ -400,26 +390,27 @@ const TarotForecast2026Results = () => {
                     flex flex-col items-center justify-center gap-1
                     transition-all duration-200 ease-out
                     cursor-pointer
-                    ${activeMonth === idx 
-                      ? 'scale-[1.06] border-2 border-[#EAC46F]' 
-                      : 'border border-white/[0.12] hover:border-white/25'
+                    ${
+                      activeMonth === idx
+                        ? "scale-[1.06] border-2 border-[#EAC46F]"
+                        : "border border-white/[0.12] hover:border-white/25"
                     }
                   `}
                   style={{
-                    background: activeMonth === idx 
-                      ? 'linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))'
-                      : 'linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
-                    boxShadow: activeMonth === idx 
-                      ? '0 0 12px rgba(234,196,111,0.4), 0 6px 12px rgba(0,0,0,0.25)'
-                      : '0 6px 12px rgba(0,0,0,0.25)',
+                    background:
+                      activeMonth === idx
+                        ? "linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06))"
+                        : "linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))",
+                    boxShadow:
+                      activeMonth === idx
+                        ? "0 0 12px rgba(234,196,111,0.4), 0 6px 12px rgba(0,0,0,0.25)"
+                        : "0 6px 12px rgba(0,0,0,0.25)",
                   }}
                 >
                   <span className="text-xl" style={{ color: "#EAC46F" }}>
                     {monthData.icon}
                   </span>
-                  <span className="text-white text-xs font-medium">
-                    {monthData.month}
-                  </span>
+                  <span className="text-white text-xs font-medium">{monthData.month}</span>
                   <span className="text-white/70 text-[10px] font-semibold text-center leading-tight">
                     {monthData.card}
                   </span>
@@ -429,16 +420,16 @@ const TarotForecast2026Results = () => {
           </div>
 
           {/* Detailed Month Interpretation - single card without extra nesting */}
-          <div 
+          <div
             ref={contentRef}
             key={activeMonth}
             className="rounded-[24px] p-6"
             style={{
-              background: 'rgba(15,31,26,0.8)',
-              backdropFilter: 'blur(14px)',
-              border: '1px solid rgba(234,196,111,0.2)',
-              boxShadow: '0 20px 40px rgba(234,196,111,0.08)',
-              animation: 'slideIn 280ms ease-out',
+              background: "rgba(15,31,26,0.8)",
+              backdropFilter: "blur(14px)",
+              border: "1px solid rgba(234,196,111,0.2)",
+              boxShadow: "0 20px 40px rgba(234,196,111,0.08)",
+              animation: "slideIn 280ms ease-out",
             }}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
@@ -447,7 +438,7 @@ const TarotForecast2026Results = () => {
             <h3 className="text-xl md:text-[22px] font-semibold text-white mb-2">
               {currentMonth.month} — {currentMonth.card}
             </h3>
-            <p className="text-sm md:text-[15px] font-medium mb-6" style={{ color: '#EAC46F' }}>
+            <p className="text-sm md:text-[15px] font-medium mb-6" style={{ color: "#EAC46F" }}>
               {currentMonth.keywords}
             </p>
 
