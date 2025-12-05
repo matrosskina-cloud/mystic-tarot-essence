@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 import { StarfieldCanvas } from "@/components/StarfieldCanvas";
 
@@ -320,30 +319,7 @@ const TarotForecast2026Results = () => {
       <Sparkle style={{ top: "75%", left: "15%", animationDelay: "2s" }} size={4} />
 
       <main className="relative z-10 w-full max-w-4xl mx-auto px-4 py-8 md:py-12 space-y-5 box-border">
-        {/* Block 1: User Avatar & Welcome */}
-        <section
-          data-section="0"
-          className={`transition-all duration-500 ${visibleSections.has(0) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-        >
-          <div className="bg-[#0f1f1a]/60 backdrop-blur-md border border-amber-500/20 rounded-[28px] p-6 md:p-8 shadow-[0_0_60px_rgba(234,196,111,0.1)]">
-            <div className="flex flex-col items-center text-center">
-              {/* Avatar with glow */}
-              <div className="relative mb-4">
-                <div className="absolute inset-0 rounded-full bg-amber-400/20 blur-xl scale-150" />
-                <Avatar className="relative w-20 h-20 md:w-22 md:h-22 ring-2 ring-amber-400/50 shadow-[0_0_30px_rgba(234,196,111,0.3)]">
-                  <AvatarImage src={mockUserData.avatarUrl} alt={mockUserData.name} />
-                  <AvatarFallback className="bg-gradient-to-br from-amber-600 to-amber-800 text-white text-2xl font-bold">
-                    {mockUserData.name.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
-              </div>
-
-              <h1 className="text-2xl md:text-3xl font-bold text-white mb-2"> ✨ Твой расклад на 2026 год ✨</h1>
-            </div>
-          </div>
-        </section>
-
-        {/* Block 2: Main Energy of the Year - Premium Card */}
+        {/* Block: Main Energy of the Year - Premium Card */}
         <section
           data-section="1"
           className={`transition-all duration-500 delay-100 ${visibleSections.has(1) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
@@ -363,8 +339,8 @@ const TarotForecast2026Results = () => {
             <Sparkle style={{ bottom: 20, left: 16 }} size={5} />
 
             {/* Header */}
-            <h2 className="text-[20px] md:text-[22px] font-bold text-white mb-6 text-center">
-              ✨ Энергия 2026 года: {mockMainCard.name}
+            <h2 className="text-[20px] md:text-[24px] font-bold text-white mb-6 text-center leading-snug">
+              ✨ @{mockUserData.name}, энергия твоего 2026 года: {mockMainCard.name}
             </h2>
 
             {/* Main card image with parallax and glow */}
