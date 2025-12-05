@@ -13,6 +13,7 @@ import TarotForecast2026 from "./pages/TarotForecast2026";
 import TarotForecast2026Unlocked from "./pages/TarotForecast2026Unlocked";
 import TarotForecast2026Quiz from "./pages/TarotForecast2026Quiz";
 import TarotForecast2026Results from "./pages/TarotForecast2026Results";
+import TarotForecast2026Gift from "./pages/TarotForecast2026Gift";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/2026_tarot_forecast_unlocked" element={<TarotForecast2026Unlocked />} />
           <Route path="/2026_tarot_forecast_quiz" element={<TarotForecast2026Quiz />} />
           <Route path="/2026_tarot_forecast_results" element={<TarotForecast2026Results />} />
+          <Route path="/2026_tarot_forecast_gift" element={<TarotForecast2026Gift />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
