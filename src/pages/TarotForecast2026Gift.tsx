@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { BenefitCard } from "@/components/BenefitCard";
 import tarotBg from "@/assets/tarot-2026-bg.png";
 import { useEffect, useState } from "react";
@@ -10,6 +9,7 @@ const giftData = {
   recipientAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Anna",
   senderName: "Мария",
   senderAvatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Maria",
+  wishMessage: "Пусть этот год принесёт тебе много радости, любви и исполнения желаний! 🌟",
 };
 
 const TarotForecast2026Gift = () => {
@@ -29,10 +29,6 @@ const TarotForecast2026Gift = () => {
 
   const handleStartForecast = () => {
     navigate("/2026_tarot_forecast_quiz");
-  };
-
-  const handleGiftForecast = () => {
-    console.log("Gift forecast clicked");
   };
 
   return (
@@ -135,7 +131,7 @@ const TarotForecast2026Gift = () => {
 
             {/* Santa Info Block */}
             <div 
-              className="flex items-center gap-3 rounded-[14px] px-4 py-3 mb-5"
+              className="flex items-center gap-3 rounded-[14px] px-4 py-3 mb-3"
               style={{
                 background: 'rgba(0,0,0,0.25)',
                 backdropFilter: 'blur(10px)',
@@ -160,14 +156,27 @@ const TarotForecast2026Gift = () => {
               </div>
             </div>
 
+            {/* Wish Message from Sender */}
+            <div 
+              className="rounded-[12px] px-4 py-3 mb-5"
+              style={{
+                background: 'rgba(234,196,111,0.08)',
+                border: '1px solid rgba(234,196,111,0.2)',
+              }}
+            >
+              <p className="text-white/90 text-sm italic leading-relaxed">
+                "{giftData.wishMessage}"
+              </p>
+            </div>
+
             {/* CTA Button */}
             <button
               onClick={handleStartForecast}
-              className="w-full py-4 px-6 rounded-[18px] font-semibold text-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full py-4 px-6 rounded-[18px] font-semibold text-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
               style={{
-                background: 'linear-gradient(135deg, #FFD979 0%, #F6C447 100%)',
+                background: 'linear-gradient(135deg, #E8C860 0%, #D4A84B 100%)',
                 color: '#1a3a2f',
-                boxShadow: '0 8px 28px rgba(234,196,111,0.4), 0 0 50px rgba(234,196,111,0.2), inset 0 1px 0 rgba(255,255,255,0.4)',
+                boxShadow: '0 8px 28px rgba(212,168,75,0.35), 0 0 40px rgba(212,168,75,0.15), inset 0 1px 0 rgba(255,255,255,0.3)',
               }}
             >
               ✨ Сделать годовой расклад
@@ -179,26 +188,6 @@ const TarotForecast2026Gift = () => {
             <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
               Твой личный прогноз на весь год — по месяцам.
             </h1>
-            
-            {/* CTA Buttons */}
-            <div className="space-y-3 pt-2">
-              <Button 
-                variant="golden" 
-                size="xl" 
-                className="w-full font-semibold"
-                onClick={handleStartForecast}
-              >
-                Сделать годовой расклад на 2026 год
-              </Button>
-              <Button 
-                variant="outline" 
-                size="xl" 
-                className="w-full font-semibold border-white/30 text-white bg-white/10 hover:bg-white/20 hover:text-white backdrop-blur-sm"
-                onClick={handleGiftForecast}
-              >
-                🎁 Купить расклад в подарок
-              </Button>
-            </div>
           </div>
 
           {/* Benefits Cards */}
