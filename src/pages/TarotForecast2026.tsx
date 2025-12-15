@@ -125,40 +125,10 @@ const TarotForecast2026 = () => {
             Иногда достаточно одной подсказки, чтобы весь год стал яснее.
           </p>
 
-          {/* 2️⃣ "This is not a prediction" Block - Lighter card, contrasting */}
+          {/* 2️⃣ "What you'll get" Block - Cards with accent */}
           <section 
             ref={(el) => (sectionRefs.current[1] = el)}
-            className={`bg-[#1a2f28]/80 backdrop-blur-sm rounded-xl p-6 shadow-[0_4px_30px_rgba(0,0,0,0.3)] transition-all duration-700 ease-out ${getSectionClass(1)}`}
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(234,196,111,0.6)]" />
-              <h2 className="text-lg font-semibold text-white/95">
-                Это не предсказание будущего
-              </h2>
-            </div>
-            <p className="text-white/70 text-[14px] leading-[1.7] mb-4 max-w-[95%]">
-              Годовой разбор — это не приговор. Он не говорит, что обязательно случится, а помогает:
-            </p>
-            <ul className="space-y-2 text-[14px]">
-              <li className="flex items-start gap-2.5 text-white/75">
-                <span className="text-amber-400/80 mt-0.5">•</span>
-                <span>понять общее <strong className="text-white/90 font-medium">направление</strong> в каждом периоде</span>
-              </li>
-              <li className="flex items-start gap-2.5 text-white/75">
-                <span className="text-amber-400/80 mt-0.5">•</span>
-                <span>увидеть <strong className="text-white/90 font-medium">периоды напряжения</strong> и роста</span>
-              </li>
-              <li className="flex items-start gap-2.5 text-white/75">
-                <span className="text-amber-400/80 mt-0.5">•</span>
-                <span>принимать решения <strong className="text-white/90 font-medium">спокойнее</strong></span>
-              </li>
-            </ul>
-          </section>
-
-          {/* 3️⃣ "What you'll get" Block - Cards with accent */}
-          <section 
-            ref={(el) => (sectionRefs.current[2] = el)}
-            className={`space-y-5 transition-all duration-700 ease-out ${getSectionClass(2)}`}
+            className={`space-y-5 transition-all duration-700 ease-out ${getSectionClass(1)}`}
           >
             <h2 className="text-[22px] sm:text-2xl font-bold text-white text-center leading-tight mb-6">
               <span className="relative">
@@ -189,6 +159,31 @@ const TarotForecast2026 = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </section>
+
+          {/* 3️⃣ "This is not a prediction" Block - Horizontal callout style */}
+          <section 
+            ref={(el) => (sectionRefs.current[2] = el)}
+            className={`transition-all duration-700 ease-out ${getSectionClass(2)}`}
+          >
+            <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2f28]/90 to-[#0f1f1a]/90 p-[1px]">
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-transparent to-amber-500/10 opacity-50" />
+              <div className="relative bg-[#12251f]/95 rounded-xl p-6 backdrop-blur-sm">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/15 flex items-center justify-center">
+                    <span className="text-amber-400 text-lg">💡</span>
+                  </div>
+                  <div className="flex-1 space-y-3">
+                    <h3 className="text-white/95 font-semibold text-[15px]">
+                      Это не предсказание
+                    </h3>
+                    <p className="text-white/60 text-[13px] leading-[1.7]">
+                      Разбор не говорит, что случится. Он помогает увидеть направления, периоды роста и принимать решения осознаннее.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
@@ -250,35 +245,10 @@ const TarotForecast2026 = () => {
             </p>
           </section>
 
-          {/* 6️⃣ "Gift" Block - Visually distinct, lighter */}
+          {/* 6️⃣ Limitation Block with Timer - Subtle, no pressure */}
           <section 
             ref={(el) => (sectionRefs.current[5] = el)}
-            className={`bg-[#1a3029]/85 backdrop-blur-sm rounded-xl p-7 shadow-[0_4px_30px_rgba(0,0,0,0.25)] transition-all duration-700 ease-out ${getSectionClass(5)}`}
-          >
-            <div className="text-center space-y-4">
-              <span className="text-4xl block mb-2">🎁</span>
-              <h2 className="text-lg font-semibold text-white">
-                Можно подарить близкому человеку
-              </h2>
-              <p className="text-white/65 text-[14px] leading-[1.7] max-w-[95%] mx-auto">
-                Годовой разбор можно оформить в подарок —
-                тёплый, внимательный и по-настоящему личный жест
-                в начале нового этапа.
-              </p>
-              <Button 
-                variant="outline" 
-                className="mt-2 border-amber-500/30 text-amber-200/90 hover:bg-amber-500/10 hover:border-amber-400/50 transition-all duration-200"
-                onClick={handleGiftForecast}
-              >
-                Оформить в подарок
-              </Button>
-            </div>
-          </section>
-
-          {/* 7️⃣ Limitation Block with Timer - Subtle, no pressure */}
-          <section 
-            ref={(el) => (sectionRefs.current[6] = el)}
-            className={`text-center space-y-4 transition-all duration-700 ease-out ${getSectionClass(6)}`}
+            className={`text-center space-y-4 transition-all duration-700 ease-out ${getSectionClass(5)}`}
           >
             <p className="text-white/50 text-sm">
               Набор на годовой разбор открыт до 15 января
@@ -301,10 +271,10 @@ const TarotForecast2026 = () => {
           {/* Gradient spacer */}
           <div className="h-8 bg-gradient-to-b from-transparent to-[#0a1612]/40" />
 
-          {/* 8️⃣ Final CTA - Focal section with backdrop */}
+          {/* 7️⃣ Final CTA - Focal section with backdrop */}
           <section 
-            ref={(el) => (sectionRefs.current[7] = el)}
-            className={`relative text-center space-y-5 py-10 -mx-5 px-5 transition-all duration-700 ease-out ${getSectionClass(7)}`}
+            ref={(el) => (sectionRefs.current[6] = el)}
+            className={`relative text-center space-y-5 py-10 -mx-5 px-5 transition-all duration-700 ease-out ${getSectionClass(6)}`}
           >
             {/* Dark backdrop */}
             <div className="absolute inset-0 bg-[#0a1612]/80 -z-10" />
@@ -321,6 +291,31 @@ const TarotForecast2026 = () => {
             >
               Пройти годовой разбор
             </Button>
+          </section>
+
+          {/* 8️⃣ "Gift" Block - After main CTA */}
+          <section 
+            ref={(el) => (sectionRefs.current[7] = el)}
+            className={`bg-[#1a3029]/85 backdrop-blur-sm rounded-xl p-7 shadow-[0_4px_30px_rgba(0,0,0,0.25)] transition-all duration-700 ease-out ${getSectionClass(7)}`}
+          >
+            <div className="text-center space-y-4">
+              <span className="text-4xl block mb-2">🎁</span>
+              <h2 className="text-lg font-semibold text-white">
+                Можно подарить близкому человеку
+              </h2>
+              <p className="text-white/65 text-[14px] leading-[1.7] max-w-[95%] mx-auto">
+                Годовой разбор можно оформить в подарок —
+                тёплый, внимательный и по-настоящему личный жест
+                в начале нового этапа.
+              </p>
+              <Button 
+                variant="outline" 
+                className="mt-2 border-amber-500/30 text-amber-200/90 hover:bg-amber-500/10 hover:border-amber-400/50 transition-all duration-200"
+                onClick={handleGiftForecast}
+              >
+                Оформить в подарок
+              </Button>
+            </div>
           </section>
 
           {/* Bottom spacing */}
