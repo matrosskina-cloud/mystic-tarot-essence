@@ -245,58 +245,57 @@ const TarotForecast2026 = () => {
             </p>
           </section>
 
-          {/* 6️⃣ Limitation Block with Timer - Subtle, no pressure */}
+          {/* 6️⃣ Combined Timer + CTA Block */}
           <section 
             ref={(el) => (sectionRefs.current[5] = el)}
-            className={`text-center space-y-4 transition-all duration-700 ease-out ${getSectionClass(5)}`}
+            className={`relative text-center -mx-5 px-5 py-12 transition-all duration-700 ease-out ${getSectionClass(5)}`}
           >
-            <p className="text-white/50 text-sm">
-              Набор на годовой разбор открыт до 15 января
-            </p>
-            <div className="flex justify-center gap-2.5">
-              {[
-                { value: timeLeft.days, label: "дней" },
-                { value: String(timeLeft.hours).padStart(2, '0'), label: "часов" },
-                { value: String(timeLeft.minutes).padStart(2, '0'), label: "минут" },
-                { value: String(timeLeft.seconds).padStart(2, '0'), label: "секунд" }
-              ].map((item, i) => (
-                <div key={i} className="bg-[#0f1f1a]/70 backdrop-blur-sm rounded-lg px-3.5 py-2.5 min-w-[54px] shadow-[0_2px_15px_rgba(0,0,0,0.2)]">
-                  <div className="text-xl font-bold text-amber-300/90">{item.value}</div>
-                  <div className="text-[9px] text-white/40 uppercase tracking-wider">{item.label}</div>
+            {/* Dark backdrop */}
+            <div className="absolute inset-0 bg-[#0a1612]/85 -z-10" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(234,196,111,0.04)_0%,_transparent_60%)] -z-10" />
+            
+            <div className="space-y-8">
+              {/* Timer */}
+              <div className="space-y-4">
+                <p className="text-white/55 text-sm">
+                  Набор на годовой разбор открыт до 15 января
+                </p>
+                <div className="flex justify-center gap-3">
+                  {[
+                    { value: timeLeft.days, label: "дней" },
+                    { value: String(timeLeft.hours).padStart(2, '0'), label: "часов" },
+                    { value: String(timeLeft.minutes).padStart(2, '0'), label: "минут" },
+                    { value: String(timeLeft.seconds).padStart(2, '0'), label: "секунд" }
+                  ].map((item, i) => (
+                    <div key={i} className="bg-[#1a2f28]/60 backdrop-blur-sm rounded-xl px-4 py-3 min-w-[62px] shadow-[0_2px_20px_rgba(0,0,0,0.25)]">
+                      <div className="text-2xl font-bold text-amber-300">{item.value}</div>
+                      <div className="text-[10px] text-white/45 uppercase tracking-wider mt-0.5">{item.label}</div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              {/* CTA */}
+              <div className="space-y-4 pt-2">
+                <p className="text-white/70 text-[15px] leading-[1.7]">
+                  Если тебе важно начать год с ясностью и опорой
+                </p>
+                <Button 
+                  variant="golden" 
+                  size="xl" 
+                  className="w-full font-semibold text-[17px] py-6 shadow-[0_0_35px_rgba(234,196,111,0.3)] hover:shadow-[0_0_50px_rgba(234,196,111,0.45)] transition-all duration-300"
+                  onClick={handleStartForecast}
+                >
+                  Пройти годовой разбор
+                </Button>
+              </div>
             </div>
           </section>
 
-          {/* Gradient spacer */}
-          <div className="h-8 bg-gradient-to-b from-transparent to-[#0a1612]/40" />
-
-          {/* 7️⃣ Final CTA - Focal section with backdrop */}
+          {/* 7️⃣ "Gift" Block - After main CTA */}
           <section 
             ref={(el) => (sectionRefs.current[6] = el)}
-            className={`relative text-center space-y-5 py-10 -mx-5 px-5 transition-all duration-700 ease-out ${getSectionClass(6)}`}
-          >
-            {/* Dark backdrop */}
-            <div className="absolute inset-0 bg-[#0a1612]/80 -z-10" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(234,196,111,0.05)_0%,_transparent_70%)] -z-10" />
-            
-            <p className="text-white/75 text-[15px] leading-[1.7]">
-              Если тебе важно начать год с ясностью и опорой
-            </p>
-            <Button 
-              variant="golden" 
-              size="xl" 
-              className="w-full font-semibold text-[17px] py-6 shadow-[0_0_35px_rgba(234,196,111,0.3)] hover:shadow-[0_0_50px_rgba(234,196,111,0.45)] transition-all duration-300"
-              onClick={handleStartForecast}
-            >
-              Пройти годовой разбор
-            </Button>
-          </section>
-
-          {/* 8️⃣ "Gift" Block - After main CTA */}
-          <section 
-            ref={(el) => (sectionRefs.current[7] = el)}
-            className={`bg-[#1a3029]/85 backdrop-blur-sm rounded-xl p-7 shadow-[0_4px_30px_rgba(0,0,0,0.25)] transition-all duration-700 ease-out ${getSectionClass(7)}`}
+            className={`bg-[#1a3029]/85 backdrop-blur-sm rounded-xl p-7 shadow-[0_4px_30px_rgba(0,0,0,0.25)] transition-all duration-700 ease-out ${getSectionClass(6)}`}
           >
             <div className="text-center space-y-4">
               <span className="text-4xl block mb-2">🎁</span>
