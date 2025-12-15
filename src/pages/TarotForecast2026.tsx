@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import tarotBg from "@/assets/tarot-2026-bg.png";
@@ -6,6 +6,8 @@ import tarotBg from "@/assets/tarot-2026-bg.png";
 const TarotForecast2026 = () => {
   const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [visibleSections, setVisibleSections] = useState<Set<number>>(new Set());
+  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
 
   // Calculate time until January 15, 2026
   useEffect(() => {
@@ -30,13 +32,41 @@ const TarotForecast2026 = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Intersection Observer for scroll animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = sectionRefs.current.indexOf(entry.target as HTMLElement);
+            if (index !== -1) {
+              setVisibleSections((prev) => new Set([...prev, index]));
+            }
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    sectionRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const handleStartForecast = () => {
     navigate("/2026_tarot_forecast_quiz");
   };
 
   const handleGiftForecast = () => {
-    // TODO: Implement gift flow
-    console.log("Gift forecast clicked");
+    navigate("/2026_tarot_forecast_gift");
+  };
+
+  const getSectionClass = (index: number) => {
+    return visibleSections.has(index)
+      ? "opacity-100 translate-y-0"
+      : "opacity-0 translate-y-8";
   };
 
   return (
@@ -49,268 +79,252 @@ const TarotForecast2026 = () => {
         backgroundAttachment: 'fixed'
       }}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40" />
+      {/* Base overlay */}
+      <div className="absolute inset-0 bg-[#0a1612]/60" />
       
-      <main className="relative z-10 flex flex-col items-center px-4 sm:px-6 py-12">
-        <div className="w-full max-w-lg mx-auto space-y-8 box-border">
+      {/* Radial gradient overlays for depth */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_transparent_0%,_#0a1612_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_#0f1f1a_0%,_transparent_50%)]" />
+      
+      <main className="relative z-10 flex flex-col items-center px-5 sm:px-6 py-14">
+        <div className="w-full max-w-lg mx-auto space-y-16 box-border">
           
-          {/* 1️⃣ HERO Block */}
-          <section className="text-center space-y-5 animate-fade-in-up pt-4">
-            <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
-              Твоя персональная навигация<br />на весь 2026 год
+          {/* 1️⃣ HERO Block - Light section, text only */}
+          <section 
+            ref={(el) => (sectionRefs.current[0] = el)}
+            className={`text-center space-y-6 pt-6 transition-all duration-700 ease-out ${getSectionClass(0)}`}
+          >
+            <h1 className="text-[28px] sm:text-[34px] font-bold text-white leading-[1.25] tracking-tight">
+              <span className="relative inline-block">
+                Твоя персональная навигация
+                <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
+              </span>
+              <br />на весь 2026 год
             </h1>
-            <p className="text-base sm:text-lg text-white/90 leading-relaxed">
-              Пойми, с чем ты входишь в этот год,<br />
-              где будут ключевые повороты<br />
+            <p className="text-[17px] sm:text-lg text-white/90 leading-[1.7] max-w-[95%] mx-auto">
+              Пойми, с чем ты входишь в этот год,
+              где будут ключевые повороты
               и на что стоит опираться, чтобы прожить его осознанно.
             </p>
-            <p className="text-sm text-white/60 leading-relaxed">
+            <p className="text-sm text-white/50 leading-relaxed">
               Индивидуальный годовой разбор на основе Таро —<br />
               не предсказание, а ориентир и поддержка.
             </p>
             <Button 
               variant="golden" 
               size="xl" 
-              className="w-full font-semibold mt-4"
+              className="w-full font-semibold mt-6 shadow-[0_0_30px_rgba(234,196,111,0.25)] hover:shadow-[0_0_40px_rgba(234,196,111,0.4)] transition-shadow duration-300"
               onClick={handleStartForecast}
             >
               Начать персональный разбор года
             </Button>
           </section>
 
-          {/* 2️⃣ "This is not a prediction" Block */}
+          {/* Highlight phrase */}
+          <p className="text-center text-white/40 text-sm italic">
+            Иногда достаточно одной подсказки, чтобы весь год стал яснее.
+          </p>
+
+          {/* 2️⃣ "This is not a prediction" Block - Lighter card, contrasting */}
           <section 
-            className="bg-[#0f1f1a]/70 backdrop-blur-md border border-amber-500/20 rounded-2xl p-6 animate-fade-in-up"
-            style={{ animationDelay: '200ms' }}
+            ref={(el) => (sectionRefs.current[1] = el)}
+            className={`bg-[#1a2f28]/80 backdrop-blur-sm rounded-xl p-6 shadow-[0_4px_30px_rgba(0,0,0,0.3)] transition-all duration-700 ease-out ${getSectionClass(1)}`}
           >
-            <h2 className="text-xl font-bold text-white mb-4 text-center">
-              ✨ Это не предсказание будущего
-            </h2>
-            <div className="text-white/80 text-[15px] leading-relaxed space-y-4">
-              <p>
-                Годовой разбор — это не приговор и не обещание событий.<br />
-                Он не говорит, что обязательно случится.
-              </p>
-              <p>Он помогает:</p>
-              <ul className="space-y-2 ml-1">
-                <li className="flex items-start gap-2">
-                  <span className="text-amber-400">•</span>
-                  <span>лучше понять общее направление в каждом месяце года</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-amber-400">•</span>
-                  <span>увидеть периоды напряжения и роста</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-amber-400">•</span>
-                  <span>принимать решения спокойнее и увереннее</span>
-                </li>
-              </ul>
-              <p className="text-white/70 italic">
-                Ты остаёшься в точке выбора —<br />
-                разбор лишь подсвечивает возможные маршруты.
-              </p>
+            <div className="flex items-center gap-2 mb-4">
+              <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(234,196,111,0.6)]" />
+              <h2 className="text-lg font-semibold text-white/95">
+                Это не предсказание будущего
+              </h2>
             </div>
+            <p className="text-white/70 text-[14px] leading-[1.7] mb-4 max-w-[95%]">
+              Годовой разбор — это не приговор. Он не говорит, что обязательно случится, а помогает:
+            </p>
+            <ul className="space-y-2 text-[14px]">
+              <li className="flex items-start gap-2.5 text-white/75">
+                <span className="text-amber-400/80 mt-0.5">•</span>
+                <span>понять общее <strong className="text-white/90 font-medium">направление</strong> в каждом периоде</span>
+              </li>
+              <li className="flex items-start gap-2.5 text-white/75">
+                <span className="text-amber-400/80 mt-0.5">•</span>
+                <span>увидеть <strong className="text-white/90 font-medium">периоды напряжения</strong> и роста</span>
+              </li>
+              <li className="flex items-start gap-2.5 text-white/75">
+                <span className="text-amber-400/80 mt-0.5">•</span>
+                <span>принимать решения <strong className="text-white/90 font-medium">спокойнее</strong></span>
+              </li>
+            </ul>
           </section>
 
-          {/* 3️⃣ "What you'll get" Block */}
+          {/* 3️⃣ "What you'll get" Block - Cards with accent */}
           <section 
-            className="space-y-4 animate-fade-in-up"
-            style={{ animationDelay: '400ms' }}
+            ref={(el) => (sectionRefs.current[2] = el)}
+            className={`space-y-5 transition-all duration-700 ease-out ${getSectionClass(2)}`}
           >
-            <h2 className="text-xl font-bold text-white text-center mb-5">
-              Что даёт годовой разбор
+            <h2 className="text-[22px] sm:text-2xl font-bold text-white text-center leading-tight mb-6">
+              <span className="relative">
+                Что даёт годовой разбор
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-16 h-[2px] bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
+              </span>
             </h2>
             
             <div className="space-y-4">
-              <div className="bg-[#0f1f1a]/60 backdrop-blur-md border border-amber-500/15 rounded-xl p-5">
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">🃏</span>
-                  <div>
-                    <h3 className="text-white font-semibold mb-1">Личный фокус на год</h3>
-                    <p className="text-white/70 text-sm leading-relaxed">
-                      Ты формулируешь главный запрос — не абстрактный «что будет», а то, что действительно важно именно тебе.
-                    </p>
+              {[
+                { icon: "🃏", title: "Личный фокус на год", text: "Ты формулируешь главный запрос — не абстрактный «что будет», а то, что действительно важно именно тебе." },
+                { icon: "🔍", title: "Ясные ориентиры по периодам", text: "Ключевые темы, возможности и риски каждого этапа — без перегруза и лишней эзотерики." },
+                { icon: "✨", title: "Общая энергия года", text: "Главное направление, которое будет возвращаться снова и снова и задавать тон происходящему." },
+                { icon: "📘", title: "Опора для возвращения", text: "Ты сможешь перечитывать разбор в любой момент, когда потребуется ясность." }
+              ].map((item, i) => (
+                <div 
+                  key={i}
+                  className="bg-[#0f1f1a]/75 backdrop-blur-sm rounded-lg p-5 shadow-[0_2px_20px_rgba(0,0,0,0.2)] border-t border-amber-500/10"
+                >
+                  <div className="flex items-start gap-3.5">
+                    <span className="text-xl mt-0.5">{item.icon}</span>
+                    <div>
+                      <h3 className="text-white font-semibold text-[15px] mb-1.5">{item.title}</h3>
+                      <p className="text-white/65 text-[14px] leading-[1.65]">
+                        {item.text}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="bg-[#0f1f1a]/60 backdrop-blur-md border border-amber-500/15 rounded-xl p-5">
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">🔍</span>
-                  <div>
-                    <h3 className="text-white font-semibold mb-1">Ясные ориентиры по периодам года</h3>
-                    <p className="text-white/70 text-sm leading-relaxed">
-                      Ключевые темы, возможности и риски каждого этапа — без перегруза и лишней эзотерики.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-[#0f1f1a]/60 backdrop-blur-md border border-amber-500/15 rounded-xl p-5">
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">✨</span>
-                  <div>
-                    <h3 className="text-white font-semibold mb-1">Общую энергию и настроение года</h3>
-                    <p className="text-white/70 text-sm leading-relaxed">
-                      Главное направление, которое будет возвращаться снова и снова и задавать тон происходящему.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-[#0f1f1a]/60 backdrop-blur-md border border-amber-500/15 rounded-xl p-5">
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">📘</span>
-                  <div>
-                    <h3 className="text-white font-semibold mb-1">Опору, к которой можно возвращаться</h3>
-                    <p className="text-white/70 text-sm leading-relaxed">
-                      Ты сможешь перечитывать разбор в любой момент, когда потребуется ясность или подтверждение своих решений.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </section>
 
-          {/* 4️⃣ "How the yearly reading works" Block */}
+          {/* Highlight phrase */}
+          <p className="text-center text-white/40 text-sm italic py-2">
+            Ты остаёшься в точке выбора — разбор лишь подсвечивает маршруты.
+          </p>
+
+          {/* 4️⃣ "How the yearly reading works" Block - Timeline format */}
           <section 
-            className="bg-[#0f1f1a]/70 backdrop-blur-md border border-amber-500/20 rounded-2xl p-6 animate-fade-in-up"
-            style={{ animationDelay: '600ms' }}
+            ref={(el) => (sectionRefs.current[3] = el)}
+            className={`space-y-6 transition-all duration-700 ease-out ${getSectionClass(3)}`}
           >
-            <h2 className="text-xl font-bold text-white mb-5 text-center">
-              Как проходит годовой разбор
+            <h2 className="text-[22px] sm:text-2xl font-bold text-white text-center leading-tight">
+              <span className="relative">
+                Как проходит разбор
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-12 h-[2px] bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
+              </span>
             </h2>
             
-            <div className="space-y-5">
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-bold text-sm shadow-[0_0_15px_rgba(234,196,111,0.3)]">
-                  1
+            <div className="space-y-8 pt-2">
+              {[
+                { num: 1, title: "Формулировка запроса", text: "Ты задаёшь главный вопрос или фокус на год — работа, отношения, деньги или общее направление." },
+                { num: 2, title: "Персональный расклад", text: "Ты выбираешь карты, и расклад формируется индивидуально — по ключевым периодам года." },
+                { num: 3, title: "Итоговый вывод", text: "Ты получаешь связную картину: смысл, риски, точки роста и рекомендации." }
+              ].map((step, i) => (
+                <div key={i} className="flex gap-5">
+                  <div className="flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-bold text-lg shadow-[0_0_20px_rgba(234,196,111,0.35)]">
+                      {step.num}
+                    </div>
+                  </div>
+                  <div className="pt-1">
+                    <h3 className="text-white font-semibold text-[15px] mb-1.5">{step.title}</h3>
+                    <p className="text-white/65 text-[14px] leading-[1.65]">
+                      {step.text}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-white font-semibold mb-1">Формулировка запроса</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">
-                    Ты задаёшь главный вопрос или фокус на год (работа, отношения, деньги или общее направление).
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-bold text-sm shadow-[0_0_15px_rgba(234,196,111,0.3)]">
-                  2
-                </div>
-                <div>
-                  <h3 className="text-white font-semibold mb-1">Персональный расклад</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">
-                    Ты выбираешь карты, и расклад формируется индивидуально — по месяцам или ключевым периодам года.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-bold text-sm shadow-[0_0_15px_rgba(234,196,111,0.3)]">
-                  3
-                </div>
-                <div>
-                  <h3 className="text-white font-semibold mb-1">Итоговый вывод</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">
-                    Ты получаешь связную картину года: смысл, риски, точки роста и рекомендации.
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </section>
 
-          {/* 5️⃣ "Return to reading" Block */}
+          {/* 5️⃣ "Return to reading" Block - Text only, no card */}
           <section 
-            className="bg-[#0f1f1a]/60 backdrop-blur-md border border-amber-500/15 rounded-2xl p-6 animate-fade-in-up"
-            style={{ animationDelay: '800ms' }}
+            ref={(el) => (sectionRefs.current[4] = el)}
+            className={`text-center space-y-4 py-4 transition-all duration-700 ease-out ${getSectionClass(4)}`}
           >
-            <h2 className="text-xl font-bold text-white mb-4 text-center">
-              📖 К этому разбору можно возвращаться
+            <h2 className="text-lg font-semibold text-white/90 flex items-center justify-center gap-2">
+              <span className="text-amber-400/70">📖</span>
+              К разбору можно возвращаться
             </h2>
-            <div className="text-white/80 text-[15px] leading-relaxed space-y-3 text-center">
-              <p>
-                Годовой разбор — не одноразовый текст.<br />
-                Его можно перечитывать в течение года —<br />
-                в моменты сомнений, выбора или усталости.
-              </p>
-              <p className="text-white/60 italic">
-                Иногда одно предложение, прочитанное вовремя,<br />
-                меняет восприятие ситуации.
-              </p>
-            </div>
-          </section>
-
-          {/* 6️⃣ "Gift" Block */}
-          <section 
-            className="bg-[#0f1f1a]/70 backdrop-blur-md border border-amber-500/20 rounded-2xl p-6 animate-fade-in-up"
-            style={{ animationDelay: '1000ms' }}
-          >
-            <h2 className="text-xl font-bold text-white mb-4 text-center">
-              🎁 Можно подарить близкому человеку
-            </h2>
-            <p className="text-white/80 text-[15px] leading-relaxed text-center mb-5">
-              Годовой разбор можно оформить в подарок.<br />
-              Это тёплый, внимательный и по-настоящему личный жест —<br />
-              поддержка и забота в начале нового этапа.
+            <p className="text-white/60 text-[15px] leading-[1.7] max-w-[90%] mx-auto">
+              Годовой разбор — не одноразовый текст.
+              Его можно перечитывать в моменты сомнений, выбора или усталости.
             </p>
-            <Button 
-              variant="outline" 
-              className="w-full border-amber-500/40 text-amber-200 hover:bg-amber-500/10 hover:border-amber-400/60"
-              onClick={handleGiftForecast}
-            >
-              Оформить в подарок
-            </Button>
+            <p className="text-white/40 text-sm italic">
+              Иногда одно предложение, прочитанное вовремя, меняет всё.
+            </p>
           </section>
 
-          {/* 7️⃣ Limitation Block with Timer */}
+          {/* 6️⃣ "Gift" Block - Visually distinct, lighter */}
           <section 
-            className="text-center animate-fade-in-up"
-            style={{ animationDelay: '1200ms' }}
+            ref={(el) => (sectionRefs.current[5] = el)}
+            className={`bg-[#1a3029]/85 backdrop-blur-sm rounded-xl p-7 shadow-[0_4px_30px_rgba(0,0,0,0.25)] transition-all duration-700 ease-out ${getSectionClass(5)}`}
           >
-            <p className="text-white/70 text-sm mb-3">
+            <div className="text-center space-y-4">
+              <span className="text-4xl block mb-2">🎁</span>
+              <h2 className="text-lg font-semibold text-white">
+                Можно подарить близкому человеку
+              </h2>
+              <p className="text-white/65 text-[14px] leading-[1.7] max-w-[95%] mx-auto">
+                Годовой разбор можно оформить в подарок —
+                тёплый, внимательный и по-настоящему личный жест
+                в начале нового этапа.
+              </p>
+              <Button 
+                variant="outline" 
+                className="mt-2 border-amber-500/30 text-amber-200/90 hover:bg-amber-500/10 hover:border-amber-400/50 transition-all duration-200"
+                onClick={handleGiftForecast}
+              >
+                Оформить в подарок
+              </Button>
+            </div>
+          </section>
+
+          {/* 7️⃣ Limitation Block with Timer - Subtle, no pressure */}
+          <section 
+            ref={(el) => (sectionRefs.current[6] = el)}
+            className={`text-center space-y-4 transition-all duration-700 ease-out ${getSectionClass(6)}`}
+          >
+            <p className="text-white/50 text-sm">
               Набор на годовой разбор открыт до 15 января
             </p>
-            <div className="flex justify-center gap-3">
-              <div className="bg-[#0f1f1a]/80 backdrop-blur-md border border-amber-500/20 rounded-xl px-4 py-3 min-w-[60px]">
-                <div className="text-2xl font-bold text-amber-300">{timeLeft.days}</div>
-                <div className="text-[10px] text-white/50 uppercase tracking-wider">дней</div>
-              </div>
-              <div className="bg-[#0f1f1a]/80 backdrop-blur-md border border-amber-500/20 rounded-xl px-4 py-3 min-w-[60px]">
-                <div className="text-2xl font-bold text-amber-300">{String(timeLeft.hours).padStart(2, '0')}</div>
-                <div className="text-[10px] text-white/50 uppercase tracking-wider">часов</div>
-              </div>
-              <div className="bg-[#0f1f1a]/80 backdrop-blur-md border border-amber-500/20 rounded-xl px-4 py-3 min-w-[60px]">
-                <div className="text-2xl font-bold text-amber-300">{String(timeLeft.minutes).padStart(2, '0')}</div>
-                <div className="text-[10px] text-white/50 uppercase tracking-wider">минут</div>
-              </div>
-              <div className="bg-[#0f1f1a]/80 backdrop-blur-md border border-amber-500/20 rounded-xl px-4 py-3 min-w-[60px]">
-                <div className="text-2xl font-bold text-amber-300">{String(timeLeft.seconds).padStart(2, '0')}</div>
-                <div className="text-[10px] text-white/50 uppercase tracking-wider">секунд</div>
-              </div>
+            <div className="flex justify-center gap-2.5">
+              {[
+                { value: timeLeft.days, label: "дней" },
+                { value: String(timeLeft.hours).padStart(2, '0'), label: "часов" },
+                { value: String(timeLeft.minutes).padStart(2, '0'), label: "минут" },
+                { value: String(timeLeft.seconds).padStart(2, '0'), label: "секунд" }
+              ].map((item, i) => (
+                <div key={i} className="bg-[#0f1f1a]/70 backdrop-blur-sm rounded-lg px-3.5 py-2.5 min-w-[54px] shadow-[0_2px_15px_rgba(0,0,0,0.2)]">
+                  <div className="text-xl font-bold text-amber-300/90">{item.value}</div>
+                  <div className="text-[9px] text-white/40 uppercase tracking-wider">{item.label}</div>
+                </div>
+              ))}
             </div>
           </section>
 
-          {/* 8️⃣ Final CTA */}
+          {/* Gradient spacer */}
+          <div className="h-8 bg-gradient-to-b from-transparent to-[#0a1612]/40" />
+
+          {/* 8️⃣ Final CTA - Focal section with backdrop */}
           <section 
-            className="text-center space-y-5 pb-8 animate-fade-in-up"
-            style={{ animationDelay: '1400ms' }}
+            ref={(el) => (sectionRefs.current[7] = el)}
+            className={`relative text-center space-y-5 py-10 -mx-5 px-5 transition-all duration-700 ease-out ${getSectionClass(7)}`}
           >
-            <p className="text-white/80 text-[15px] leading-relaxed">
-              Если тебе важно начать год с ясностью и опорой —<br />
-              годовой разбор может стать хорошей точкой входа.
+            {/* Dark backdrop */}
+            <div className="absolute inset-0 bg-[#0a1612]/80 -z-10" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(234,196,111,0.05)_0%,_transparent_70%)] -z-10" />
+            
+            <p className="text-white/75 text-[15px] leading-[1.7]">
+              Если тебе важно начать год с ясностью и опорой
             </p>
             <Button 
               variant="golden" 
               size="xl" 
-              className="w-full font-semibold"
+              className="w-full font-semibold text-[17px] py-6 shadow-[0_0_35px_rgba(234,196,111,0.3)] hover:shadow-[0_0_50px_rgba(234,196,111,0.45)] transition-all duration-300"
               onClick={handleStartForecast}
             >
               Пройти годовой разбор
             </Button>
           </section>
+
+          {/* Bottom spacing */}
+          <div className="h-8" />
 
         </div>
       </main>
