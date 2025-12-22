@@ -205,13 +205,14 @@ const TarotForecast2026 = () => {
             </h2>
             
             {/* Example image */}
-            <div className="relative rounded-xl overflow-hidden border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+            <div className="relative rounded-2xl overflow-hidden border border-amber-400/20 shadow-[0_12px_48px_rgba(0,0,0,0.5),0_0_60px_rgba(234,196,111,0.15)] animate-fade-in transition-all duration-500 hover:shadow-[0_16px_56px_rgba(0,0,0,0.6),0_0_80px_rgba(234,196,111,0.25)] hover:scale-[1.02] group">
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-400/10 via-transparent to-amber-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
               <img 
                 src="/tarot-spread-example.png" 
                 alt="Пример расклада на месяц" 
-                className="w-full h-auto"
+                className="w-full h-auto transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a1612]/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a1612]/80 via-transparent to-transparent pointer-events-none" />
             </div>
             
             <div className="space-y-8 pt-2">
