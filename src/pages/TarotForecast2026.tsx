@@ -120,10 +120,13 @@ const TarotForecast2026 = () => {
             </Button>
           </section>
 
-          {/* Highlight phrase */}
-          <p className="text-center text-white/40 text-sm italic">
-            Годовой расклад доступен бесплатно при подписке на 3 или 6 месяцев
-          </p>
+          {/* Highlight phrase - subscription badge */}
+          <div className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500/10 via-amber-400/15 to-amber-500/10 rounded-full px-5 py-2.5 border border-amber-400/20 shadow-[0_0_20px_rgba(234,196,111,0.1)]">
+            <span className="text-amber-400 text-sm">✨</span>
+            <p className="text-amber-200/80 text-sm font-medium">
+              Бесплатно с подпиской на 3 или 6 месяцев
+            </p>
+          </div>
 
           {/* 2️⃣ "What you'll get" Block - Cards with accent */}
           <section 
