@@ -116,13 +116,13 @@ const TarotForecast2026 = () => {
               className="w-full font-semibold mt-6 shadow-[0_0_30px_rgba(234,196,111,0.25)] hover:shadow-[0_0_40px_rgba(234,196,111,0.4)] transition-shadow duration-300"
               onClick={handleStartForecast}
             >
-              Начать персональный разбор года
+              Получить годовой разбор · 499 ₽
             </Button>
           </section>
 
           {/* Highlight phrase */}
           <p className="text-center text-white/40 text-sm italic">
-            Иногда достаточно одной подсказки, чтобы весь год стал яснее.
+            Годовой расклад доступен бесплатно при подписке на 3 или 6 месяцев
           </p>
 
           {/* 2️⃣ "What you'll get" Block - Cards with accent */}
@@ -291,13 +291,13 @@ const TarotForecast2026 = () => {
                 <p className="text-white/70 text-[15px] leading-[1.7]">
                   Если тебе важно начать год с ясностью и опорой
                 </p>
-                <Button 
+              <Button 
                   variant="golden" 
                   size="xl" 
                   className="w-full font-semibold text-[17px] py-6 shadow-[0_0_35px_rgba(234,196,111,0.3)] hover:shadow-[0_0_50px_rgba(234,196,111,0.45)] transition-all duration-300"
                   onClick={handleStartForecast}
                 >
-                  Пройти годовой разбор
+                  Получить годовой разбор · 499 ₽
                 </Button>
               </div>
             </div>
